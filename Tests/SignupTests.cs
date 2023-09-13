@@ -8,7 +8,7 @@ namespace Tests;
 public class SignupTests
 {
     [TestMethod]
-    public void Signup_Test_OK()
+    public void Signup_OK_Test()
     {
         var request = new SignupRequest
         {
