@@ -30,5 +30,22 @@ namespace Tests
 
             Assert.AreEqual(201, result?.StatusCode);
         }
+
+
+        [TestMethod]
+        public void GetProducts_OK_Test()
+        {
+            var request = new GetProductsRequest()
+            {
+                Brand = "Nike",
+                Category = "Shoes",
+                Text = "Air"
+            };
+
+            var controller = new ProductsController();
+            var result = controller.GetProducts(request) as ObjectResult;
+
+            Assert.AreEqual(200, result?.StatusCode);
+        }
     }
 }
