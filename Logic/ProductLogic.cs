@@ -20,4 +20,9 @@ public class ProductLogic : IProductLogic
         return product;
     }
     
+    public List<Product> GetProducts()
+    {
+        return _productRepository.GetProducts();
+    }
+    
 }
