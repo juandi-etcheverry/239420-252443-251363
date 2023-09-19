@@ -10,7 +10,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult CreateProduct([FromBody] CreateProductRequest request)
         {
-            return StatusCode(201, "Product created successfully");
+            return StatusCode(201, request);
         }
 
 

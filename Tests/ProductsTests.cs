@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApiModels.Requests;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers;
 
@@ -20,9 +21,9 @@ namespace Tests
                 Name = "Product 1",
                 Price = 100,
                 Description = "Description",
-                Brand = "Brand",
-                Category = "Category",
-                Colors = new List<string> { "Red", "Blue" }
+                Brand = new Brand(){Name="Brand"},
+                Category = new Category(){Name="Category"},
+                Colors = new List<Color> { new() {Name="Red"}, new() { Name = "Blue" } }
             };
 
             var controller = new ProductsController();
