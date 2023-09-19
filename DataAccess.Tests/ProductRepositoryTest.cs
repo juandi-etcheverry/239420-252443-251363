@@ -177,4 +177,30 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product.Id, result[0].Id);
     }
+
+    [TestMethod]
+    public void GetProducts_TrivialTruePredicate_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("GetProducts_TrivialTruePredicate_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand() { Name = "Gucci" },
+            Category = new Category() { Name = "Bag" },
+            Colors = new List<Color>() { new() { Name = "Red" } },
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+
+        // Act
+        var result = productRepository.GetProducts(p => true);
+
+        // Assert
+        Assert.AreEqual(product.Id, result[0].Id);
+    }
 }

@@ -7,4 +7,5 @@ public interface IProductRepository
     public Product AddProduct(Product product);
     public Product? GetProduct(int id);
     public List<Product> GetProducts();
+    public List<Product> GetProducts(Func<Product, bool> predicate);
 }

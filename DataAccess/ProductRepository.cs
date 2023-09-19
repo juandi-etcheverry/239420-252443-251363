@@ -29,5 +29,10 @@ public class ProductRepository : IProductRepository
     {
         return _context.Set<Product>().ToList();
     }
+    
+    public List<Product> GetProducts(Func<Product, bool> predicate)
+    {
+        return _context.Set<Product>().ToList();
+    }
 
 }
