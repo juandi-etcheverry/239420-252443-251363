@@ -37,24 +37,6 @@ public class ProductTests
     }
     
     [TestMethod]
-    public void AddProduct_MissingCategory_FAIL()
-    {
-        // Arrange
-        var context = CreateDbContext("AddProduct_NullProduct_Exception");
-        var productRepository = new ProductRepository(context);
-
-        // Act
-        var product = new Product
-        {
-            Name = "Test Product",
-            Description = "Test Description",
-            Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
-        };
-    }
-    
-    [TestMethod]
     public void GetProduct_CorrectId_OK()
     {
         // Arrange
