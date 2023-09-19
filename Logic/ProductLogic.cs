@@ -15,7 +15,9 @@ public class ProductLogic : IProductLogic
     
     public Product GetProduct(int id)
     {
-        return _productRepository.GetProduct(id);
+        var product = _productRepository.GetProduct(id);
+        if (product.IsDeleted) throw new ArgumentException($"Product with id {id} not found");
+        return product;
     }
     
 }

@@ -39,4 +39,20 @@ public class ProductLogicTest
         // Assert
         // Exception
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Product with id 1 not found")]
+    public void GetProduct_SoftDeleted_FAIL()
+    {
+        // Arrange
+        var product = new Product { Name = "Test", Price = 420, Description = "Test Description", IsDeleted = true};
+        var mock = new Mock<IProductRepository>();
+        mock.Setup(x => x.GetProduct(product.Id)).Returns(product);
+        var logic = new ProductLogic(mock.Object);
+        
+        // Act
+        var result = logic.GetProduct(product.Id);
+        
+        // Exception
+    }
 }
