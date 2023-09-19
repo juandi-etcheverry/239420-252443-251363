@@ -61,4 +61,30 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product, result);
     }
+    
+    [TestMethod]
+    public void GetProduct_IncorrectId_NULL_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("GetProduct_IncorrectId_Null");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+
+        // Act
+        var result = productRepository.GetProduct(product.Id + 1);
+
+        // Assert
+        Assert.IsNull(result);
+    }
 }
