@@ -35,4 +35,11 @@ public class ProductRepository : IProductRepository
         return _context.Set<Product>().Where(predicate).ToList();
     }
 
+    public Product? SoftDelete(int id)
+    {
+        var product = _context.Set<Product>().Find(id);
+        product.IsDeleted = true;
+        return product;
+    }
+
 }

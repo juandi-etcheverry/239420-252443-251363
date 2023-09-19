@@ -339,4 +339,31 @@ public class ProductTests
         Assert.AreEqual(product1, result[0]);
 
     }
+    
+    [TestMethod]
+    public void SoftDelete_CorrectId_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("SoftDelete_CorrectId_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            IsDeleted = false,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+
+        // Act
+        var result = productRepository.SoftDelete(product.Id);
+
+        // Assert
+        Assert.AreEqual(true, result.IsDeleted);
+    }
 }
