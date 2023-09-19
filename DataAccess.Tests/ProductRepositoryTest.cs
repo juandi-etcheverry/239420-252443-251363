@@ -134,7 +134,7 @@ public class ProductTests
         var result = productRepository.GetProducts();
 
         // Assert
-        Assert.AreEqual(product, result[0]);
+        Assert.AreEqual(product.Id, result[0].Id);
     }
     
     [TestMethod]
@@ -149,5 +149,32 @@ public class ProductTests
 
         // Assert
         Assert.AreEqual(0, result.Count);
+    }
+
+    [TestMethod]
+    public void GetProducts_SoftDeletedProducts_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("GetProducts_SoftDeletedProducts_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand() { Name = "Gucci" },
+            Category = new Category() { Name = "Bag" },
+            Colors = new List<Color>() { new() { Name = "Red" } },
+            IsDeleted = true
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+
+        // Act
+        var result = productRepository.GetProducts();
+
+        // Assert
+        Assert.AreEqual(product.Id, result[0].Id);
     }
 }
