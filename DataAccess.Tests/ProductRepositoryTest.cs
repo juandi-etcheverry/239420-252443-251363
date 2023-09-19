@@ -229,4 +229,40 @@ public class ProductTests
         // Assert
         Assert.AreEqual(0, result.Count);
     }
+    
+    [TestMethod]
+    public void GetProducts_ProductsMatchingPredicate_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("GetProducts_ProductsMatchingPredicate_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product1 = new Product
+        {
+            Name = "Test Product 1",
+            Description = "Test Description 1",
+            Price = 100,
+            Brand = new Brand() { Name = "Gucci" },
+            Category = new Category() { Name = "Bag" },
+            Colors = new List<Color>() { new() { Name = "Red" } },
+        };
+        var product2 = new Product
+        {
+            Name = "Test Product 2",
+            Description = "Test Description 2",
+            Price = 100,
+            Brand = new Brand() { Name = "Gucci" },
+            Category = new Category() { Name = "Bag" },
+            Colors = new List<Color>() { new() { Name = "Red" } },
+        };
+        context.Set<Product>().Add(product1);
+        context.Set<Product>().Add(product2);
+        context.SaveChanges();
+
+        // Act
+        var result = productRepository.GetProducts(p => p.Name.Contains("1"));
+
+        // Assert
+        Assert.AreEqual(product1.Id, result[0].Id);
+    }
 }
