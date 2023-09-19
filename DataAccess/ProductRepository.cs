@@ -24,5 +24,10 @@ public class ProductRepository : IProductRepository
     {
         return _context.Set<Product>().Find(id);
     }
+    
+    public List<Product> GetProducts()
+    {
+        return _context.Set<Product>().ToList();
+    }
 
 }
