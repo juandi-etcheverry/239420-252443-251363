@@ -38,6 +38,7 @@ public class ProductRepository : IProductRepository
     public Product? SoftDelete(int id)
     {
         var product = _context.Set<Product>().Find(id);
+        if (product == null) return null;
         product.IsDeleted = true;
         return product;
     }
