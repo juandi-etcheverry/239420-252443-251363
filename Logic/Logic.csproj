@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj" />
+      <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj" />
+    </ItemGroup>
+
 </Project>
