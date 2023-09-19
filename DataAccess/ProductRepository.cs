@@ -19,5 +19,10 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
         return product;
     }
+    
+    public Product? GetProduct(int Id)
+    {
+        return _context.Set<Product>().Find(Id);
+    }
 
 }
