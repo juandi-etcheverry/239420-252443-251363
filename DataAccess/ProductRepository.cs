@@ -20,9 +20,11 @@ public class ProductRepository : IProductRepository
         return product;
     }
     
-    public Product? GetProduct(int id)
+    public Product GetProduct(int id)
     {
-        return _context.Set<Product>().Find(id);
+        var product = _context.Set<Product>().Find(id);
+        if (product == null) throw new ArgumentException($"Product with id {id} not found");
+        return product;
     }
     
     public List<Product> GetProducts()

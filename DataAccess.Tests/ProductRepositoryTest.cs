@@ -86,6 +86,7 @@ public class ProductTests
     }
     
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Product with id -1 not found")]
     public void GetProduct_IncorrectId_Null()
     {
         // Arrange
@@ -103,12 +104,9 @@ public class ProductTests
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
-
+        
         // Act
-        var result = productRepository.GetProduct(product.Id + 1);
-
-        // Assert
-        Assert.IsNull(result);
+        productRepository.GetProduct(-1);
     }
     
     [TestMethod]
