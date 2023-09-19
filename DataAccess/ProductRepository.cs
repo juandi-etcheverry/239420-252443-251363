@@ -32,7 +32,7 @@ public class ProductRepository : IProductRepository
     
     public List<Product> GetProducts(Func<Product, bool> predicate)
     {
-        return _context.Set<Product>().ToList();
+        return _context.Set<Product>().Where(predicate).ToList();
     }
 
 }
