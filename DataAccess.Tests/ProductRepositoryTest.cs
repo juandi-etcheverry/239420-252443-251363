@@ -115,7 +115,7 @@ public class ProductTests
     public void GetProducts_ValidProducts_OK()
     {
         // Arrange
-        var context = CreateDbContext("GetProducts_CorrectId_OK");
+        var context = CreateDbContext("GetProducts_ValidProducts_OK");
         var productRepository = new ProductRepository(context);
 
         var product = new Product
@@ -135,5 +135,19 @@ public class ProductTests
 
         // Assert
         Assert.AreEqual(product, result[0]);
+    }
+    
+    [TestMethod]
+    public void GetProducts_NoProducts_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("GetProducts_NoProducts_Ok");
+        var productRepository = new ProductRepository(context);
+
+        // Act
+        var result = productRepository.GetProducts();
+
+        // Assert
+        Assert.AreEqual(0, result.Count);
     }
 }
