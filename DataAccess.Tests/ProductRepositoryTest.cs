@@ -368,7 +368,8 @@ public class ProductTests
     }
     
     [TestMethod]
-    public void SoftDelete_IncorrectId_Null()
+    [ExpectedException(typeof(ArgumentException), "Product with id -1 not found")]
+    public void SoftDelete_IncorrectId_FAIL()
     {
         // Arrange
         var context = CreateDbContext("SoftDelete_IncorrectId_Null");
@@ -386,11 +387,8 @@ public class ProductTests
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
-
+        
         // Act
-        var result = productRepository.SoftDelete(product.Id + 1);
-
-        // Assert
-        Assert.IsNull(result);
+        productRepository.SoftDelete(-1);
     }
 }
