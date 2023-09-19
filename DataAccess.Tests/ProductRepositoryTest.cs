@@ -35,6 +35,29 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product, result);
     }
+    [TestMethod]
+    public void AddProduct_AddProductTwice_Fail()
+    {
+        // Arrange
+        var context = CreateDbContext("AddProduct_CorrectProduct_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+
+        // Act
+        productRepository.AddProduct(product);
+
+        // Assert
+        Assert.ThrowsException<ArgumentException>(() => productRepository.AddProduct(product));
+    }
     
     [TestMethod]
     public void GetProduct_CorrectId_OK()
