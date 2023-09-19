@@ -20,9 +20,9 @@ public class ProductRepository : IProductRepository
         return product;
     }
     
-    public Product? GetProduct(int Id)
+    public Product? GetProduct(int id)
     {
-        return _context.Set<Product>().Find(Id);
+        return _context.Set<Product>().Find(id);
     }
 
 }
