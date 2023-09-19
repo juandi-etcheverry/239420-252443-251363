@@ -75,4 +75,28 @@ public class ProductLogicTest
         // Assert
         Assert.AreEqual(products, result);
     }
+    
+    [TestMethod]
+    public void GetProducts_SoftDeleted_OK()
+    {
+        // Arrange
+        var p1 = new Product { Name = "Test", Price = 420, Description = "Test Description"};
+        var p2 = new Product { Name = "Test2", Price = 69, Description = "Test Description2", IsDeleted = true};
+        var products = new List<Product>
+        {
+            p1,
+            p2
+        };
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProducts(It.IsAny<Func<Product, bool>>()))
+            .Returns(products);
+        var logic = new ProductLogic(mock.Object);
+        
+        // Act
+        var result = logic.GetProducts();
+        products.Remove(p2);
+        
+        // Assert
+        Assert.AreEqual(products, result);
+    }
 }

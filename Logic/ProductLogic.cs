@@ -22,7 +22,7 @@ public class ProductLogic : IProductLogic
     
     public List<Product> GetProducts()
     {
-        return _productRepository.GetProducts();
+        return _productRepository.GetProducts(p => p.IsDeleted == false);
     }
     
 }
