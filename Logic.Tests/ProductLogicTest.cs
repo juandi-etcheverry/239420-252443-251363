@@ -99,4 +99,20 @@ public class ProductLogicTest
         // Assert
         Assert.AreEqual(products, result);
     }
+    
+    [TestMethod]
+    public void GetProducts_Empty_OK()
+    {
+        // Arrange
+        var products = new List<Product>();
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProducts(It.IsAny<Func<Product, bool>>())).Returns(products);
+        var logic = new ProductLogic(mock.Object);
+        
+        // Act
+        var result = logic.GetProducts();
+        
+        // Assert
+        Assert.AreEqual(products, result);
+    }
 }
