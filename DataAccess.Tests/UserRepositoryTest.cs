@@ -98,6 +98,31 @@ namespace DataAccess.Tests
             //Act
             userRepository.GetUser(-1);
         }
+
+        [TestMethod]
+        public void GetUser_SoftDeletedUsers_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_SoftDeletedUsers_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+                IsDeleted = true
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
+            //Act
+            var result = userRepository.GetUser(user.Id);
+
+            //Assert
+            Assert.AreEqual(user, result);
+        }
+
     }
 }
 
