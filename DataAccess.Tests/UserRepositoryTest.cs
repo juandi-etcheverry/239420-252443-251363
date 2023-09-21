@@ -55,6 +55,29 @@ namespace DataAccess.Tests
             Assert.ThrowsException<ArgumentException>(() => userRepository.AddUser(user));
         }
 
+        [TestMethod]
+        public void GetUser_CorrectId_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_CorrectId_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331"
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
+            //Act
+            var result = userRepository.GetUser(user.Id);
+
+            //Assert
+            Assert.AreEqual(user, result);
+        }
+
 
     }
 }
