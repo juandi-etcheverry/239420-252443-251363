@@ -46,6 +46,27 @@ namespace Logic.Tests
 			//Act
 			var result = logic.GetUser(user.Id);
         }
-	}
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with id 1 not found")]
+		public void GetUser_SoftDeleted_FAIL()
+		{
+			//Arrange
+			var user = new User
+			{
+				Email = "userTest@gmail.com",
+				Role = Role.Comprador,
+				Address = "Ejido 1234",
+				IsDeleted = true
+            };
+            var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+			mock.Setup(x => x.GetUser(user.Id)).Returns(user);
+			var logic = new UserLogic(mock.Object);
+
+			//Act
+			var result = logic.GetUser(user.Id);
+        }
+
+    }
 }
 
