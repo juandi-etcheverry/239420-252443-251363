@@ -123,6 +123,29 @@ namespace DataAccess.Tests
             Assert.AreEqual(user, result);
         }
 
+        [TestMethod]
+        public void SoftDelete_CorrectId_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("SoftDelete_CorrectId_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+                IsDeleted = false
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
+            //Act
+            var result = userRepository.SoftDelete(user.Id);
+
+            //Assert
+            Assert.AreEqual(true, user.IsDeleted);
+        }
     }
 }
 

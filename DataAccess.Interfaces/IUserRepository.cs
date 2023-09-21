@@ -6,6 +6,7 @@ namespace DataAccess.Interfaces
 	{
 		public User AddUser(User user);
 		public User GetUser(int id);
+		public User SoftDelete(int id);
 	}
 }
 
