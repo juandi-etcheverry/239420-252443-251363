@@ -146,6 +146,28 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(true, result.IsDeleted);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with id -1 not found")]
+        public void SoftDelete_IncorrectId_FAIL()
+        {
+            //Arrange
+            var context = CreateDbContext("SoftDelete_IncorrectId_Null");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+                IsDeleted = false
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
+            //Act
+            userRepository.SoftDelete(-1);
+        }
     }
 }
 
