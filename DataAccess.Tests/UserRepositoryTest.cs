@@ -78,7 +78,26 @@ namespace DataAccess.Tests
             Assert.AreEqual(user, result);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with id -1 not found")]
+        public void GetUser_IncorrectId_Null()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_IncorrectId_Null");
+            var userRepository = new UserRepository(context);
 
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331"
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
+            //Act
+            userRepository.GetUser(-1);
+        }
     }
 }
 
