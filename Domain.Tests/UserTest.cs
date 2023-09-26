@@ -56,5 +56,18 @@ namespace Domain.Tests
                 Address = "Ejido 1234"
             };
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User address can't be empty")]
+        public void NewUser_AddressEmpty_FAIL()
+        {
+            var user = new User
+            {
+                Email = "user@test.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = ""
+            };
+        }
     }
 }

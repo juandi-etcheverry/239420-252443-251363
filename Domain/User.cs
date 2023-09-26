@@ -28,8 +28,19 @@ namespace Domain
                 _password = value;
             }
         }
-		public Role Role { get; set; }
-		public string Address { get; set; }
+        private string _address;
+
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                ValidateUser.ValidateAddress(value);
+                _address = value;
+            }
+        }
+        public Role Role { get; set; }
+		
         public bool IsDeleted { get; set; } = false;
     }
 }
