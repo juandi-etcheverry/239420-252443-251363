@@ -27,6 +27,7 @@ namespace Controller.Test
             SignupRequest request = new SignupRequest()
             {
                 Email = "user1@gmail.com",
+                Address = "Miramar 1223",
                 Password = "Password123",
                 PasswordConfirmation = "Password123"
             };
