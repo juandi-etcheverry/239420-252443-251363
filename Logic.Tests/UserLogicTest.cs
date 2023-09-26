@@ -1,6 +1,7 @@
 ﻿using System;
 using DataAccess.Interfaces;
 using Domain;
+using Logic.Interfaces;
 using Moq;
 namespace Logic.Tests
 {
@@ -65,6 +66,32 @@ namespace Logic.Tests
 
 			//Act
 			var result = logic.GetUser(user.Id);
+        }
+
+		[TestMethod]
+		public void AdminDeleteUser_OK()
+		{
+			//Arrange
+			var buyer = new User
+			{
+				Email = "buyerTest@gmail.com",
+				Role = Role.Comprador,
+				Address = "Ejido 1234",
+			};
+            var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+			mock.Setup(x => x.SoftDeleteUser(buyer.Id)).Returns((int id) => {
+				buyer.IsDeleted = true;
+				//buyer.Id = id;
+				return buyer;
+			});
+            var logic = new UserLogic(mock.Object);
+            logic.AddUser(buyer);
+
+            //Act
+            var result = logic.SoftDeleteUser(buyer.Id);
+			
+			//Assert
+			Assert.AreEqual(result.IsDeleted, true);
         }
 
     }

@@ -26,7 +26,7 @@ namespace DataAccess
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
 			return user;
         }
-		public User SoftDelete(int id)
+		public User SoftDeleteUser(int id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");

@@ -142,7 +142,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            var result = userRepository.SoftDelete(user.Id);
+            var result = userRepository.SoftDeleteUser(user.Id);
 
             //Assert
             Assert.AreEqual(true, result.IsDeleted);
@@ -167,7 +167,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            userRepository.SoftDelete(-1);
+            userRepository.SoftDeleteUser(-1);
         }
     }
 }

@@ -12,13 +12,22 @@ namespace Logic
 		{
 			_userRepository = userRepository;
 		}
-
 		public User GetUser(int id)
 		{
 			var user = _userRepository.GetUser(id);
 			if(user.IsDeleted) throw new ArgumentException($"User with id {id} not found");
 			return user;
         }
+		public User SoftDeleteUser(int id)
+		{
+			var user = _userRepository.SoftDeleteUser(id);
+			return user;
+		}
+		public User AddUser(User user)
+		{
+			var result = _userRepository.AddUser(user);
+			return result;
+		}
 	}
 }
 
