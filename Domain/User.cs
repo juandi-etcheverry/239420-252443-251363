@@ -8,16 +8,26 @@ namespace Domain
 	public class User
 	{
 		public Guid Id { get; private set; }
+        private string _email;
 		public string Email
         {
-            get => Email;
+            get => _email;
             set
             {
                 ValidateUser.ValidateEmail(value);
-                Email = value;
+                _email = value;
             }
         }
-		public string Password { get; set; }
+        private string _password;
+		public string Password
+        {
+            get => _password;
+            set
+            {
+                ValidateUser.ValidatePassword(value);
+                _password = value;
+            }
+        }
 		public Role Role { get; set; }
 		public string Address { get; set; }
         public bool IsDeleted { get; set; } = false;

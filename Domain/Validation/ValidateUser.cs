@@ -16,6 +16,11 @@ namespace Domain.Validation
             if (!IsValidEmail(email)) throw new ArgumentException("User email format is incorrect");
         }
 
+        internal static void ValidatePassword(string password)
+        {
+            if (string.IsNullOrEmpty(password)) throw new ArgumentException("User password can't be empty");
+        }
+
         private static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
