@@ -1,5 +1,4 @@
 ﻿using ApiModels.Requests.Users;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Users
