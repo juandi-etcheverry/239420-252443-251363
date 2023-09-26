@@ -16,7 +16,7 @@ namespace Domain.Tests
                 Role = Role.Comprador,
                 Address = "Ejido 1234"
             };
-        }
+        }   
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "User email format is incorrect")]

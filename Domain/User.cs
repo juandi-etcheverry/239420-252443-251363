@@ -28,8 +28,8 @@ namespace Domain
                 _password = value;
             }
         }
-        private string _address;
 
+        private string _address;
         public string Address
         {
             get => _address;

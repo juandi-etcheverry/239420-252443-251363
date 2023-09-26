@@ -3,10 +3,12 @@ using ApiModels.Responses.Users;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 
 
 namespace WebApi.Controllers.Users
 {
+
     [Route("api/signup")]
     [ApiController]
     public class SignupController : ControllerBase
@@ -26,3 +28,4 @@ namespace WebApi.Controllers.Users
         }
     }
 }
+
