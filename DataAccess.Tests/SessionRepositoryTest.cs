@@ -75,9 +75,46 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreNotEqual(sessionResult1.Id, sessionResult2.Id);
         }
-        
-        
-        
-        
+
+        [TestMethod]
+        public void AddSession_AddTwoSessionsDifferentUser_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("AddSession_AddTwoSessionsDifferentUser_OK");
+            var sessionRepository = new SessionRepository(context);
+            var userRepository = new UserRepository(context);
+
+            var user1 = new User
+            {
+                Email = "test1@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+            var userResult1 = userRepository.AddUser(user1);
+
+            var user2 = new User
+            {
+                Email = "test2@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+            var userResult2 = userRepository.AddUser(user2);
+
+            var session1 = new SessionToken
+            {
+                User = userResult1
+            };
+            var sessionResult1 = sessionRepository.AddSessionToken(session1);
+
+            //Act
+            var session2 = new SessionToken
+            {
+                User = userResult2
+            };
+            var sessionResult2 = sessionRepository.AddSessionToken(session2);
+
+            //Assert
+            Assert.AreNotEqual(sessionResult1.Id, sessionResult2.Id);
+        }
     }
 }
