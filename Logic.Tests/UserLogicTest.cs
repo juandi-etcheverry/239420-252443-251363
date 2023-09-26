@@ -2,6 +2,8 @@
 using DataAccess.Interfaces;
 using Domain;
 using Moq;
+using TypeHelper;
+
 namespace Logic.Tests
 {
 	[TestClass]
@@ -14,6 +16,7 @@ namespace Logic.Tests
 			var user = new User
 			{
 				Email = "userTest@gmail.com",
+				Password = "Password123",
 				Role = Role.Comprador,
 				Address = "Ejido 1234"
 			};
@@ -36,6 +39,7 @@ namespace Logic.Tests
             var user = new User
             {
                 Email = "userTest@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Ejido 1234"
             };
@@ -55,6 +59,7 @@ namespace Logic.Tests
 			var user = new User
 			{
 				Email = "userTest@gmail.com",
+				Password = "Password123",
 				Role = Role.Comprador,
 				Address = "Ejido 1234",
 				IsDeleted = true

@@ -24,6 +24,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -45,6 +46,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -66,6 +68,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -80,7 +83,7 @@ namespace DataAccess.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), "User with id -1 not found")]
+        [ExpectedException(typeof(ArgumentException), "User with random id not found")]
         public void GetUser_IncorrectId_Null()
         {
             //Arrange
@@ -90,6 +93,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -97,7 +101,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            userRepository.GetUser(-1);
+            userRepository.GetUser(Guid.NewGuid());
         }
 
         [TestMethod]
@@ -110,6 +114,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
                 IsDeleted = true
@@ -134,6 +139,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
                 IsDeleted = false
@@ -159,6 +165,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
                 IsDeleted = false
@@ -167,7 +174,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            userRepository.SoftDelete(-1);
+            userRepository.SoftDelete(Guid.NewGuid());
         }
     }
 }
