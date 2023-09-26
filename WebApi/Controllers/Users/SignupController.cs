@@ -1,7 +1,7 @@
-﻿using ApiModels.Requests;
+﻿using ApiModels.Requests.Users;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Users
 {
     [Route("api/signup")]
     [ApiController]

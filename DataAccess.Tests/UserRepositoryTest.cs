@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using TypeHelper;
 
 namespace DataAccess.Tests
 {

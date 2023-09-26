@@ -1,4 +1,6 @@
 ﻿using System;
+using TypeHelper;
+
 namespace Domain
 {
 	public class User
@@ -9,11 +11,6 @@ namespace Domain
 		public string Address { get; set; }
 		public bool IsDeleted { get; set; }
 	}
-    public enum Role
-    {
-        Comprador = 1,
-        Administrador = 2
-    };
 }
 
 
