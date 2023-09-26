@@ -17,5 +17,18 @@ namespace Domain.Tests
                 Address = "Ejido 1234"
             };
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User email format is incorrect")]
+        public void NewUser_WrongEmailFormat_FAIL()
+        {
+            var user = new User
+            {
+                Email = "userEmail",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Ejido 1234"
+            };
+        }
     }
 }
