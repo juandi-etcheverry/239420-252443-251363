@@ -13,11 +13,16 @@ namespace Logic
 			_userRepository = userRepository;
 		}
 
-		public User GetUser(int id)
+		public User GetUser(Guid id)
 		{
 			var user = _userRepository.GetUser(id);
 			if(user.IsDeleted) throw new ArgumentException($"User with id {id} not found");
 			return user;
+        }
+
+        public User CreateUser(User user)
+        {
+			return _userRepository.AddUser(user);
         }
 	}
 }
