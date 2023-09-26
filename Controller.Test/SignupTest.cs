@@ -4,6 +4,7 @@ using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TypeHelper;
+using WebApi.Controllers.Users;
 
 namespace Controller.Test
 {
@@ -14,11 +15,12 @@ namespace Controller.Test
         public void Signup_Controller_OK()
         {
             // Arrange
-            var mock = new Mock<IUserLogic>();
-            mock.Setup(x => x.CreateUser(It.IsAny<User>())).Returns(new User()
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.CreateUser(It.IsAny<User>())).Returns(new User()
             {
                 Address = "Miramar 1223",
                 Email = "testing@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador
             });
 
@@ -35,8 +37,7 @@ namespace Controller.Test
             var response = controller.Signup(request) as ObjectResult;
 
             // Assert
-            Assert.IsInstanceOfType(response, typeof(StatusCodeResult));
             Assert.AreEqual(response.StatusCode, 201);
         }
-    }
+    }   
 }

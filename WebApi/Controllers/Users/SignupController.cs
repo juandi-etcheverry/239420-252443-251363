@@ -1,5 +1,9 @@
 ﻿using ApiModels.Requests.Users;
+using ApiModels.Responses.Users;
+using Domain;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebApi.Controllers.Users
 {
@@ -7,10 +11,18 @@ namespace WebApi.Controllers.Users
     [ApiController]
     public class SignupController : ControllerBase
     {
+        private IUserLogic _userLogic;
+        public SignupController(IUserLogic userLogic)
+        {
+            _userLogic = userLogic;
+        }
+
         [HttpPost]
         public IActionResult Signup([FromBody] SignupRequest request)
         {
-            return StatusCode(201, "User created successfully");
+            User newUser = _userLogic.CreateUser(request.ToEntity());
+            var response = new SignupResponse() { Message = "User created successfully" };
+            return StatusCode(201, response);
         }
     }
 }

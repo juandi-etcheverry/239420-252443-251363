@@ -20,13 +20,13 @@ namespace DataAccess
 			_context.SaveChanges();
 			return user;
 		}
-		public User GetUser(int id)
+		public User GetUser(Guid id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
 			return user;
         }
-		public User SoftDelete(int id)
+		public User SoftDelete(Guid id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
