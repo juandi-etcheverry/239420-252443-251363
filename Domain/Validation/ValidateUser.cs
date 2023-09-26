@@ -19,6 +19,7 @@ namespace Domain.Validation
         internal static void ValidatePassword(string password)
         {
             if (string.IsNullOrEmpty(password)) throw new ArgumentException("User password can't be empty");
+            if(password.Length < 5) throw new ArgumentException("User password must be at least 5 characters");
         }
 
         private static bool IsValidEmail(string email)

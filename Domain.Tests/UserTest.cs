@@ -43,5 +43,18 @@ namespace Domain.Tests
                 Address = "Ejido 1234"
             };
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User password must be at least 5 characters")]
+        public void NewUser_PasswordTooShort_FAIL()
+        {
+            var user = new User
+            {
+                Email = "user@test.com",
+                Password = "1234",
+                Role = Role.Comprador,
+                Address = "Ejido 1234"
+            };
+        }
     }
 }
