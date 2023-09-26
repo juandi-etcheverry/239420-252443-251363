@@ -6,5 +6,6 @@ namespace DataAccess.Interfaces
     {
         public SessionToken AddSessionToken(SessionToken session);
         public List<SessionToken> GetUserSessions(User user);
+        public SessionToken GetSessionToken(Guid id);
     }
 }

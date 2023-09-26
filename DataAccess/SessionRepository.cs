@@ -24,4 +24,11 @@ public class SessionRepository : ISessionRepository
         var result =_context.Set<SessionToken>().Where(s => s.User.Id == user.Id);
         return result.ToList();
     }
+    
+    public SessionToken GetSessionToken(Guid id)
+    {
+        var session = _context.Set<SessionToken>().Find(id);
+        if (session == null) throw new ArgumentException($"Session with id {id} not found");
+        return session;
+    }
 }

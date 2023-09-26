@@ -116,5 +116,34 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreNotEqual(sessionResult1.Id, sessionResult2.Id);
         }
+
+        [TestMethod]
+        public void GetSession_CorrectId_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("GetSession_CorrectId");
+            var sessionRepository = new SessionRepository(context);
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+           context.Set<User>().Add(user);
+           context.SaveChanges();
+           
+            var session = new SessionToken
+            {
+                User = user
+            };
+            context.Set<SessionToken>().Add(session);
+            context.SaveChanges();
+            
+            //Act
+            var result = sessionRepository.GetSessionToken(session.Id);
+            
+            //Assert
+            Assert.AreEqual(session, result);
+        }
     }
 }
