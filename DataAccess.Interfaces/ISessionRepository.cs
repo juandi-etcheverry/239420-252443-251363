@@ -5,5 +5,6 @@ namespace DataAccess.Interfaces
     public interface ISessionRepository
     {
         public SessionToken AddSessionToken(SessionToken session);
+        public List<SessionToken> GetUserSessions(User user);
     }
 }

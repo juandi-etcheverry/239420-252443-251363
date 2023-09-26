@@ -19,4 +19,9 @@ public class SessionRepository : ISessionRepository
         _context.SaveChanges();
         return session;
     }
+    public List<SessionToken> GetUserSessions(User user)
+    {
+        var result =_context.Set<SessionToken>().Where(s => s.User.Id == user.Id);
+        return result.ToList();
+    }
 }

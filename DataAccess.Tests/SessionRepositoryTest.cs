@@ -41,5 +41,43 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(sessionResult.User.Id, userResult.Id);
         }
+
+        [TestMethod]
+        public void AddSession_AddTwoSessionsSameUser_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("AddSession_AddTwoSessionsSameUser_OK");
+            var sessionRepository = new SessionRepository(context);
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+            var userResult = userRepository.AddUser(user);
+
+            var session1 = new SessionToken
+            {
+                User = userResult
+            };
+            var sessionResult1 = sessionRepository.AddSessionToken(session1);
+
+            var session2 = new SessionToken
+            {
+                User = userResult
+            };
+            
+            //Act
+            var sessionResult2 = sessionRepository.AddSessionToken(session2);
+            
+            //Assert
+            Assert.AreNotEqual(sessionResult1.Id, sessionResult2.Id);
+        }
+        
+        
+        
+        
     }
 }

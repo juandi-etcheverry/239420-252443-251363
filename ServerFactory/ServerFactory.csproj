@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj" />
       <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     </ItemGroup>
 
