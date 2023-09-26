@@ -98,5 +98,34 @@ namespace Controller.Test
 
             Assert.AreEqual(400, response.StatusCode);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User email can't be empty")]
+        public void Signup_Controller_NoPassword_FAIL()
+        {
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.CreateUser(It.IsAny<User>())).Returns(new User()
+            {
+                Email = "test@test.com",
+                Address = "Miramar 1223",
+                Password = "",
+                Role = Role.Comprador
+            });
+
+            SignupRequest request = new SignupRequest()
+            {
+                Email = "user1@gmail.com",
+                Address = "Miramar 1223",
+                Password = "Password123",
+                PasswordConfirmation = "Password123"
+            };
+
+            var controller = new SignupController(mock.Object);
+
+            var response = controller.Signup(request) as ObjectResult;
+
+
+            Assert.AreEqual(400, response.StatusCode);
+        }
     }   
 }
