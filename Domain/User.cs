@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection.Metadata.Ecma335;
+using Domain.Validation;
 using TypeHelper;
 
 namespace Domain
@@ -12,7 +13,7 @@ namespace Domain
             get => Email;
             set
             {
-                ValidateEmail(value);
+                ValidateUser.ValidateEmail(value);
                 Email = value;
             }
         }
@@ -20,11 +21,6 @@ namespace Domain
 		public Role Role { get; set; }
 		public string Address { get; set; }
         public bool IsDeleted { get; set; } = false;
-
-        private void ValidateEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email)) throw new ArgumentException("User email can't be empty");
-        }
     }
 }
 
