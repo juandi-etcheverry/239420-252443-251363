@@ -19,16 +19,18 @@ public class SessionRepository : ISessionRepository
         _context.SaveChanges();
         return session;
     }
-    public List<SessionToken> GetUserSessions(User user)
-    {
-        var result =_context.Set<SessionToken>().Where(s => s.User.Id == user.Id);
-        return result.ToList();
-    }
     
     public SessionToken GetSessionToken(Guid id)
     {
         var session = _context.Set<SessionToken>().Find(id);
         if (session == null) throw new ArgumentException($"Session not found");
         return session;
+    }
+
+    public void DeleteSession(Guid id)
+    {
+        var session = GetSessionToken(id);
+        _context.Set<SessionToken>().Remove(session);
+        _context.SaveChanges();
     }
 }

@@ -172,6 +172,33 @@ namespace DataAccess.Tests
             sessionRepository.GetSessionToken(Guid.NewGuid());
         }
 
-        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), $"Session not found")]
+        public void GetSession_Deleted_Null()
+        {
+            //Arrange
+            var context = CreateDbContext("GetSession_Deleted_Null");
+            var sessionRepository = new SessionRepository(context);
+            
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+            
+            var session = new SessionToken
+            {
+                User = user
+            };
+            context.Set<SessionToken>().Add(session);
+            context.SaveChanges();
+            
+            //Act
+            sessionRepository.DeleteSession(session.Id);
+            sessionRepository.GetSessionToken(session.Id);
+        }
     }
 }
