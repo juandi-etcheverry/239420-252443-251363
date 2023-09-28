@@ -1,7 +1,6 @@
 ﻿using System;
 using DataAccess.Interfaces;
 using Domain;
-using Logic.Interfaces;
 using Moq;
 using TypeHelper;
 
