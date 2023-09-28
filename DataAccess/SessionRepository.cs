@@ -28,7 +28,7 @@ public class SessionRepository : ISessionRepository
     public SessionToken GetSessionToken(Guid id)
     {
         var session = _context.Set<SessionToken>().Find(id);
-        if (session == null) throw new ArgumentException($"Session with id {id} not found");
+        if (session == null) throw new ArgumentException($"Session not found");
         return session;
     }
 }

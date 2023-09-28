@@ -145,5 +145,33 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(session, result);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), $"Session not found")]
+        public void GetSession_IncorrectId_Null()
+        {
+            //Arrange
+            var context = CreateDbContext("GetSession_IncorrectId_Null");
+            var sessionRepository = new SessionRepository(context);
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Role = Role.Comprador,
+                Address = "Cuareim 1234",
+            };
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+            
+            var session = new SessionToken
+            {
+                User = user
+            };
+            context.Set<SessionToken>().Add(session);
+            context.SaveChanges();
+            //Act
+            sessionRepository.GetSessionToken(Guid.NewGuid());
+        }
+
+        
     }
 }
