@@ -32,13 +32,13 @@ namespace WebApi.Controllers.Users
 
 
         [HttpDelete]
-        public IActionResult DeleteUser([FromRoute] string id)
+        public IActionResult DeleteUser([FromRoute] Guid id)
         {
             return StatusCode(200, "User deleted successfully");
         }
 
         [HttpPut]
-        public IActionResult UpdateUser([FromRoute] string id, [FromBody] UpdateUserRequest request)
+        public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
         {
             return StatusCode(200, "User updated successfully");
         }

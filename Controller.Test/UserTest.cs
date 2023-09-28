@@ -34,5 +34,25 @@ namespace Controller.Test
 
             Assert.AreEqual(200, response.StatusCode);
         }
+
+        [TestMethod]
+        public void DeleteUserAsAdmin_OK()
+        {
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.DeleteUser(It.IsAny<Guid>())).Returns(new User()
+            {
+                Email = "testing@gmail.com",
+                Address = "Miramar 1223",
+                Password = "Password123",
+                Role = Role.Comprador,
+                IsDeleted = true
+            });
+
+            var controller = new UsersController(mock.Object);
+
+            var response = controller.DeleteUser(new Guid()) as ObjectResult;
+
+            Assert.AreEqual(200, response.StatusCode);
+        }
     }
 }
