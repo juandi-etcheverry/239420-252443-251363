@@ -24,6 +24,11 @@ namespace Logic
         {
 			return _userRepository.AddUser(user);
         }
-	}
+
+        public User DeleteUser(Guid id)
+        {
+			return _userRepository.SoftDelete(id);
+        }
+    }
 }
 

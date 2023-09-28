@@ -6,6 +6,7 @@ namespace Logic.Interfaces
 	{
 		User GetUser(Guid id);
 		User CreateUser(User user);
-	}
+        User DeleteUser(Guid id);
+    }
 }
 
