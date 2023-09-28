@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Users
 {
-    [Route("users")]
+    [Route("api/users")]
     [ApiController]
     public class CreateUserController : ControllerBase
     {
