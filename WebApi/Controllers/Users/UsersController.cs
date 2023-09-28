@@ -34,7 +34,15 @@ namespace WebApi.Controllers.Users
         [HttpDelete]
         public IActionResult DeleteUser([FromRoute] Guid id)
         {
-            return StatusCode(200, "User deleted successfully");
+            User user = _userLogic.DeleteUser(id);
+            var response = new DeleteUserResponse()
+            {
+               Email = user.Email,
+               Address = user.Address,
+               Role = user.Role,
+            };
+
+            return StatusCode(200, response);
         }
 
         [HttpPut]
