@@ -200,5 +200,20 @@ namespace DataAccess.Tests
             sessionRepository.DeleteSession(session.Id);
             sessionRepository.GetSessionToken(session.Id);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), $"Session must have a user")]
+        public void AddSession_InvalidUser_FAIL()
+        {
+            //Arrange
+            var context = CreateDbContext("AddSession_InvalidUser_FAIL");
+            var sessionRepository = new SessionRepository(context);
+            var session = new SessionToken
+            {
+                User = null
+            };
+            //Act
+            var sessionResult = sessionRepository.AddSessionToken(session);
+        }
     }
 }

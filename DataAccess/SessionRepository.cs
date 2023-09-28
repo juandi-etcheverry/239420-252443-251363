@@ -15,6 +15,7 @@ public class SessionRepository : ISessionRepository
     }
     public SessionToken AddSessionToken(SessionToken session)
     {
+        if (session.User == null) throw new ArgumentException("Session must have a user");
         _context.Set<SessionToken>().Add(session);
         _context.SaveChanges();
         return session;
