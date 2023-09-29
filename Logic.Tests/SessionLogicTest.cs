@@ -96,6 +96,31 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(result, session);
     }
+    [TestMethod]
+    public void AddSession_RepeatedSession_OK()
+    {
+        //Arrange
+        var user = new User
+        {
+            Email = "test@gmail.com",
+            Role = Role.Comprador,
+            Address = "Cuareim 1234",
+        };
+        var session = new SessionToken
+        {
+            User = user
+        };
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
+        var logic = new SessionTokenLogic(mock.Object);
 
+        var result1 = logic.AddSessionToken(session);
+    
+        //Act
+        var result2 = logic.AddSessionToken(session);
+        
+        //Assert
+        Assert.AreEqual(result1, result2);
+    }
 
 }
