@@ -15,7 +15,6 @@ public class SessionRepository : ISessionRepository
     }
     public SessionToken AddSessionToken(SessionToken session)
     {
-        if (session.User == null) throw new ArgumentException("Session must have a user");
         _context.Set<SessionToken>().Add(session);
         _context.SaveChanges();
         return session;
@@ -25,6 +24,13 @@ public class SessionRepository : ISessionRepository
     {
         var session = _context.Set<SessionToken>().Find(id);
         if (session == null) throw new ArgumentException($"Session not found");
+        return session;
+    }
+
+    public SessionToken GetSessionToken(User user)
+    {
+        var session = _context.Set<SessionToken>().FirstOrDefault(s => s.User == user);
+        if (session == null) throw new ArgumentException($"User has no active session");
         return session;
     }
 

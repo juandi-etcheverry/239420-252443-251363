@@ -23,7 +23,7 @@ public class SessionLogicTest
             User = user
         };
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.GetSessionToken(session.Id)).Returns(session);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
 
         //Act
@@ -49,7 +49,7 @@ public class SessionLogicTest
             User = user
         };
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.GetSessionToken(session.Id)).Throws(new ArgumentException("Session  not found"));
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Throws(new ArgumentException("Session  not found"));
         var logic = new SessionTokenLogic(mock.Object);
 
         //Act
@@ -71,7 +71,7 @@ public class SessionLogicTest
             User = user
         };
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddSessionToken(session)).Returns(session);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
         
         //Act
@@ -82,16 +82,20 @@ public class SessionLogicTest
     }
     
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException), "Session must have a user")]
-    public void AddSession_NullUser_FAIL()
+    public void AddSession_NullUser_OK()
     {
         //Arrange
         var session = new SessionToken();
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddSessionToken(session)).Throws(new ArgumentException("Session must have a user"));
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
         
         //Act
         var result = logic.AddSessionToken(session);
+        
+        //Assert
+        Assert.AreEqual(result, session);
     }
+
+
 }

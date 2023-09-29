@@ -202,7 +202,6 @@ namespace DataAccess.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), $"Session must have a user")]
         public void AddSession_InvalidUser_FAIL()
         {
             //Arrange
@@ -214,6 +213,9 @@ namespace DataAccess.Tests
             };
             //Act
             var sessionResult = sessionRepository.AddSessionToken(session);
+            
+            //Assert
+            Assert.AreEqual(null, sessionResult.User);
         }
     }
 }
