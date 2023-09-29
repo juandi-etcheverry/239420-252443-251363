@@ -205,4 +205,34 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(false, result);
     }
+
+    [TestMethod]
+    public void AddUserToSession_ValidSession_OK()
+    {
+        //Arrange
+        var user = new User
+        {
+            Email = "test@test.com",
+            Address = "Cuareim 1234",
+            Role = Role.Comprador,
+            Password = "Password123"
+        };
+
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
+        mock.Setup(x => x.UpdateUserSessionToken(It.IsAny<Guid>(), It.IsAny<User>())).Returns(() =>
+        {
+            session.User = user;
+            return session;
+        });
+
+        var logic = new SessionTokenLogic(mock.Object);
+
+        //Act
+        var result = logic.AddUserToToken(new Guid(), user);
+
+        //Assert
+        Assert.AreEqual(session.User, result.User);
+    }
 }
