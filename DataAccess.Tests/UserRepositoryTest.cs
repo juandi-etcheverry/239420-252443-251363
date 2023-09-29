@@ -142,7 +142,6 @@ namespace DataAccess.Tests
                 Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
-                IsDeleted = false
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
@@ -168,13 +167,37 @@ namespace DataAccess.Tests
                 Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
-                IsDeleted = false
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
 
             //Act
             userRepository.SoftDelete(Guid.NewGuid());
+        }
+
+        [TestMethod]
+        public void UpdateUser_CorrectUser_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("UpdateUser_CorrectUser_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+            };
+
+            userRepository.AddUser(user);
+
+            var result = userRepository.UpdateUser(user.Id,
+                new User() { Address = "new Address", Email = "newEmail@gmail.com", Role = Role.Total });
+
+            Assert.AreEqual("new Address", result.Address);
+            Assert.AreEqual("newEmail@gmail.com", result.Email);
+            Assert.AreEqual(Role.Total, result.Role);
         }
     }
 }

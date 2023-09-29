@@ -48,7 +48,15 @@ namespace WebApi.Controllers.Users
         [HttpPut]
         public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
         {
-            return StatusCode(200, "User updated successfully");
+            User user = _userLogic.UpdateUser(id, request.ToEntity());
+            var response = new UpdateUserResponse()
+            {
+                Email = user.Email,
+                Address = user.Address,
+                Role = user.Role,
+            };
+
+            return StatusCode(200, response);
         }
     }
 }

@@ -29,6 +29,11 @@ namespace Logic
         {
 			return _userRepository.SoftDelete(id);
         }
+
+        public User UpdateUser(Guid id, User user)
+        {
+			return _userRepository.UpdateUser(id, user);
+        }
     }
 }
 

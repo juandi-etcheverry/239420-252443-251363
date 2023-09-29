@@ -34,6 +34,17 @@ namespace DataAccess
 			_context.SaveChanges();
 			return user;
         }
+
+        public User UpdateUser(Guid id , User user)
+        {
+            var userToModify = GetUser(id);
+			userToModify.Address = user.Address;
+			userToModify.Email = user.Email;
+			userToModify.Role = user.Role;
+            _context.Set<User>().Update(userToModify);
+            _context.SaveChanges();
+            return userToModify;
+        }
 	}
 }
 
