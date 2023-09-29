@@ -10,6 +10,7 @@ namespace DataAccess
         public DbSet<Color> Colors { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<SessionToken> SessionTokens { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
