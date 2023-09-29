@@ -18,10 +18,17 @@ public class SessionTokenLogic : ISessionTokenLogic
     }
     public SessionToken AddSessionToken(SessionToken session)
     {
-        var sessionExists = _sessionRepository.GetSessionToken(session.Id);
-        if (sessionExists != null) return sessionExists;
-        var newSession = _sessionRepository.AddSessionToken(session);
-        return newSession;
+        try
+        {
+            var sessionExists = _sessionRepository.GetSessionToken(session.Id);
+            return sessionExists;
+        }
+        catch (ArgumentException e)
+        {
+            var newSession = _sessionRepository.AddSessionToken(session);
+            return newSession;
+        }
+
     }
     public bool DeleteSessionToken(SessionToken session)
     {

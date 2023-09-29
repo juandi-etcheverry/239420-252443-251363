@@ -27,13 +27,6 @@ public class SessionRepository : ISessionRepository
         return session;
     }
 
-    public SessionToken GetSessionToken(User user)
-    {
-        var session = _context.Set<SessionToken>().FirstOrDefault(s => s.User == user);
-        if (session == null) throw new ArgumentException($"User has no active session");
-        return session;
-    }
-
     public void DeleteSession(Guid id)
     {
         var session = GetSessionToken(id);

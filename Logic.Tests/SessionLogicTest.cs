@@ -155,4 +155,21 @@ public class SessionLogicTest
         //Act
         var result = logic.DeleteSessionToken(session);
     }
+
+    [TestMethod]
+    public void AddSession_SessionNotFoundOK()
+    {
+        //Arrange
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Throws(new ArgumentException("Session  not found"));
+        mock.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(session);
+        var logic = new SessionTokenLogic(mock.Object);
+        
+        //Act
+        var result = logic.AddSessionToken(session);
+        
+        //Assert
+        Assert.AreEqual(session, result);
+    }
 }
