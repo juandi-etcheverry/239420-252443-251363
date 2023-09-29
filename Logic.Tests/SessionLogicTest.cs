@@ -142,4 +142,17 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(true, result);
     }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Session  not found")]
+    public void DeleteSession_InvalidSession_FAIL()
+    {
+        //Arrange
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup((x => x.DeleteSession(It.IsAny<Guid>()))).Throws(new ArgumentException("Session  not found"));
+        var logic = new SessionTokenLogic(mock.Object);
+
+        //Act
+        var result = logic.DeleteSessionToken(session);
+    }
 }
