@@ -45,6 +45,23 @@ namespace DataAccess
             _context.SaveChanges();
             return userToModify;
         }
-	}
+
+        public bool FindUser(string email)
+        {
+            User user;
+            try
+            {
+                user = _context.Set<User>().Where(u => u.Email == email).FirstOrDefault();
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
+            
+            if(user == null) return false;
+
+            return true;
+        }
+    }
 }
 
