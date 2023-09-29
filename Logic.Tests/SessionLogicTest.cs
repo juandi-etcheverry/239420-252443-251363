@@ -80,4 +80,18 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(session, result);
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Session must have a user")]
+    public void AddSession_NullUser_FAIL()
+    {
+        //Arrange
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.AddSessionToken(session)).Throws(new ArgumentException("Session must have a user"));
+        var logic = new SessionTokenLogic(mock.Object);
+        
+        //Act
+        var result = logic.AddSessionToken(session);
+    }
 }
