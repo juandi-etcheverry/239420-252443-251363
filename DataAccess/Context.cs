@@ -15,5 +15,13 @@ namespace DataAccess
         public Context(DbContextOptions options) : base(options)
         {
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess"));
+        //    }
+        //}
     }
 }

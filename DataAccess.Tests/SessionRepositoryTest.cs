@@ -25,6 +25,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -53,6 +54,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -87,6 +89,7 @@ namespace DataAccess.Tests
             var user1 = new User
             {
                 Email = "test1@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -95,6 +98,7 @@ namespace DataAccess.Tests
             var user2 = new User
             {
                 Email = "test2@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -126,6 +130,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -156,6 +161,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -183,6 +189,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };

@@ -24,6 +24,13 @@ namespace Controller.Test
                 Role = Role.Comprador
             });
 
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            var sessionToken = new SessionToken() { };
+
+            mockSession.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(sessionToken);
+            mockSession.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(sessionToken);
+
+
             SignupRequest request = new SignupRequest()
             {
                 Email = "user1@gmail.com",
@@ -32,13 +39,13 @@ namespace Controller.Test
                 PasswordConfirmation = "Password123"
             };
 
-            var controller = new SignupController(mock.Object);
+            var controller = new SignupController(mock.Object, mockSession.Object);
 
             // Act
-            var response = controller.Signup(request) as ObjectResult;
+            var response = controller.Signup(request, new Guid()) as ObjectResult;
 
             // Assert
-            Assert.AreEqual(response.StatusCode, 201);
+            Assert.AreEqual(201, response.StatusCode);
         }
 
         [TestMethod]
@@ -54,6 +61,18 @@ namespace Controller.Test
                 Role = Role.Comprador
             });
 
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            var sessionToken = new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "abc@test.com",
+                    Address = "Miramar 1223",
+                    Password = "Password123",
+                }
+            };
+            mockSession.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(sessionToken);
+
             SignupRequest request = new SignupRequest()
             {
                 Email = "user1@gmail.com",
@@ -62,11 +81,11 @@ namespace Controller.Test
                 PasswordConfirmation = "Password123"
             };
 
-            var controller = new SignupController(mock.Object);
+            var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request) as ObjectResult;
+            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
 
-            
+
             Assert.AreEqual(400, response.StatusCode);
         }
 
@@ -83,6 +102,18 @@ namespace Controller.Test
                 Role = Role.Comprador
             });
 
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            var sessionToken = new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "abc@test.com",
+                    Address = "Miramar 1223",
+                    Password = "Password123",
+                }
+            };
+            mockSession.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(sessionToken);
+
             SignupRequest request = new SignupRequest()
             {
                 Email = "user1@gmail.com",
@@ -91,9 +122,9 @@ namespace Controller.Test
                 PasswordConfirmation = "Password123"
             };
 
-            var controller = new SignupController(mock.Object);
+            var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request) as ObjectResult;
+            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
@@ -112,6 +143,18 @@ namespace Controller.Test
                 Role = Role.Comprador
             });
 
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            var sessionToken = new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "abc@test.com",
+                    Address = "Miramar 1223",
+                    Password = "Password123",
+                }
+            };
+            mockSession.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(sessionToken);
+
             SignupRequest request = new SignupRequest()
             {
                 Email = "user1@gmail.com",
@@ -120,12 +163,52 @@ namespace Controller.Test
                 PasswordConfirmation = "Password123"
             };
 
-            var controller = new SignupController(mock.Object);
+            var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request) as ObjectResult;
+            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
         }
-    }   
+
+        [TestMethod]
+        public void SignupController_AlreadyLoggedIn_FAIL()
+        {
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.CreateUser(It.IsAny<User>())).Returns(new User()
+            {
+                Email = "test@test.com",
+                Address = "Miramar 1223",
+                Password = "Password123",
+                Role = Role.Comprador
+            });
+
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            var sessionToken = new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "test@test.com",
+                    Address = "Miramar 1223",
+                    Password = "Password123",
+                }
+            };
+            mockSession.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(sessionToken);
+
+            SignupRequest request = new SignupRequest()
+            {
+                Email = "user1@gmail.com",
+                Address = "Miramar 1223",
+                Password = "Password123",
+                PasswordConfirmation = "Password123"
+            };
+
+            var controller = new SignupController(mock.Object, mockSession.Object);
+
+            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
+
+
+            Assert.AreEqual(400, response.StatusCode);
+        }
+    }
 }

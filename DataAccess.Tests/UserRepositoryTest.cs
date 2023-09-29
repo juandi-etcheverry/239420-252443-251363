@@ -147,7 +147,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            var result = userRepository.SoftDeleteUser(user.Id);
+            var result = userRepository.SoftDelete(user.Id);
 
             //Assert
             Assert.AreEqual(true, result.IsDeleted);
