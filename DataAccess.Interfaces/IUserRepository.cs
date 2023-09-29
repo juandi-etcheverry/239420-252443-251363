@@ -8,6 +8,7 @@ namespace DataAccess.Interfaces
 		public User GetUser(Guid id);
 		public User SoftDelete(Guid id);
 		public User UpdateUser(Guid id, User user);
+		public bool FindUser(string email);
 	}
 }
 

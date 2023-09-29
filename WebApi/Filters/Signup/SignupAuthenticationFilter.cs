@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace WebApi.Filters.Signup
-{
+{  //NO LO ESTAMOS USANDO XQ NO PUDIMOS INYECTAR LA DEPENDENCIA
     public class SignupAuthenticationFilter : Attribute, IResultFilter
     {
         private readonly ISessionTokenLogic _sessionTokenLogic;

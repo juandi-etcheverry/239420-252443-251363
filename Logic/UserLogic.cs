@@ -22,7 +22,9 @@ namespace Logic
 
         public User CreateUser(User user)
         {
-			return _userRepository.AddUser(user);
+			bool exists = _userRepository.FindUser(user.Email);
+            if (exists) throw new ArgumentException($"User with email {user.Email} already exists");
+            return _userRepository.AddUser(user);
         }
 
         public User DeleteUser(Guid id)
