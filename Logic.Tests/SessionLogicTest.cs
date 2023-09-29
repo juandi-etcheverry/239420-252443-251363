@@ -172,4 +172,20 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(session, result);
     }
+
+    [TestMethod]
+    public void SessionExists_ValidSession_OK()
+    {
+        //Arrange
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.SessionTokenExists(It.IsAny<Guid>())).Returns(true);
+        var logic = new SessionTokenLogic(mock.Object);
+        
+        //Act
+        var result = logic.SessionTokenExists(session.Id);
+        
+        //Assert
+        Assert.AreEqual(true, result);
+    }
 }

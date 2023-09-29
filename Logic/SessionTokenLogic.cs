@@ -35,5 +35,14 @@ public class SessionTokenLogic : ISessionTokenLogic
         _sessionRepository.DeleteSession(session.Id);
         return true;
     }
-    
+
+    public bool SessionTokenExists(Guid id)
+    {
+        return _sessionRepository.SessionTokenExists(id);
+    }
+
+    public SessionToken AddUserToToken(Guid id, User user)
+    {
+        return _sessionRepository.UpdateUserSessionToken(id, user);
+    }
 }

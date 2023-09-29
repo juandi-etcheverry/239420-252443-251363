@@ -34,4 +34,20 @@ public class SessionRepository : ISessionRepository
         _context.Set<SessionToken>().Remove(session);
         _context.SaveChanges();
     }
+
+    public bool SessionTokenExists(Guid id)
+    {
+        var session = _context.Set<SessionToken>().Find(id);
+        if (session == null) return false;
+        return true;
+    }
+
+    public SessionToken UpdateUserSessionToken(Guid id, User user)
+    {
+        var sessionToModify = GetSessionToken(id);
+        sessionToModify.User = user;
+        _context.Set<SessionToken>().Update(sessionToModify);
+        _context.SaveChanges();
+        return sessionToModify;
+    }
 }
