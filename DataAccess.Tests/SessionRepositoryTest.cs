@@ -224,5 +224,27 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(null, sessionResult.User);
         }
+
+        [TestMethod]
+        public void SessionExists_OK()
+        {
+            var context = CreateDbContext("SessionExists_OK");
+            var sessionRepository = new SessionRepository(context);
+
+            SessionToken token = sessionRepository.AddSessionToken(new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "aaa@test.com",
+                    Address = "Cuareim 1234",
+                    Password = "Password123",
+                    Role = Role.Comprador
+                }
+            });
+
+            bool exists = sessionRepository.SessionTokenExists(token.Id);
+
+            Assert.IsTrue(exists);
+        }
     }
 }
