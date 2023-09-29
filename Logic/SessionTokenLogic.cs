@@ -16,5 +16,10 @@ public class SessionTokenLogic : ISessionTokenLogic
         var session = _sessionRepository.GetSessionToken(id);
         return session;
     }
-
+    public SessionToken AddSessionToken(SessionToken session)
+    {
+        var newSession = _sessionRepository.AddSessionToken(session);
+        return newSession;
+    }
+    
 }
