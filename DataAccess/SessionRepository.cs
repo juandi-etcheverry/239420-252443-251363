@@ -37,6 +37,7 @@ public class SessionRepository : ISessionRepository
     public void DeleteSession(Guid id)
     {
         var session = GetSessionToken(id);
+        if (session == null) throw new ArgumentException($"Session not found");
         _context.Set<SessionToken>().Remove(session);
         _context.SaveChanges();
     }

@@ -123,4 +123,23 @@ public class SessionLogicTest
         Assert.AreEqual(result1, result2);
     }
 
+    [TestMethod]
+    public void DeleteSession_ValidSession_OK()
+    {
+        //Arrange
+        var session = new SessionToken();
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
+        mock.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(session);
+        mock.Setup(x => x.DeleteSession(It.IsAny<Guid>()));
+        var logic = new SessionTokenLogic(mock.Object);
+
+        logic.AddSessionToken(session);
+        
+        //Act
+        var result = logic.DeleteSessionToken(session);
+        
+        //Assert
+        Assert.AreEqual(true, result);
+    }
 }

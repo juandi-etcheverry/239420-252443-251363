@@ -23,5 +23,10 @@ public class SessionTokenLogic : ISessionTokenLogic
         var newSession = _sessionRepository.AddSessionToken(session);
         return newSession;
     }
+    public bool DeleteSessionToken(SessionToken session)
+    {
+        _sessionRepository.DeleteSession(session.Id);
+        return true;
+    }
     
 }
