@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using TypeHelper;
 
-namespace WebApi.Filters.CreateUser
+namespace WebApi.Filters.User
 {
-    public class CreateUserAuthenticationFilter : Attribute, IActionFilter
+    public class UserAuthenticationFilter : Attribute, IActionFilter
     {
 
         private IUserLogic _userLogic;
         private ISessionTokenLogic _sessionTokenLogic;
 
-        public CreateUserAuthenticationFilter() {}
+        public UserAuthenticationFilter() {}
 
-        public CreateUserAuthenticationFilter(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+        public UserAuthenticationFilter(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
         {
             _userLogic = userLogic;
             _sessionTokenLogic = sessionTokenLogic;
@@ -30,7 +30,7 @@ namespace WebApi.Filters.CreateUser
 
             if (!CookieValidation.AuthExists(header))
             {
-                context.Result = new ObjectResult("You must be logged in to create a user")
+                context.Result = new ObjectResult( new {Message = "You must be logged in to perform this action!" })
                 {
                     StatusCode = 401
                 };
@@ -43,7 +43,7 @@ namespace WebApi.Filters.CreateUser
                 {
                     context.Result = new ObjectResult(new
                     {
-                        Message = "You must be an admin to create a new user!"
+                        Message = "You must be an admin to perform this action!"
                     })
                     {
                         StatusCode = 403

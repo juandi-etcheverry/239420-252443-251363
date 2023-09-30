@@ -1,7 +1,8 @@
 using ServerFactory;
 using WebApi.Filters;
-using WebApi.Filters.CreateUser;
+using WebApi.Filters.User;
 using WebApi.Filters.Signup;
+using WebApi.Filters.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<CustomExceptionFilter>();
 });
-builder.Services.AddScoped<CreateUserAuthenticationFilter>();
+builder.Services.AddScoped<UserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();
 
 var app = builder.Build();
