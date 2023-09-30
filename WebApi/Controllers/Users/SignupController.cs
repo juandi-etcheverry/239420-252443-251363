@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Users
             {
                 tokenResponse = _sessionTokenLogic.AddSessionToken(new SessionToken() { User = newUser });
             }
-
+ 
             Response.Cookies.Append("Authorization", tokenResponse.Id.ToString(), new CookieOptions(){ HttpOnly = true});
 
             var response = new SignupResponse() { Message = "User created successfully" };
