@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Domain;
 using DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,14 @@ namespace DataAccess
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
 			return user;
         }
-		public User SoftDelete(Guid id)
+
+        public User GetUser(string email, string password)
+        {
+            var user = _context.Set<User>().Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+            if(user is null) throw new ArgumentException($"User with email {email} not found");
+            return user;
+        }
+        public User SoftDelete(Guid id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");

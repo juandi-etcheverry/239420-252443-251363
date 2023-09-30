@@ -220,6 +220,30 @@ namespace DataAccess.Tests
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void GetUser_EmailAndPassword_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_EmailAndPassword_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "testing@gmial.com",
+                Address = "Mercedes 2331",
+                Password = "Password123",
+                Role = Role.Comprador
+            };
+
+            userRepository.AddUser(user);
+
+            //Act
+            var result = userRepository.GetUser(user.Email, user.Password);
+
+            //Assert
+            Assert.AreEqual(user, result);
+        }
     }
 }
 
