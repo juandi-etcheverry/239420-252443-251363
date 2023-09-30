@@ -9,11 +9,11 @@ namespace WebApi.Filters
         {
             if (context.Exception is ArgumentException)
             {
-                context.Result = new BadRequestObjectResult(context.Exception.Message);
+                context.Result = new BadRequestObjectResult( new { Message = context.Exception.Message});
             }
             else
             {
-                context.Result = new ObjectResult(context.Exception.Message)
+                context.Result = new ObjectResult(new { Message = context.Exception.Message})
                 {
                     StatusCode = 500
                 };
