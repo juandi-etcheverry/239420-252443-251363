@@ -119,5 +119,26 @@ namespace Logic.Tests
             Assert.AreEqual(user, result);
         }
 
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetUser_IncorrectEmailAndPassword_FAIL()
+        {
+            var user = new User
+            {
+                Email = "userTest@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Ejido 1234",
+            };
+
+            var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+            mock.Setup(x => x.GetUser(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new ArgumentException());
+            
+            var logic = new UserLogic(mock.Object);
+
+            var result = logic.GetUser("anyEmail@test.com", "anyPassword");
+        }
     }
 }
