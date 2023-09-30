@@ -20,9 +20,8 @@ public class CreateUserController : ControllerBase
     }
 
     [HttpPost]
-    [CreateUserAuthenticationFilter]
-    public IActionResult CreateUser([FromBody] CreateUserRequest request,
-        [FromHeader(Name = "Authorization")] Guid auth)
+    [ServiceFilter(typeof(CreateUserAuthenticationFilter))]
+    public IActionResult CreateUser([FromBody] CreateUserRequest request)
     {
         try
         {

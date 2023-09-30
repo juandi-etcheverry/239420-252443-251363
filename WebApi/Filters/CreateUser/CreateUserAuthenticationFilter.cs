@@ -7,7 +7,7 @@ using TypeHelper;
 
 namespace WebApi.Filters.CreateUser
 {
-    public class CreateUserAuthenticationFilter : Attribute, IAuthorizationFilter
+    public class CreateUserAuthenticationFilter : Attribute, IActionFilter
     {
 
         private IUserLogic _userLogic;
@@ -21,11 +21,14 @@ namespace WebApi.Filters.CreateUser
             _sessionTokenLogic = sessionTokenLogic;
         }
 
-        public void OnAuthorization(AuthorizationFilterContext context)
-        {
-            string header = context.HttpContext.Request.Headers["Authorization"];
+        public void OnActionExecuted(ActionExecutedContext context) { }
 
-            if (header is null)
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
+            string header = context.HttpContext.Request.Headers["Cookie"];
+
+
+            if (!CookieValidation.AuthExists(header))
             {
                 context.Result = new ObjectResult("You must be logged in to create a user")
                 {
@@ -34,11 +37,14 @@ namespace WebApi.Filters.CreateUser
             }
             else
             {
-                Guid auth = Guid.Parse(header);
-                if(!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Administrador ||
-                   _sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Total))
+                Guid auth = CookieValidation.GetAuthFromHeader(header);
+                if (!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Administrador ||
+                      _sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Total))
                 {
-                    context.Result = new ObjectResult("You must be an admin to create a new user!")
+                    context.Result = new ObjectResult(new
+                    {
+                        Message = "You must be an admin to create a new user!"
+                    })
                     {
                         StatusCode = 403
                     };
