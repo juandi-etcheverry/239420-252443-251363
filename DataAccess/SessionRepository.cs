@@ -22,7 +22,7 @@ public class SessionRepository : ISessionRepository
     
     public SessionToken GetSessionToken(Guid id)
     {
-        var session = _context.Set<SessionToken>().Find(id);
+        var session = _context.Set<SessionToken>().Include(s => s.User).FirstOrDefault(x => x.Id==id);
         if (session == null) throw new ArgumentException($"Session not found");
         return session;
     }
