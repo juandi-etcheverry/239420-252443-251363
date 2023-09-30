@@ -99,5 +99,25 @@ namespace Logic.Tests
             Assert.AreEqual(user, result);
         }
 
+        [TestMethod]
+        public void GetUser_ValidEmailAndPassword_OK()
+        {
+            var user = new User
+            {
+                Email = "userTest@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Ejido 1234",
+            };
+
+            var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+            mock.Setup(x => x.GetUser(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
+            var logic = new UserLogic(mock.Object);
+
+            var result = logic.GetUser("anyEmail@test.com", "anyPassword");
+
+            Assert.AreEqual(user, result);
+        }
+
     }
 }

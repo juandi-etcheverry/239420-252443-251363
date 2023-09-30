@@ -20,6 +20,13 @@ namespace Logic
 			return user;
         }
 
+        public User GetUser(string email, string password)
+        {
+            var user = _userRepository.GetUser(email, password);
+            if (user.IsDeleted) throw new ArgumentException($"User with email {email} not found");
+            return user;
+        }
+
         public User CreateUser(User user)
         {
 			bool exists = _userRepository.FindUser(user.Email);
