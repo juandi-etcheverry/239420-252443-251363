@@ -4,6 +4,7 @@ using DataAccess;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using TypeHelper;
 using WebApi.Filters;
 using WebApi.Filters.Signup;
 
@@ -25,15 +26,31 @@ namespace WebApi.Controllers.Users
 
         
         [HttpPost]
-        public IActionResult Signup([FromBody] SignupRequest request, [FromHeader(Name = "Authorization")] Guid auth)
+        [ServiceFilter(typeof(SignupAuthenticationFilter))]
+        public IActionResult Signup([FromBody] SignupRequest request, [FromHeader(Name = "Cookie")] string? header)
         {
-            if (_sessionTokenLogic.GetSessionToken(auth).User != null)
+            User newUser = _userLogic.CreateUser(request.ToEntity());
+
+            SessionToken tokenResponse;
+            if (CookieValidation.AuthExists(header))
             {
-                 var responseError = new SignupResponse() { Message = "You are already logged in !" };
-                 return StatusCode(400, responseError);
+                Guid auth = CookieValidation.GetAuthFromHeader(header);
+                if (_sessionTokenLogic.SessionTokenExists(auth))
+                {
+                    tokenResponse = _sessionTokenLogic.AddUserToToken(auth, newUser);
+                }
+                else
+                {
+                    tokenResponse = _sessionTokenLogic.AddSessionToken(new SessionToken() { User = newUser });
+                }
+            }
+            else
+            {
+                tokenResponse = _sessionTokenLogic.AddSessionToken(new SessionToken() { User = newUser });
             }
 
-            User newUser = _userLogic.CreateUser(request.ToEntity());
+            Response.Cookies.Append("Authorization", tokenResponse.Id.ToString(), new CookieOptions(){ HttpOnly = true});
+
             var response = new SignupResponse() { Message = "User created successfully" };
             return StatusCode(201, response);
         }
