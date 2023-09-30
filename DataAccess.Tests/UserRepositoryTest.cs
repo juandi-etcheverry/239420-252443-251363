@@ -244,6 +244,31 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(user, result);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetUser_EmailAndPassword_FAIL()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_EmailAndPassword_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "testing@gmial.com",
+                Address = "Mercedes 2331",
+                Password = "Password123",
+                Role = Role.Comprador
+            };
+
+            userRepository.AddUser(user);
+
+            //Act
+            var result = userRepository.GetUser("notTheEmail@test.com", "notThePassword");
+
+            //Assert
+            Assert.AreEqual(user, result);
+        }
     }
 }
 
