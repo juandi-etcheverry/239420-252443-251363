@@ -18,10 +18,9 @@ namespace WebApi.Filters.Logout
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            string header = context.HttpContext.Request.Headers["Cookie"];
-            if (CookieValidation.AuthExists(header))
+            if (context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
             {
-                var auth = CookieValidation.GetAuthFromHeader(header);
+                var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
                 if (_sessionTokenLogic.SessionTokenExists(auth))
                 {
                     if (_sessionTokenLogic.GetSessionToken(auth).User is null)

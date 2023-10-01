@@ -42,7 +42,7 @@ namespace Controller.Test
             var controller = new SignupController(mock.Object, mockSession.Object);
 
             // Act
-            var response = controller.Signup(request, new Guid()) as ObjectResult;
+            var response = controller.Signup(request) as ObjectResult;
 
             // Assert
             Assert.AreEqual(201, response.StatusCode);
@@ -83,7 +83,7 @@ namespace Controller.Test
 
             var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
+            var response = controller.Signup(request) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
@@ -124,7 +124,7 @@ namespace Controller.Test
 
             var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
+            var response = controller.Signup(request) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
@@ -165,7 +165,7 @@ namespace Controller.Test
 
             var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
+            var response = controller.Signup(request) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
@@ -205,7 +205,7 @@ namespace Controller.Test
 
             var controller = new SignupController(mock.Object, mockSession.Object);
 
-            var response = controller.Signup(request, sessionToken.Id) as ObjectResult;
+            var response = controller.Signup(request) as ObjectResult;
 
 
             Assert.AreEqual(400, response.StatusCode);
