@@ -250,7 +250,7 @@ namespace DataAccess.Tests
         public void GetUser_EmailAndPassword_FAIL()
         {
             //Arrange
-            var context = CreateDbContext("GetUser_EmailAndPassword_OK");
+            var context = CreateDbContext("GetUser_EmailAndPassword_FAIL");
             var userRepository = new UserRepository(context);
 
             var user = new User
