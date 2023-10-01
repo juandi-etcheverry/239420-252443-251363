@@ -31,7 +31,7 @@ namespace DataAccess
         public User GetUser(string email, string password)
         {
             var user = _context.Set<User>().Where(u => u.Email == email && u.Password == password).FirstOrDefault();
-            if(user is null) throw new ArgumentException($"User with email {email} not found");
+            if(user is null) throw new UnauthorizedAccessException($"User with email {email} not found");
             return user;
         }
         public User SoftDelete(Guid id)

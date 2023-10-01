@@ -23,7 +23,7 @@ namespace Logic
         public User GetUser(string email, string password)
         {
             var user = _userRepository.GetUser(email, password);
-            if (user.IsDeleted) throw new ArgumentException($"User with email {email} not found");
+            if (user.IsDeleted) throw new UnauthorizedAccessException($"User with email {email} not found");
             return user;
         }
 

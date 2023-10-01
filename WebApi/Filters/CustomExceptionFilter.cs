@@ -11,6 +11,11 @@ namespace WebApi.Filters
             {
                 context.Result = new BadRequestObjectResult( new { Message = context.Exception.Message});
             }
+
+            if (context.Exception is UnauthorizedAccessException)
+            {
+                context.Result = new UnauthorizedObjectResult(new { Message = context.Exception.Message});
+            }
             else
             {
                 context.Result = new ObjectResult(new { Message = context.Exception.Message})
