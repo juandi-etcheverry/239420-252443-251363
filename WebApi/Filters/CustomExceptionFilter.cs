@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Authentication;
 
 namespace WebApi.Filters
 {
@@ -15,6 +16,14 @@ namespace WebApi.Filters
             if (context.Exception is UnauthorizedAccessException)
             {
                 context.Result = new UnauthorizedObjectResult(new { Message = context.Exception.Message});
+            }
+
+            if (context.Exception is InvalidCredentialException)
+            {
+                context.Result = new ObjectResult(new { Message = context.Exception.Message})
+                {
+                    StatusCode = 403
+                };
             }
             else
             {

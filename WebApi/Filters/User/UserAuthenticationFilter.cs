@@ -1,4 +1,5 @@
-﻿using ApiModels.Responses.Users;
+﻿using System.Security.Authentication;
+using ApiModels.Responses.Users;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +31,7 @@ namespace WebApi.Filters.User
 
             if (!CookieValidation.AuthExists(header))
             {
-                context.Result = new ObjectResult( new {Message = "You must be logged in to perform this action!" })
-                {
-                    StatusCode = 401
-                };
+                throw new UnauthorizedAccessException("You must be logged in to perform this action!");
             }
             else
             {
@@ -41,13 +39,7 @@ namespace WebApi.Filters.User
                 if (!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Administrador ||
                       _sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Total))
                 {
-                    context.Result = new ObjectResult(new
-                    {
-                        Message = "You must be an admin to perform this action!"
-                    })
-                    {
-                        StatusCode = 403
-                    };
+                    throw new InvalidCredentialException("You must be an administrator to perform this action!");
                 }
             }
         }

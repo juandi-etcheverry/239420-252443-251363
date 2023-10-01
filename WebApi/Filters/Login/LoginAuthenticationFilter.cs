@@ -26,13 +26,7 @@ namespace WebApi.Filters.Login
 
                 if (_sessionTokenLogic.GetSessionToken(auth).User != null)
                 {
-                    context.Result = new ObjectResult(new
-                    {
-                        Message = "You are already logged in!"
-                    })
-                    {
-                        StatusCode = 400
-                    };
+                    throw new ArgumentException("You are already logged in!");
                 }
             }
         }
