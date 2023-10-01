@@ -27,14 +27,14 @@ namespace WebApi.Controllers.Users
         
         [HttpPost]
         [ServiceFilter(typeof(SignupAuthenticationFilter))]
-        public IActionResult Signup([FromBody] SignupRequest request, [FromHeader(Name = "Cookie")] string? header)
+        public IActionResult Signup([FromBody] SignupRequest request)
         {
             User newUser = _userLogic.CreateUser(request.ToEntity());
 
             SessionToken tokenResponse;
-            if (CookieValidation.AuthExists(header))
+            if (Request.Cookies.ContainsKey("Authorization"))
             {
-                Guid auth = CookieValidation.GetAuthFromHeader(header);
+                Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
                 if (_sessionTokenLogic.SessionTokenExists(auth))
                 {
                     tokenResponse = _sessionTokenLogic.AddUserToToken(auth, newUser);

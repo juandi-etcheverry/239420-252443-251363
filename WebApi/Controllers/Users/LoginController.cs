@@ -1,5 +1,6 @@
 ﻿using ApiModels.Requests.Users;
 using ApiModels.Responses.Users;
+using DataAccess;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -24,15 +25,14 @@ public class LoginController : ControllerBase
 
     [HttpPost]
     [ServiceFilter(typeof(LoginAuthenticationFilter))]
-    public IActionResult Login([FromBody] LoginRequest request, [FromHeader(Name = "Cookie")] string? header)
+    public IActionResult Login([FromBody] LoginRequest request)
     {
         var user = _userLogic.GetUser(request.Email, request.Password);
 
-        //let copilot cook
         SessionToken tokenResponse;
-        if (CookieValidation.AuthExists(header))
+        if (Request.Cookies.ContainsKey("Authorization"))
         {
-            var auth = CookieValidation.GetAuthFromHeader(header);
+            Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
                 tokenResponse = _sessionTokenLogic.AddUserToToken(auth, user);
             else
