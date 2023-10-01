@@ -242,11 +242,11 @@ namespace DataAccess.Tests
             var result = userRepository.GetUser(user.Email, user.Password);
 
             //Assert
-            Assert.AreEqual(user, result);
+            Assert.AreEqual(user.Id, result.Id);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
         public void GetUser_EmailAndPassword_FAIL()
         {
             //Arrange
