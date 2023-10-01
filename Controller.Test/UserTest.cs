@@ -21,16 +21,23 @@ namespace Controller.Test
         [TestMethod]
         public void GetUserAsAdmin_OK()
         {
-            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
-            mock.Setup(logic => logic.GetUser(It.IsAny<Guid>())).Returns(new User()
+            User user = new User()
             {
                 Email = "testing@gmail.com",
                 Address = "Miramar 1223",
                 Password = "Password123",
                 Role = Role.Comprador
+            };
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.GetUser(It.IsAny<Guid>())).Returns(user);
+
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            mockSession.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(new SessionToken()
+            {
+                User = user
             });
 
-            var controller = new UsersController(mock.Object);
+            var controller = new UsersController(mock.Object, mockSession.Object);
 
             var response = controller.GetUser(new Guid()) as ObjectResult;
 
@@ -40,17 +47,24 @@ namespace Controller.Test
         [TestMethod]
         public void DeleteUserAsAdmin_OK()
         {
-            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
-            mock.Setup(logic => logic.DeleteUser(It.IsAny<Guid>())).Returns(new User()
+            User user = new User()
             {
                 Email = "testing@gmail.com",
                 Address = "Miramar 1223",
                 Password = "Password123",
                 Role = Role.Comprador,
                 IsDeleted = true
+            };
+            var mock = new Mock<IUserLogic>(MockBehavior.Strict);
+            mock.Setup(logic => logic.DeleteUser(It.IsAny<Guid>())).Returns(user);
+
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+            mockSession.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(new SessionToken()
+            {
+                User = user
             });
 
-            var controller = new UsersController(mock.Object);
+            var controller = new UsersController(mock.Object, mockSession.Object);
 
             var response = controller.DeleteUser(new Guid()) as ObjectResult;
 
@@ -83,11 +97,12 @@ namespace Controller.Test
             {
                 Email = "noImporta@test.com",
                 Address = "Mercedes 2331",
+                Role = Role.Total,
                 Password = "NoSoySeguro123",
                 PasswordConfirmation = "NoSoySeguro123"
             };
 
-            var response = controller.CreateUser(request, new Guid()) as ObjectResult;
+            var response = controller.CreateUser(request) as ObjectResult;
 
             Assert.AreEqual(201, response.StatusCode);
         }
