@@ -1,6 +1,7 @@
 using ServerFactory;
 using WebApi.Filters;
 using WebApi.Filters.Login;
+using WebApi.Filters.Logout;
 using WebApi.Filters.User;
 using WebApi.Filters.Signup;
 using WebApi.Filters.User;
@@ -21,6 +22,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddScoped<UserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();
 builder.Services.AddScoped<LoginAuthenticationFilter>();
+builder.Services.AddScoped<LogoutAuthenticationFilter>();
 
 var app = builder.Build();
 
