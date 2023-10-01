@@ -22,7 +22,7 @@ public class SessionRepository : ISessionRepository
     
     public SessionToken GetSessionToken(Guid id)
     {
-        var session = _context.Set<SessionToken>().Find(id);
+        var session = _context.Set<SessionToken>().Include(s => s.User).FirstOrDefault(x => x.Id==id);
         if (session == null) throw new ArgumentException($"Session not found");
         return session;
     }
@@ -33,5 +33,21 @@ public class SessionRepository : ISessionRepository
         if (session == null) throw new ArgumentException($"Session not found");
         _context.Set<SessionToken>().Remove(session);
         _context.SaveChanges();
+    }
+
+    public bool SessionTokenExists(Guid id)
+    {
+        var session = _context.Set<SessionToken>().Find(id);
+        if (session == null) return false;
+        return true;
+    }
+
+    public SessionToken UpdateUserSessionToken(Guid id, User user)
+    {
+        var sessionToModify = GetSessionToken(id);
+        sessionToModify.User = user;
+        _context.Set<SessionToken>().Update(sessionToModify);
+        _context.SaveChanges();
+        return sessionToModify;
     }
 }

@@ -20,6 +20,7 @@ public static class ServiceExtension
         services.AddScoped<IProductLogic, ProductLogic>();
         services.AddScoped<IUserLogic, UserLogic>();
         services.AddScoped<ISessionTokenLogic, SessionTokenLogic>();
+
         return services;
     }
 }

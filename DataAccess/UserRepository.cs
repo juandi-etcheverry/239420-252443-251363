@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Domain;
 using DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +21,20 @@ namespace DataAccess
 			_context.SaveChanges();
 			return user;
 		}
-		public User GetUser(int id)
+		public User GetUser(Guid id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
 			return user;
         }
-		public User SoftDeleteUser(int id)
+
+        public User GetUser(string email, string password)
+        {
+            var user = _context.Set<User>().Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+            if(user is null) throw new UnauthorizedAccessException($"User with email {email} not found");
+            return user;
+        }
+        public User SoftDelete(Guid id)
 		{
 			var user = _context.Set<User>().Find(id);
 			if(user == null) throw new ArgumentException($"User with id {id} not found");
@@ -34,6 +42,34 @@ namespace DataAccess
 			_context.SaveChanges();
 			return user;
         }
-	}
+
+        public User UpdateUser(Guid id , User user)
+        {
+            var userToModify = GetUser(id);
+			userToModify.Address = user.Address;
+			userToModify.Email = user.Email;
+			userToModify.Role = user.Role;
+            _context.Set<User>().Update(userToModify);
+            _context.SaveChanges();
+            return userToModify;
+        }
+
+        public bool FindUser(string email)
+        {
+            User user;
+            try
+            {
+                user = _context.Set<User>().Where(u => u.Email == email).FirstOrDefault();
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
+            
+            if(user == null) return false;
+
+            return true;
+        }
+    }
 }
 

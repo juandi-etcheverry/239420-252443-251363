@@ -1,4 +1,11 @@
 using ServerFactory;
+using WebApi.Filters;
+using WebApi.Filters.Login;
+using WebApi.Filters.Logout;
+using WebApi.Filters.User;
+using WebApi.Filters.Signup;
+using WebApi.Filters.User;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +15,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration.GetConnectionString("DA2DB"));
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CustomExceptionFilter>();
+});
+builder.Services.AddScoped<UserAuthenticationFilter>();
+builder.Services.AddScoped<SignupAuthenticationFilter>();
+builder.Services.AddScoped<LoginAuthenticationFilter>();
+builder.Services.AddScoped<LogoutAuthenticationFilter>();
 
 var app = builder.Build();
 

@@ -1,31 +1,65 @@
 ﻿using ApiModels.Requests.Users;
+using ApiModels.Responses.Users;
 using Domain;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters.User;
 
 namespace WebApi.Controllers.Users
 {
-    [Route("users/{id}")]
+    [Route("/api/users/{id}")]
     [ApiController]
+    [ServiceFilter(typeof(UserAuthenticationFilter))]
     public class UsersController : ControllerBase
     {
 
-        [HttpGet]
-        public IActionResult GetUser([FromRoute] string id, [FromQuery] GetUserRequest request)
+        private IUserLogic _userLogic;
+        private ISessionTokenLogic _sessionTokenLogic;
+        public UsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
         {
-            return StatusCode(200, "Users retrieved successfully");
+            _userLogic = userLogic;
+            _sessionTokenLogic = sessionTokenLogic;
         }
 
+        [HttpGet]
+        public IActionResult GetUser([FromRoute] Guid id)
+        {
+            User user = _userLogic.GetUser(id);
+            var response = new GetUserResponse()
+            {
+                Address = user.Address,
+                Email = user.Email,
+                Role = user.Role,
+            };
+            return StatusCode(200, response);
+        }
 
         [HttpDelete]
-        public IActionResult DeleteUser([FromRoute] string id)
+        public IActionResult DeleteUser([FromRoute] Guid id)
         {
-            return StatusCode(200, "User deleted successfully");
+            User user = _userLogic.DeleteUser(id);
+            var response = new DeleteUserResponse()
+            {
+               Email = user.Email,
+               Address = user.Address,
+               Role = user.Role,
+            };
+
+            return StatusCode(200, response);
         }
 
         [HttpPut]
-        public IActionResult UpdateUser([FromRoute] string id, [FromBody] UpdateUserRequest request)
+        public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
         {
-            return StatusCode(200, "User updated successfully");
+            User user = _userLogic.UpdateUser(id, request.ToEntity());
+            var response = new UpdateUserResponse()
+            {
+                Email = user.Email,
+                Address = user.Address,
+                Role = user.Role,
+            };
+
+            return StatusCode(200, response);
         }
     }
 }

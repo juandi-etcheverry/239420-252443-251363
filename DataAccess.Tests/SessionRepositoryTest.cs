@@ -25,6 +25,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -53,6 +54,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -68,10 +70,10 @@ namespace DataAccess.Tests
             {
                 User = userResult
             };
-            
+
             //Act
             var sessionResult2 = sessionRepository.AddSessionToken(session2);
-            
+
             //Assert
             Assert.AreNotEqual(sessionResult1.Id, sessionResult2.Id);
         }
@@ -87,6 +89,7 @@ namespace DataAccess.Tests
             var user1 = new User
             {
                 Email = "test1@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -95,6 +98,7 @@ namespace DataAccess.Tests
             var user2 = new User
             {
                 Email = "test2@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
@@ -126,22 +130,23 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
-           context.Set<User>().Add(user);
-           context.SaveChanges();
-           
+            context.Set<User>().Add(user);
+            context.SaveChanges();
+
             var session = new SessionToken
             {
                 User = user
             };
             context.Set<SessionToken>().Add(session);
             context.SaveChanges();
-            
+
             //Act
             var result = sessionRepository.GetSessionToken(session.Id);
-            
+
             //Assert
             Assert.AreEqual(session, result);
         }
@@ -156,12 +161,13 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
-            
+
             var session = new SessionToken
             {
                 User = user
@@ -179,23 +185,24 @@ namespace DataAccess.Tests
             //Arrange
             var context = CreateDbContext("GetSession_Deleted_Null");
             var sessionRepository = new SessionRepository(context);
-            
+
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Cuareim 1234",
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
-            
+
             var session = new SessionToken
             {
                 User = user
             };
             context.Set<SessionToken>().Add(session);
             context.SaveChanges();
-            
+
             //Act
             sessionRepository.DeleteSession(session.Id);
             sessionRepository.GetSessionToken(session.Id);
@@ -213,9 +220,57 @@ namespace DataAccess.Tests
             };
             //Act
             var sessionResult = sessionRepository.AddSessionToken(session);
-            
+
             //Assert
             Assert.AreEqual(null, sessionResult.User);
+        }
+
+        [TestMethod]
+        public void SessionExists_OK()
+        {
+            var context = CreateDbContext("SessionExists_OK");
+            var sessionRepository = new SessionRepository(context);
+
+            SessionToken token = sessionRepository.AddSessionToken(new SessionToken()
+            {
+                User = new User()
+                {
+                    Email = "aaa@test.com",
+                    Address = "Cuareim 1234",
+                    Password = "Password123",
+                    Role = Role.Comprador
+                }
+            });
+
+            bool exists = sessionRepository.SessionTokenExists(token.Id);
+
+            Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        public void UpdateUserSessionToken_OK()
+        {
+            var context = CreateDbContext("UpdateUserSessionToken_OK");
+            var sessionRepository = new SessionRepository(context);
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "testing@test.com",
+                Address = "Dot Net 1234",
+                Password = "Password123",
+                Role = Role.Comprador
+            };
+
+            var userResult = userRepository.AddUser(user);
+
+            var session = new SessionToken();
+
+            var sessionResult = sessionRepository.AddSessionToken(session);
+
+            var updatedSession = sessionRepository.UpdateUserSessionToken(sessionResult.Id, userResult);
+
+            Assert.AreEqual(userResult, updatedSession.User);
         }
     }
 }

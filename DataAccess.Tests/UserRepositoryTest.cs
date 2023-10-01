@@ -24,6 +24,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -45,6 +46,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -66,6 +68,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -80,7 +83,7 @@ namespace DataAccess.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), "User with id -1 not found")]
+        [ExpectedException(typeof(ArgumentException), "User with random id not found")]
         public void GetUser_IncorrectId_Null()
         {
             //Arrange
@@ -90,6 +93,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331"
             };
@@ -97,7 +101,7 @@ namespace DataAccess.Tests
             context.SaveChanges();
 
             //Act
-            userRepository.GetUser(-1);
+            userRepository.GetUser(Guid.NewGuid());
         }
 
         [TestMethod]
@@ -110,6 +114,7 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
                 IsDeleted = true
@@ -134,15 +139,15 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
-                IsDeleted = false
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
 
             //Act
-            var result = userRepository.SoftDeleteUser(user.Id);
+            var result = userRepository.SoftDelete(user.Id);
 
             //Assert
             Assert.AreEqual(true, result.IsDeleted);
@@ -159,15 +164,110 @@ namespace DataAccess.Tests
             var user = new User
             {
                 Email = "test@gmail.com",
+                Password = "Password123",
                 Role = Role.Comprador,
                 Address = "Mercedes 2331",
-                IsDeleted = false
             };
             context.Set<User>().Add(user);
             context.SaveChanges();
 
             //Act
-            userRepository.SoftDeleteUser(-1);
+            userRepository.SoftDelete(Guid.NewGuid());
+        }
+
+        [TestMethod]
+        public void UpdateUser_CorrectUser_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("UpdateUser_CorrectUser_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+            };
+
+            userRepository.AddUser(user);
+
+            var result = userRepository.UpdateUser(user.Id,
+                new User() { Address = "new Address", Email = "newEmail@gmail.com", Role = Role.Total });
+
+            Assert.AreEqual("new Address", result.Address);
+            Assert.AreEqual("newEmail@gmail.com", result.Email);
+            Assert.AreEqual(Role.Total, result.Role);
+        }
+
+        [TestMethod]
+        public void FindUser_OK_Test()
+        {
+            var context = CreateDbContext("FindUser_OK_Test");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+            };
+
+            userRepository.AddUser(user);
+
+            var result = userRepository.FindUser(user.Email);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GetUser_EmailAndPassword_OK()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_EmailAndPassword_OK");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "testing@gmial.com",
+                Address = "Mercedes 2331",
+                Password = "Password123",
+                Role = Role.Comprador
+            };
+
+            userRepository.AddUser(user);
+
+            //Act
+            var result = userRepository.GetUser(user.Email, user.Password);
+
+            //Assert
+            Assert.AreEqual(user.Id, result.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
+        public void GetUser_EmailAndPassword_FAIL()
+        {
+            //Arrange
+            var context = CreateDbContext("GetUser_EmailAndPassword_FAIL");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "testing@gmial.com",
+                Address = "Mercedes 2331",
+                Password = "Password123",
+                Role = Role.Comprador
+            };
+
+            userRepository.AddUser(user);
+
+            //Act
+            var result = userRepository.GetUser("notTheEmail@test.com", "notThePassword");
+
+            //Assert
+            Assert.AreEqual(user, result);
         }
     }
 }
