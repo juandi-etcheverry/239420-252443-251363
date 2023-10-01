@@ -23,16 +23,8 @@ public class CreateUserController : ControllerBase
     [ServiceFilter(typeof(UserAuthenticationFilter))]
     public IActionResult CreateUser([FromBody] CreateUserRequest request)
     {
-        try
-        {
-            var newUser = _userLogic.CreateUser(request.ToEntity());
-            var responseOk = new CreateUserResponse { Message = "User created successfully", User = newUser };
-            return StatusCode(201, responseOk);
-        }
-        catch (ArgumentException e)
-        {
-            var responseAlreadyExists = new CreateUserResponse { Message = e.Message };
-            return StatusCode(400, responseAlreadyExists);
-        }
+        var newUser = _userLogic.CreateUser(request.ToEntity());
+        var responseOk = new CreateUserResponse { Message = "User created successfully", User = newUser };
+        return StatusCode(201, responseOk);
     }
 }

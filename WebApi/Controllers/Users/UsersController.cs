@@ -24,25 +24,14 @@ namespace WebApi.Controllers.Users
         [HttpGet]
         public IActionResult GetUser([FromRoute] Guid id)
         {
-            try
+            User user = _userLogic.GetUser(id);
+            var response = new GetUserResponse()
             {
-                User user = _userLogic.GetUser(id);
-                var response = new GetUserResponse()
-                {
-                    Address = user.Address,
-                    Email = user.Email,
-                    Role = user.Role,
-                };
-                return StatusCode(200, response);
-            }
-            catch (ArgumentException e)
-            {
-                var response = new GetUserResponse()
-                {
-                    Message = e.Message,
-                };
-                return StatusCode(400, response);
-            }
+                Address = user.Address,
+                Email = user.Email,
+                Role = user.Role,
+            };
+            return StatusCode(200, response);
         }
 
         [HttpDelete]
