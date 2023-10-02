@@ -405,4 +405,14 @@ public class PromotionStrategiesTests
         //Assert
         Assert.AreEqual(0, result);
     }
+    
+    [TestMethod]
+    public void ThreeForTwo_EmptyList_OK()
+    {
+        var strategy = new ThreeForTwoPromotionStrategy();
+        var result = strategy.GetDiscount(new List<Product>());
+        Assert.AreEqual(0, result);
+    }
+    
+    
 }
