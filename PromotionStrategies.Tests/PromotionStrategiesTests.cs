@@ -457,4 +457,49 @@ public class PromotionStrategiesTests
         Assert.AreEqual(100, result);
         
     }
+
+
+    [TestMethod]
+    public void ThreeForTwo_DifferentCategoriesNoPromo_OK()
+    {
+        //Arrange
+        var strategy = new ThreeForTwoPromotionStrategy();
+        var c1 = new Category() { Name = "Shoe" };
+        var c2 = new Category() { Name = "Shirt" };
+
+        var product1 = new Product()
+        {
+            Price = 100,
+            Brand = new Brand() { Name = "Brand" },
+            Category = c2,
+            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
+            Name = "Product 1",
+        };
+
+        var product2 = new Product()
+        {
+            Price = 190,
+            Brand = new Brand() { Name = "Brand" },
+            Category = c1,
+            Name = "Product 2",
+            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
+        };
+
+        var product3 = new Product()
+        {
+            Price = 300,
+            Brand = new Brand() { Name = "Brand" },
+            Category = c2,
+            Name = "Product 3",
+            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
+        };
+
+        var products = new List<Product>() { product1, product2, product3 };
+
+        //Act
+        var result = strategy.GetDiscount(products);
+
+        //Assert
+        Assert.AreEqual(0, result);
+    }
 }
