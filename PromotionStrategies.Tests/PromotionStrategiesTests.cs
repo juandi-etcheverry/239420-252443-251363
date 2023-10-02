@@ -737,4 +737,68 @@ public class PromotionStrategiesTests
         //Assert
         Assert.AreEqual(0, result);
     }
+    
+    [TestMethod]
+    public void Fidelity_DifferentBrandsWithPromo_OK()
+    {
+        //Arrange
+        var strategy = new FidelityPromotionStrategy();
+
+        var b1 = new Brand()
+        {
+            Name = "Gucci"
+        };
+        var b2 = new Brand()
+        {
+            Name = "Nike"
+        };
+
+        var p1 = new Product()
+        {
+            Name = "P1",
+            Price = 10,
+            Brand = b1,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Bag"},
+            Description = "A ripoff Gucci Bag"
+        };
+        
+        var p2 = new Product()
+        {
+            Name = "P2",
+            Price = 90,
+            Brand = b2,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Shoe"},
+            Description = "Nike Sneakers"
+        };
+        
+        var p3 = new Product()
+        {
+            Name = "P3",
+            Price = 250,
+            Brand = b2,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Shoe"},
+            Description = "Collection Nikeys"
+        };
+
+        var p4 = new Product()
+        {
+            Name = "P4",
+            Price = 100,
+            Brand = b2,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Sandal"},
+            Description = "Nike sandals"
+        };
+
+        var products = new List<Product>() { p1, p2, p3, p4 };
+        
+        //Act
+        var result = strategy.GetDiscount(products);
+        
+        //Assert
+        Assert.AreEqual(190, result);
+    }
 }
