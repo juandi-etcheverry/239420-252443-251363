@@ -6,6 +6,8 @@ namespace PromotionStrategies;
 public class ThreeForTwoPromotionStrategy : IPromotionStrategy
 {
     private const float DiscountPercentage = 1f;
+    public string Name => "3x2 Category Promotion";
+
     public float GetDiscount(List<Product> products)
     {
         var filteredProducts = products.FindAll(p => !p.IsDeleted);

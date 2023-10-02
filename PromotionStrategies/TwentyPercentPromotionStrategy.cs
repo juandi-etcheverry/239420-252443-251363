@@ -5,6 +5,7 @@ namespace PromotionStrategies;
 
 public class TwentyPercentPromotionStrategy : IPromotionStrategy
 {
+    public string Name => "20% Promotion";
     private const float DiscountPercentage = 0.2f;    
     
     public float GetDiscount(List<Product> products)

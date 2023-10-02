@@ -9,6 +9,7 @@ namespace PromotionStrategies;
  */
 public class TotalLookPromotionStrategy : IPromotionStrategy
 {
+    public string Name => "Total Look Promotion";
     private const float DiscountPercentage = 0.5f;
 
     public float GetDiscount(List<Product> products)
