@@ -21,7 +21,12 @@ public class TotalLookPromotionStrategy : IPromotionStrategy
 
     private float GetFinalDiscountAmount(List<Product> products)
     {
-        return products.Max(p => p.Price) * DiscountPercentage;
+        var uniqueColors = products.SelectMany(p => p.Colors).Distinct().ToList();
+        var colorsWithAtLeastThreeProducts =
+            uniqueColors.FindAll(c => products.FindAll(p => p.Colors.Contains(c)).Count >= 3);
+        if (colorsWithAtLeastThreeProducts.Count == 0) return 0;
+        var validProducts = products.FindAll(p => p.Colors.Any(c => colorsWithAtLeastThreeProducts.Contains(c)));
+        return validProducts.Max(p => p.Price) * DiscountPercentage;
     }
 
 }

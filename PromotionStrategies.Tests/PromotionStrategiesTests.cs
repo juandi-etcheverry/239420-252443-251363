@@ -146,12 +146,16 @@ public class PromotionStrategiesTests
     {
         //Arrange
         var strategy = new TotalLookPromotionStrategy();
+
+        var c1 = new Color() { Name = "Red" };
+        var c2 = new Color() { Name = "Blue" };
+        
         var product1 = new Product()
         {
             Price = 100,
             Brand = new Brand() { Name = "Brand" },
             Category = new Category() { Name = "Category" },
-            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
+            Colors = new List<Color> { c1, c2 },
             Name = "Product 1",
         };
         
@@ -160,8 +164,8 @@ public class PromotionStrategiesTests
             Price = 190,
             Brand = new Brand() { Name = "Brand" },
             Category = new Category() { Name = "Category" },
-            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
             Name = "Product 2",
+            Colors = new List<Color> { c1, c2 },
         };
         
         var product3 = new Product()
@@ -169,11 +173,64 @@ public class PromotionStrategiesTests
             Price = 300,
             Brand = new Brand() { Name = "Brand" },
             Category = new Category() { Name = "    Category" },
-            Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } },
             Name = "Product 3",
+            Colors = new List<Color> { c1, c2 },
         };
         
         var products = new List<Product>() { product1, product2, product3 };
+        
+        //Act
+        var result = strategy.GetDiscount(products);
+        
+        //Assert
+        Assert.AreEqual(150, result);
+    }
+
+    [TestMethod]
+    public void TotalLook_DifferentColors_OK()
+    {
+        //Arrange
+        var strategy = new TotalLookPromotionStrategy();
+        var c1 = new Color() { Name = "Red" };
+        var c2 = new Color() { Name = "Blue" };
+        var c3 = new Color() { Name = "Green" };
+
+        var product1 = new Product()
+        {
+            Price = 100,
+            Brand = new Brand() { Name = "Brand" },
+            Category = new Category() { Name = "Category" },
+            Colors = new List<Color> { c1, c2 },
+            Name = "Product 1",
+        };
+
+        var product2 = new Product()
+        {
+            Price = 190,
+            Brand = new Brand() { Name = "Brand" },
+            Category = new Category() { Name = "Category" },
+            Colors = new List<Color> { c1,c2 },
+            Name = "Product 2",
+        };
+
+        var product3 = new Product()
+        {
+            Price = 300,
+            Brand = new Brand() { Name = "Brand" },
+            Category = new Category() { Name = "Category" },
+            Colors = new List<Color> { c1 },
+            Name = "Product 3",
+        };
+
+        var product4 = new Product()
+        {
+            Price = 420,
+            Brand = new Brand() { Name = "Brand" },
+            Category = new Category() { Name = "Category" },
+            Colors = new List<Color> { c3 },
+        };
+        
+        var products = new List<Product>() { product1, product2, product3, product4 };
         
         //Act
         var result = strategy.GetDiscount(products);
