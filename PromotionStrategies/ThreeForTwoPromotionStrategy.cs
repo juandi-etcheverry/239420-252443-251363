@@ -5,8 +5,10 @@ namespace PromotionStrategies;
 
 public class ThreeForTwoPromotionStrategy : IPromotionStrategy
 {
+    private const float DiscountPercentage = 1f;
     public float GetDiscount(List<Product> products)
     {
-        return 0;
+        if (products.Count < 3) return 0f;
+        return products.Min(p => p.Price) * DiscountPercentage;
     }
 }
