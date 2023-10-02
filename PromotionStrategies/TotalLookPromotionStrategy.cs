@@ -21,7 +21,7 @@ public class TotalLookPromotionStrategy : IPromotionStrategy
 
     private float GetFinalDiscountAmount(List<Product> products)
     {
-        return 0;
+        return products.Max(p => p.Price) * DiscountPercentage;
     }
 
 }
