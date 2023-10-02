@@ -623,4 +623,19 @@ public class PromotionStrategiesTests
         //Assert
         Assert.AreEqual(0, result);
     }
+
+    [TestMethod]
+    public void Fidelity_EmptyList_OK()
+    {
+        //Arrange
+        var strategy = new FidelityPromotionStrategy();
+        
+        //Act
+        var result = strategy.GetDiscount(new List<Product>());
+        
+        //Assert
+        Assert.AreEqual(0, result);
+    }
+    
+    
 }
