@@ -12,6 +12,7 @@ public class ThreeForTwoPromotionStrategy : IPromotionStrategy
         var uniqueCategories = products.Select(p => p.Category).Distinct().ToList();
         var categoriesWithAtLeastThreeProducts = uniqueCategories.FindAll(c => products.FindAll(p => p.Category == c).Count >= 3);
         if (categoriesWithAtLeastThreeProducts.Count == 0) return 0f;
-        return products.Min(p => p.Price) * DiscountPercentage;
+        var validProducts = products.FindAll(p => categoriesWithAtLeastThreeProducts.Contains(p.Category));
+        return validProducts.Min(p => p.Price) * DiscountPercentage;
     }
 }
