@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Domain;
 
 namespace PromotionStrategies.Tests;
@@ -681,5 +682,59 @@ public class PromotionStrategiesTests
         
         //Assert
         Assert.AreEqual(290, result);
+    }
+
+    [TestMethod]
+    public void Fidelity_DifferentBrands_OK()
+    {
+        //Arrange
+        var strategy = new FidelityPromotionStrategy();
+
+        var b1 = new Brand()
+        {
+            Name = "Gucci"
+        };
+        var b2 = new Brand()
+        {
+            Name = "Nike"
+        };
+
+        var p1 = new Product()
+        {
+            Name = "P1",
+            Price = 10000,
+            Brand = b1,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Bag"},
+            Description = "A luxury Gucci Bag"
+        };
+        
+        var p2 = new Product()
+        {
+            Name = "P2",
+            Price = 90,
+            Brand = b2,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Shoe"},
+            Description = "Nike Sneakers"
+        };
+        
+        var p3 = new Product()
+        {
+            Name = "P3",
+            Price = 250,
+            Brand = b1,
+            Colors = new List<Color>() { new Color() { Name = "Blue" } },
+            Category = new Category() {Name = "Shoe"},
+            Description = "Collection Nikeys"
+        };
+
+        var products = new List<Product>() { p1, p2, p3 };
+        
+        //Act
+        var result = strategy.GetDiscount(products);
+        
+        //Assert
+        Assert.AreEqual(0, result);
     }
 }
