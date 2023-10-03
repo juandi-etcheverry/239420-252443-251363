@@ -13,12 +13,12 @@ namespace WebApi.Filters
                 context.Result = new BadRequestObjectResult( new { Message = context.Exception.Message});
             }
 
-            if (context.Exception is UnauthorizedAccessException)
+            else if (context.Exception is UnauthorizedAccessException)
             {
                 context.Result = new UnauthorizedObjectResult(new { Message = context.Exception.Message});
             }
 
-            if (context.Exception is InvalidCredentialException)
+            else if (context.Exception is InvalidCredentialException)
             {
                 context.Result = new ObjectResult(new { Message = context.Exception.Message})
                 {

@@ -1,7 +1,11 @@
 ﻿using ApiModels.Requests;
 using Domain;
+using Logic;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using WebApi.Controllers;
+using WebApi.Controllers.Products;
 
 namespace Controller.Test
 {
@@ -21,7 +25,13 @@ namespace Controller.Test
                 Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } }
             };
 
-            var controller = new ProductsController();
+            var mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+            mockProduct.Setup(x => x.AddProduct(It.IsAny<Product>())).Returns(request.ToEntity());
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+
+            //q: what is the problem?
+            //a: the problem is that the controller is not instantiated with the mock objects
+            var controller = new ProductsController(mockProduct.Object, mockSession.Object);
             var result = controller.CreateProduct(request) as ObjectResult;
 
             Assert.AreEqual(201, result?.StatusCode);
@@ -38,7 +48,24 @@ namespace Controller.Test
                 Text = "Air"
             };
 
-            var controller = new ProductsController();
+            var mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+            mockProduct.Setup(x => x.GetProducts(It.IsAny<Func<Product, bool>>())).Returns(() =>
+            {
+                return new List<Product>()
+                {
+                    new Product()
+                    {
+                        Brand = new Brand() { Name = "Nike" },
+                        Category = new Category() { Name = "Shoes" },
+                        Name = "Air Max",
+                        Description = "Air Max 90",
+                        Colors = new List<Color> { new() { Name = "Red" }, new() { Name = "Blue" } }
+                    }
+                };
+            });
+            var mockSession = new Mock<ISessionTokenLogic>(MockBehavior.Strict);
+
+            var controller = new ProductsController(mockProduct.Object, mockSession.Object);
             var result = controller.GetProducts(request) as ObjectResult;
 
             Assert.AreEqual(200, result?.StatusCode);
