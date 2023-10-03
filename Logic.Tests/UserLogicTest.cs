@@ -213,5 +213,30 @@ namespace Logic.Tests
 	        //Assert
 	        Assert.AreEqual(user, result);
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with id 0 not found")]
+        public void UpdateUser_InvalidUser_FAIL()
+		{
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "a@a.a",
+		        Password = "Password123",
+		        Role = Role.Administrador
+	        };
+	        
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur =>
+			        ur.UpdateUser(It.IsAny<Guid>(), It.IsAny<User>()))
+		        .Throws(new ArgumentException("User with id 0 not found"));
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        logic.UpdateUser(Guid.Empty, user);
+	        
+	        //ERROR
+		}
 	}
 }
