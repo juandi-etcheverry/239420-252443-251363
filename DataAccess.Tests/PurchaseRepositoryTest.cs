@@ -57,6 +57,77 @@ public class PurchaseRepositoryTest
     }
 
     [TestMethod]
+    public void AddTwoProducts_CorrectProduct()
+    {
+        //Arrange
+        var context = CreateDbContext("AddTwoProducts_CorrectProduct");
+        var cartRepository = new CartRepository(context);
+        var products = new List<Product>();
+        var product1 = new Product{
+            Name = "Test Product1",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        products.Add(product1);
+        context.Set<Product>().Add(product1);
+        context.SaveChanges();
+        
+        var product2 = new Product{
+            Name = "Test Product1",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        products.Add(product2);
+        context.Set<Product>().Add(product2);
+        context.SaveChanges();
+        var session = new SessionToken();
+        var cart = new Purchase();
+        var cartResult = cartRepository.AddCart(cart);
+        
+        //Act
+        var result = cartRepository.AddProducts(cartResult, products);
+        
+        //Assert
+        Assert.AreEqual(result.Products.Count, 2);
+    }
+
+    [TestMethod]
+    public void AddTwoProductsEqual_OK()
+    {
+        //Arrange
+        var context = CreateDbContext("AddTwoProducts_CorrectProduct");
+        var cartRepository = new CartRepository(context);
+        var products = new List<Product>();
+        var product1 = new Product{
+            Name = "Test Product1",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        products.Add(product1);
+        context.Set<Product>().Add(product1);
+        context.SaveChanges();
+        var session = new SessionToken();
+        var cart = new Purchase();
+        var cartResult = cartRepository.AddCart(cart);
+        
+        //Act
+        products.Add(product1);
+        var result = cartRepository.AddProducts(cartResult, products);
+        
+        //Assert
+        Assert.AreEqual(result.Products.Count, 1);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(ArgumentException), "Product is null")]
     public void AddProduct_NullProductFail()
     {
