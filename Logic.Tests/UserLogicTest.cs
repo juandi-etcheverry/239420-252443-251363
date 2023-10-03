@@ -188,7 +188,30 @@ namespace Logic.Tests
 	        
 	        //ERROR
         }
-        
-        
+
+        [TestMethod]
+        public void UpdateUser_ValidUser_OK()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "a@a.a",
+		        Password = "Password123",
+		        Role = Role.Administrador
+	        };
+	        
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur =>
+                ur.UpdateUser(It.IsAny<Guid>(), It.IsAny<User>()))
+		        .Returns(user);
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        var result = logic.UpdateUser(Guid.Empty, user);
+	        
+	        //Assert
+	        Assert.AreEqual(user, result);
+        }
 	}
 }
