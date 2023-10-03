@@ -42,6 +42,7 @@ namespace Domain
         public Role Role { get; set; }
 		
         public bool IsDeleted { get; set; } = false;
+        public SessionToken? Session { get; set; }
     }
 }
 

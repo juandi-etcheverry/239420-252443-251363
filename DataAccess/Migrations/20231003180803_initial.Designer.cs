@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230929191857_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20231003180803_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,8 +29,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("ColorsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ColorsId", "ProductsId");
 
@@ -92,11 +92,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Domain.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
@@ -138,7 +136,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("SessionTokens");
                 });
@@ -209,8 +209,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Domain.SessionToken", b =>
                 {
                     b.HasOne("Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("Session")
+                        .HasForeignKey("Domain.SessionToken", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -223,6 +224,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Domain.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Domain.User", b =>
+                {
+                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }
