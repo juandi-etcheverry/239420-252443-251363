@@ -16,4 +16,9 @@ public class CartLogic : ICartLogic
         var result = _cartRepository.AddProduct(cart, product);
         return result;
     }
+    public Cart DeleteProduct(Product product, Cart cart)
+    {
+        var result = _cartRepository.DeleteProduct(cart, product);
+        return result;
+    }
 }

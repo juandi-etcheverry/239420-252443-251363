@@ -28,6 +28,28 @@ public class CartLogicTest
        
         // Assert
         Assert.AreEqual(1, result.Products.Count);
+    }
+    
+    [TestMethod]
+    public void DeleteProductFromCart_Valid_OK()
+    {
+        // Arrange
+        var product = new Product { Name = "Test", Price = 420, Description = "Test Description"};
+        var session = new SessionToken();
+        var cart = new Cart { Session = session};
+        
+        var mock = new Mock<ICartRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.DeleteProduct(It.IsAny<Cart>(), It.IsAny<Product>())).Returns(() =>
+        {
+            cart.DeleteProduct(product);
+            return cart;
+        });
+        var logic = new CartLogic(mock.Object);
+        
+        // Act
+       var result = logic.DeleteProduct(product, cart);
        
+        // Assert
+        Assert.AreEqual(0, result.Products.Count);
     }
 }
