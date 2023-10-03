@@ -4,9 +4,8 @@ using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters.Products;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Products
 {
-    [Route("api/products")]
     [ApiController]
     [ServiceFilter(typeof(ProductAuthenticationFilter))]
     public class ProductsController : ControllerBase
@@ -21,6 +20,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("api/products")]
         public IActionResult CreateProduct([FromBody] CreateProductRequest request)
         {
             var product = _productLogic.AddProduct(request.ToEntity());
@@ -39,6 +39,7 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
+        [Route("api/products")]
         public IActionResult GetProducts([FromQuery] GetProductsRequest request)
         {
             var products = _productLogic.GetProducts(p => p.Name.Contains(request.Text) ||
@@ -46,13 +47,33 @@ namespace WebApi.Controllers
                                                           p.Brand.Name.Contains(request.Brand) ||
                                                           p.Category.Name.Contains(request.Category));
 
-             var response = new GetProductsResponse()
+            var response = new GetProductsResponse()
             {
                 Message = "Products retrieved successfully",
                 Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList()
             };
 
-             return StatusCode(200, response);
+            return StatusCode(200, response);
+        }
+
+        [HttpGet]
+        [Route("api/products/{id}")]
+        public IActionResult GetProduct([FromRoute] int id)
+        {
+            var product = _productLogic.GetProduct(id);
+
+            var response = new GetProductResponse()
+            {
+                Message = "Product retrieved successfully",
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Brand = product.Brand,
+                Category = product.Category,
+                Colors = product.Colors
+            };
+
+            return StatusCode(200, response);
         }
 
     }
