@@ -378,4 +378,36 @@ public class Test
         //Act
         var result = purchaseRepository.GetAllPurchasesHistory(user);
     }
+
+    [TestMethod]
+    public void CalculateTotalPrice_OK()
+    {
+        //Arrange
+        var context = CreateDbContext("CalculateTotalPrice_OK");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User();
+        List<Product> products = new List<Product>();
+        var product1 = new Product
+        {
+            Price = 300
+        };
+        var product2 = new Product
+        {
+            Price = 200
+        };
+        products.Add(product1);
+        products.Add(product2);
+        var purchase = new Purchase
+        {
+            User = user,
+            IsCompleted = false
+        };
+        
+        //Act
+        var result =purchaseRepository.AddProducts(purchase, products);
+        
+        //Assert
+        Assert.AreEqual(500, result.TotalPrice);
+    }
+
 }

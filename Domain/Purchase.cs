@@ -8,10 +8,13 @@ public class Purchase
     public User User { get; set; }
     
     public bool IsCompleted { get; set; }
-    
+
+    public float TotalPrice { get; set; }
+
     public void AddProducts(List<Product> products)
     {
         foreach (var p in products) AddProduct(p);
+        CalculateTotalPrice();
     }
     
     public Product AddProduct(Product product)
@@ -32,6 +35,10 @@ public class Purchase
     public void AssignUser(User user)
     {
         User = user;
+    }
+    private void CalculateTotalPrice()
+    {
+        TotalPrice = Products.Sum(p => p.Price);
     }
     
 
