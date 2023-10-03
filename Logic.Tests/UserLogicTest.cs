@@ -165,5 +165,30 @@ namespace Logic.Tests
 	        //Assert
 	        Assert.AreEqual(user, result);
         }
-    }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with email abc@abc.com already exists")]
+        public void CreateUser_InvalidEmail_FAIL()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "abc@abc.com",
+		        Password = "Password123",
+		        Address = "Ejido 1234",
+		        Role = Role.Comprador
+	        };
+			
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur => ur.FindUser(It.IsAny<string>())).Returns(true);
+
+	        var logic = new UserLogic(mock.Object);
+	        //Act
+	        logic.CreateUser(user);
+	        
+	        //ERROR
+        }
+        
+        
+	}
 }
