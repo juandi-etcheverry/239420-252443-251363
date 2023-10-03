@@ -6,8 +6,6 @@ public class Purchase
     public List<Product> Products { get; set; } = new List<Product>();
     
     public User User { get; set; }
-    
-    public bool IsCompleted { get; set; }
 
     public float TotalPrice { get; set; }
     public float FinalPrice { get; set; }

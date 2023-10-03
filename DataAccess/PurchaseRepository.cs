@@ -44,7 +44,7 @@ public class PurchaseRepository : IPurchaseRepository
     public List<Purchase> GetAllPurchasesHistory(User user)
     {
         if(user == null) throw new ArgumentException("User is null");
-        var result = _context.Set<Purchase>().Include(p => p.Products).Where(p => p.User == user && p.IsCompleted).ToList();
+        var result = _context.Set<Purchase>().Include(p => p.Products).Where(p => p.User == user).ToList();
         if(result.Count == 0) throw new ArgumentException("There are no purchases");
         return result;
     }

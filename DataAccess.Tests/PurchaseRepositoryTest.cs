@@ -299,7 +299,6 @@ public class Test
         var purchase = new Purchase
         {
             User = user,
-            IsCompleted = true
         };
         var purchaseResult = purchaseRepository.AddPurchase(purchase);
         
@@ -323,13 +322,11 @@ public class Test
         };
         var purchase1 = new Purchase
         {
-            User = user,
-            IsCompleted = true
+            User = user
         };
         var purchase2 = new Purchase
         {
-            User = user,
-            IsCompleted = false
+            User = user
         };
         purchaseRepository.AddPurchase(purchase1);
         purchaseRepository.AddPurchase(purchase2);
@@ -371,7 +368,6 @@ public class Test
         var purchase = new Purchase
         {
             User = user,
-            IsCompleted = false
         };
         var purchaseResult = purchaseRepository.AddPurchase(purchase);
         
@@ -400,7 +396,6 @@ public class Test
         var purchase = new Purchase
         {
             User = user,
-            IsCompleted = false
         };
         
         //Act
