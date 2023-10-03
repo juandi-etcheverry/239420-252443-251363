@@ -1,6 +1,8 @@
 ﻿using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Authentication;
+using TypeHelper;
 
 namespace WebApi.Filters.Products
 {
@@ -27,10 +29,15 @@ namespace WebApi.Filters.Products
                 var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
                 if (_sessionTokenLogic.SessionTokenExists(auth))
                 {
-                    if (_sessionTokenLogic.GetSessionToken(auth).User is null)
+                    SessionToken sessionToken = _sessionTokenLogic.GetSessionToken(auth);
+                    if (sessionToken.User is null)
                     {
                         throw new UnauthorizedAccessException("You are not logged in");
                     }
+
+                    if (!(sessionToken.User?.Role == Role.Administrador ||
+                          sessionToken.User?.Role == Role.Total))
+                        throw new InvalidCredentialException("You must be an administrator to perform this action!");
                 }
                 else
                 {
