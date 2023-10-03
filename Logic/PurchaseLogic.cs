@@ -6,15 +6,20 @@ namespace Logic;
 public class PurchaseLogic : IPurchaseLogic
 {
     private IPurchaseRepository _purchaseRepository;
+    private IPromotionLogic _promotionStrategies;
     
+    public PurchaseLogic(IPurchaseRepository purchaseRepository, IPromotionLogic promotionStrategies)
+    {
+        _purchaseRepository = purchaseRepository;
+        _promotionStrategies = promotionStrategies;
+    }
     public PurchaseLogic(IPurchaseRepository purchaseRepository)
     {
         _purchaseRepository = purchaseRepository;
     }
-    public Purchase AddProduct(Product product, Purchase purchase)
+    
+    public Purchase AddProducts(List<Product> products, Purchase purchase)
     {
-        var products = new List<Product>();
-        products.Add(product);
         var result = _purchaseRepository.AddProducts(purchase, products);
         return result;
     }
@@ -27,5 +32,13 @@ public class PurchaseLogic : IPurchaseLogic
     {
         var result = _purchaseRepository.AddPurchase(purchase);
         return result;
+    }
+
+    public void SetFinalPrice(Purchase purchase)
+    {
+        var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
+        var result = promotion.GetDiscount(purchase.Products);
+        purchase.FinalPrice = purchase.TotalPrice - result;
+        purchase.PromotionName = promotion.Name;
     }
 }

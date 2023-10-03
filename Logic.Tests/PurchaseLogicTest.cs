@@ -1,6 +1,8 @@
 using DataAccess.Interfaces;
 using Domain;
+using Logic.Interfaces;
 using Moq;
+using PromotionStrategies;
 
 namespace Logic.Tests;
 
@@ -11,7 +13,9 @@ public class PurchaseLogicTest
     public void AddProductToCart_Valid_OK()
     {
         // Arrange
+        var products = new List<Product>();
         var product = new Product { Name = "Test", Price = 420, Description = "Test Description"};
+        products.Add(product);
         var session = new SessionToken();
         var cart = new Purchase();
         
@@ -24,7 +28,7 @@ public class PurchaseLogicTest
         var logic = new PurchaseLogic(mock.Object);
         
         // Act
-       var result = logic.AddProduct(product, cart);
+       var result = logic.AddProducts(products, cart);
        
         // Assert
         Assert.AreEqual(1, result.Products.Count);
@@ -71,5 +75,39 @@ public class PurchaseLogicTest
        
         // Assert
         Assert.AreEqual(cart, result);
+    }
+    
+    [TestMethod]
+    public void SetFinalPrice_Valid_OK()
+    {
+        // Arrange
+        var products = new List<Product>();
+        var product1 = new Product { Name = "Test1", Price = 420, Description = "Test Description"};
+        var product2 = new Product { Name = "Test2", Price = 500, Description = "Test Description"};
+        products.Add(product1);
+        products.Add(product2);
+        var cart = new Purchase();
+        
+        var mockPurchase = new Mock<IPurchaseRepository>(MockBehavior.Strict);
+        var mockPromotion = new Mock<IPromotionLogic>(MockBehavior.Strict);
+        var mockPromotionStrategy = new Mock<IPromotionStrategy>(MockBehavior.Strict);
+        
+        mockPurchase.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<Product>>())).Returns(() =>
+        {
+            cart.AddProducts(products);
+            return cart;
+        });
+        mockPromotion.Setup(x=>x.GetBestPromotion(It.IsAny<List<Product>>())).Returns(() =>
+        {
+            return new TwentyPercentPromotionStrategy();
+        });
+        var logic = new PurchaseLogic(mockPurchase.Object, mockPromotion.Object);
+        
+        // Act
+       var result = logic.AddProducts(products, cart);
+       logic.SetFinalPrice(result);
+       
+        // Assert
+        Assert.AreEqual(820, result.FinalPrice);
     }
 }

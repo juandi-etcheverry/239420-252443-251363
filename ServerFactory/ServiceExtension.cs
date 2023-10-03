@@ -17,10 +17,14 @@ public static class ServiceExtension
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
-
+        services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+        
+        
         services.AddScoped<IProductLogic, ProductLogic>();
         services.AddScoped<IUserLogic, UserLogic>();
         services.AddScoped<ISessionTokenLogic, SessionTokenLogic>();
+        services.AddScoped<IPurchaseLogic, PurchaseLogic>();
+        services.AddScoped<IPromotionLogic, PromotionLogic>();
 
         services.AddScoped<IPromotionStrategy, TwentyPercentPromotionStrategy>();
         services.AddScoped<IPromotionStrategy, FidelityPromotionStrategy>();

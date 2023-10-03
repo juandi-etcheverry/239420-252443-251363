@@ -10,6 +10,9 @@ public class Purchase
     public bool IsCompleted { get; set; }
 
     public float TotalPrice { get; set; }
+    public float FinalPrice { get; set; }
+    public string? PromotionName { get; set; }
+    
 
     public void AddProducts(List<Product> products)
     {
