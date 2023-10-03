@@ -2,7 +2,7 @@
 using ApiModels.Responses.Users;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Filters.User;
+using WebApi.Filters.User.Admin;
 
 namespace WebApi.Controllers.Users;
 
@@ -20,7 +20,7 @@ public class CreateUserController : ControllerBase
     }
 
     [HttpPost]
-    [ServiceFilter(typeof(UserAuthenticationFilter))]
+    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
     public IActionResult CreateUser([FromBody] CreateUserRequest request)
     {
         var newUser = _userLogic.CreateUser(request.ToEntity());
