@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Tests;
 
 [TestClass]
-public class PurchaseRepositoryTest
+public class Test
 {
     private DbContext CreateDbContext(string dbName)
     {
@@ -17,7 +17,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddCart_CorrectCart");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var session = new SessionToken();
         var cart = new Purchase();
         //Act
@@ -32,7 +32,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddProduct_CorrectProductOK");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
@@ -61,7 +61,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddTwoProducts_CorrectProduct");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var products = new List<Product>();
         var product1 = new Product{
             Name = "Test Product1",
@@ -102,7 +102,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddTwoProducts_CorrectProduct");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var products = new List<Product>();
         var product1 = new Product{
             Name = "Test Product1",
@@ -133,7 +133,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddProduct_CorrectProductOK");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var session = new SessionToken();
         var cart = new Purchase();
         var cartResult = cartRepository.AddCart(cart);
@@ -150,7 +150,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("DeleteProduct_CorrectProductOK");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
@@ -181,7 +181,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("DeleteProduct_NullProductFail");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var session = new SessionToken();
         var cart = new Purchase {};
         var cartResult = cartRepository.AddCart(cart);
@@ -197,7 +197,7 @@ public class PurchaseRepositoryTest
     {
         //Arrange
         var context = CreateDbContext("AddProduct_NullCartFail");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
@@ -222,7 +222,7 @@ public class PurchaseRepositoryTest
     {
         //Arange
         var context = CreateDbContext("DeleteProduct_NullCartFail");
-        var cartRepository = new CartRepository(context);
+        var cartRepository = new PurchaseRepository(context);
         var product = new Product{
             Name = "Test Product",
             Description = "Test Description",
@@ -237,5 +237,21 @@ public class PurchaseRepositoryTest
         
         //Act
         var result = cartRepository.DeleteProduct(purchase, product);
+    }
+
+    [TestMethod]
+    public void AssignUserToPurchase_OK()
+    {
+        var context = CreateDbContext("DeleteProduct_NullCartFail");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User();
+        var purchase = new Purchase();
+        var purchaseResult = purchaseRepository.AddCart(purchase);
+        
+        //Act
+        purchaseRepository.AssignUserToPurchase(purchaseResult, user);
+        
+        //Assert
+        Assert.AreEqual(purchaseResult.User, user);
     }
 }

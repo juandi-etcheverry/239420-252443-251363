@@ -15,7 +15,7 @@ public class PurchaseLogicTest
         var session = new SessionToken();
         var cart = new Purchase();
         
-        var mock = new Mock<ICartRepository>(MockBehavior.Strict);
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
         mock.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<Product>>())).Returns(() =>
         {
             cart.AddProduct(product);
@@ -38,7 +38,7 @@ public class PurchaseLogicTest
         var session = new SessionToken();
         var cart = new Purchase();
         
-        var mock = new Mock<ICartRepository>(MockBehavior.Strict);
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
         mock.Setup(x => x.DeleteProduct(It.IsAny<Purchase>(), It.IsAny<Product>())).Returns(() =>
         {
             cart.DeleteProduct(product);
@@ -59,7 +59,7 @@ public class PurchaseLogicTest
         var session = new SessionToken();
         var cart = new Purchase();
         
-        var mock = new Mock<ICartRepository>(MockBehavior.Strict);
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
         mock.Setup(x => x.AddCart(It.IsAny<Purchase>())).Returns(() =>
         {
             return cart;

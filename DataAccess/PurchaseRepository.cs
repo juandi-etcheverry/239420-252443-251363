@@ -3,11 +3,11 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 namespace DataAccess;
 
-public class CartRepository : ICartRepository
+public class PurchaseRepository : IPurchaseRepository
 {
     private readonly DbContext _context;
     
-    public CartRepository(DbContext context)
+    public PurchaseRepository(DbContext context)
     {
         _context = context;
     }
@@ -33,9 +33,12 @@ public class CartRepository : ICartRepository
         _context.SaveChanges();
         return purchase;
     }
-    /*public Cart GetCartBySession(SessionToken sessionToken)
+
+    public Purchase AssignUserToPurchase(Purchase purchase, User user)
     {
-        //if (sessionToken == null) throw new ArgumentException("SessionToken is null");
-        return _context.Set<Cart>().Include(c => c.Products).FirstOrDefault(c => c.Session == sessionToken);
-    }*/
+        if (purchase == null) throw new ArgumentException("Cart is null");
+        if (user == null) throw new ArgumentException("User is null");
+        purchase.AssignUser(user);
+        return purchase;
+    }
 }

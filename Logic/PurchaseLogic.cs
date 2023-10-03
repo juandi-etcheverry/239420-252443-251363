@@ -5,27 +5,27 @@ namespace Logic;
 
 public class PurchaseLogic : IPurchaseLogic
 {
-    private ICartRepository _cartRepository;
+    private IPurchaseRepository _purchaseRepository;
     
-    public PurchaseLogic(ICartRepository cartRepository)
+    public PurchaseLogic(IPurchaseRepository purchaseRepository)
     {
-        _cartRepository = cartRepository;
+        _purchaseRepository = purchaseRepository;
     }
     public Purchase AddProduct(Product product, Purchase purchase)
     {
         var products = new List<Product>();
         products.Add(product);
-        var result = _cartRepository.AddProducts(purchase, products);
+        var result = _purchaseRepository.AddProducts(purchase, products);
         return result;
     }
     public Purchase DeleteProduct(Product product, Purchase purchase)
     {
-        var result = _cartRepository.DeleteProduct(purchase, product);
+        var result = _purchaseRepository.DeleteProduct(purchase, product);
         return result;
     }
     public Purchase AddCart(Purchase purchase)
     {
-        var result = _cartRepository.AddCart(purchase);
+        var result = _purchaseRepository.AddCart(purchase);
         return result;
     }
 }
