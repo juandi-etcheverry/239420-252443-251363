@@ -33,12 +33,17 @@ public class PurchaseLogic : IPurchaseLogic
         var result = _purchaseRepository.AddPurchase(purchase);
         return result;
     }
-
+    
     public void SetFinalPrice(Purchase purchase)
     {
         var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
         var result = promotion.GetDiscount(purchase.Products);
         purchase.FinalPrice = purchase.TotalPrice - result;
         purchase.PromotionName = promotion.Name;
+    }
+    public List<Purchase> GetAllPurchasesHistory(User user)
+    {
+        var result = _purchaseRepository.GetAllPurchasesHistory(user);
+        return result;
     }
 }
