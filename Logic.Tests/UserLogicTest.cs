@@ -140,5 +140,30 @@ namespace Logic.Tests
 
             var result = logic.GetUser("anyEmail@test.com", "anyPassword");
         }
+
+        [TestMethod]
+        public void CreateUser_Valid_OK()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "userTest@gmail.com",
+		        Password = "Password123",
+		        Role = Role.Comprador,
+		        Address = "Ejido 1234",
+	        };
+
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(u => u.AddUser(It.IsAny<User>())).Returns(user);
+	        mock.Setup(u => u.FindUser(It.IsAny<string>())).Returns(false);
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        var result = logic.CreateUser(user);
+	        
+	        //Assert
+	        Assert.AreEqual(user, result);
+        }
     }
 }
