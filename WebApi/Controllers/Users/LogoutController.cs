@@ -19,7 +19,7 @@ namespace WebApi.Controllers.Users
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(LogoutAuthenticationFilter))]
+        [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
         public IActionResult Logout()
         {
             return StatusCode(200, new LogoutResponse() {Messsage = "Logout successful"});

@@ -22,7 +22,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddScoped<UserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();
 builder.Services.AddScoped<LoginAuthenticationFilter>();
-builder.Services.AddScoped<LogoutAuthenticationFilter>();
+builder.Services.AddScoped<IsLoggedInAuthenticationFilter>();
 
 var app = builder.Build();
 
