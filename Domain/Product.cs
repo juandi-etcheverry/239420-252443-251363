@@ -11,5 +11,5 @@ public class Product
     public Brand Brand { get; set; }
     public int BrandId { get; set; }
     public IList<Color> Colors { get; set; }
-    public bool IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; } = false;
 }
