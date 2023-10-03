@@ -11,7 +11,7 @@ public class PurchaseRepository : IPurchaseRepository
     {
         _context = context;
     }
-    public Purchase AddCart(Purchase purchase)
+    public Purchase AddPurchase(Purchase purchase)
     {
         _context.Set<Purchase>().Add(purchase);
         _context.SaveChanges();
@@ -36,7 +36,6 @@ public class PurchaseRepository : IPurchaseRepository
 
     public Purchase AssignUserToPurchase(Purchase purchase, User user)
     {
-        if (purchase == null) throw new ArgumentException("Cart is null");
         if (user == null) throw new ArgumentException("User is null");
         purchase.AssignUser(user);
         return purchase;

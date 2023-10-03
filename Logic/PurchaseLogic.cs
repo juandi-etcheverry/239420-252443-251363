@@ -25,7 +25,7 @@ public class PurchaseLogic : IPurchaseLogic
     }
     public Purchase AddCart(Purchase purchase)
     {
-        var result = _purchaseRepository.AddCart(purchase);
+        var result = _purchaseRepository.AddPurchase(purchase);
         return result;
     }
 }

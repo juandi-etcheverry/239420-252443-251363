@@ -60,7 +60,7 @@ public class PurchaseLogicTest
         var cart = new Purchase();
         
         var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddCart(It.IsAny<Purchase>())).Returns(() =>
+        mock.Setup(x => x.AddPurchase(It.IsAny<Purchase>())).Returns(() =>
         {
             return cart;
         });

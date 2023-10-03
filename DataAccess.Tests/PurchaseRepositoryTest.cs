@@ -21,7 +21,7 @@ public class Test
         var session = new SessionToken();
         var cart = new Purchase();
         //Act
-        var result = cartRepository.AddCart(cart);
+        var result = cartRepository.AddPurchase(cart);
         
         //Assert
         Assert.AreEqual(cart, result);
@@ -47,7 +47,7 @@ public class Test
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase();
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         
         //Act
         var result = cartRepository.AddProducts(cartResult, products);
@@ -88,7 +88,7 @@ public class Test
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase();
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         
         //Act
         var result = cartRepository.AddProducts(cartResult, products);
@@ -117,7 +117,7 @@ public class Test
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase();
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         
         //Act
         products.Add(product1);
@@ -136,7 +136,7 @@ public class Test
         var cartRepository = new PurchaseRepository(context);
         var session = new SessionToken();
         var cart = new Purchase();
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         var products = new List<Product>();
         Product product = null;
         products.Add(product);
@@ -165,7 +165,7 @@ public class Test
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase {};
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         var cartResultWithProduct = cartRepository.AddProducts(cartResult, products);
         
         //Act
@@ -184,7 +184,7 @@ public class Test
         var cartRepository = new PurchaseRepository(context);
         var session = new SessionToken();
         var cart = new Purchase {};
-        var cartResult = cartRepository.AddCart(cart);
+        var cartResult = cartRepository.AddPurchase(cart);
         Product product = null;
         
         //Act
@@ -246,12 +246,25 @@ public class Test
         var purchaseRepository = new PurchaseRepository(context);
         var user = new User();
         var purchase = new Purchase();
-        var purchaseResult = purchaseRepository.AddCart(purchase);
+        var purchaseResult = purchaseRepository.AddPurchase(purchase);
         
         //Act
         purchaseRepository.AssignUserToPurchase(purchaseResult, user);
         
         //Assert
         Assert.AreEqual(purchaseResult.User, user);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "User is null")]
+    public void AssignUserToPurchase_NullUser_OK()
+    {
+        var context = CreateDbContext("DeleteProduct_NullCartFail");
+        var purchaseRepository = new PurchaseRepository(context);
+        var purchase = new Purchase();
+        var purchaseResult = purchaseRepository.AddPurchase(purchase);
+        
+        //Act
+        purchaseRepository.AssignUserToPurchase(purchaseResult, null);
     }
 }
