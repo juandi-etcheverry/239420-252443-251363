@@ -88,4 +88,94 @@ public class CartRepositoryTest
         //Act
         var result = cartRepository.AddProduct(cartResult, product);
     }
+    
+    [TestMethod]
+    public void DeleteProduct_CorrectProductOK()
+    {
+        //Arrange
+        var context = CreateDbContext("DeleteProduct_CorrectProductOK");
+        var cartRepository = new CartRepository(context);
+        var product = new Product{
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+        var session = new SessionToken();
+        var cart = new Cart { Session = session};
+        var cartResult = cartRepository.AddCart(cart);
+        var cartResultWithProduct = cartRepository.AddProduct(cartResult, product);
+        
+        //Act
+        var result = cartRepository.DeleteProduct(cartResultWithProduct, product);
+        
+        //Assert
+        Assert.AreEqual(result.Products.Count, 0);
+    }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Product is null")]
+    public void DeleteProduct_NullProductFail()
+    {
+        //Arrange
+        var context = CreateDbContext("DeleteProduct_NullProductFail");
+        var cartRepository = new CartRepository(context);
+        var session = new SessionToken();
+        var cart = new Cart { Session = session};
+        var cartResult = cartRepository.AddCart(cart);
+        Product product = null;
+        
+        //Act
+        var result = cartRepository.DeleteProduct(cartResult, product);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Cart is null")]
+    public void AddProduct_NullCartFail()
+    {
+        //Arrange
+        var context = CreateDbContext("AddProduct_NullCartFail");
+        var cartRepository = new CartRepository(context);
+        var product = new Product{
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+        Cart cart = null;
+        
+        //Act
+        var result = cartRepository.AddProduct(cart, product);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Cart is null")]
+    public void DeleteProduct_NullCartFail()
+    {
+        //Arange
+        var context = CreateDbContext("DeleteProduct_NullCartFail");
+        var cartRepository = new CartRepository(context);
+        var product = new Product{
+            Name = "Test Product",
+            Description = "Test Description",
+            Price = 100,
+            Brand = new Brand(){Name="Gucci"},
+            Category = new Category(){Name="Bag"},
+            Colors = new List<Color>() {new(){Name="Red"}},
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+        Cart cart = null;
+        
+        //Act
+        var result = cartRepository.DeleteProduct(cart, product);
+    }
 }

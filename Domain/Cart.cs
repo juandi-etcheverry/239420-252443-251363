@@ -12,4 +12,10 @@ public class Cart
         Products.Add(product);
         return product;
     }
+    public Product DeleteProduct(Product product)
+    {
+        if(product == null) throw new ArgumentException("Product is null");
+        Products.Remove(product);
+        return product;
+    }
 }

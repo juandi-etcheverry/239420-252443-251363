@@ -26,4 +26,12 @@ public class CartRepository : ICartRepository
         _context.SaveChanges();
         return cart;
     }
+    public Cart DeleteProduct(Cart cart, Product product)
+    {
+        if (cart == null) throw new ArgumentException("Cart is null");
+        if (product == null) throw new ArgumentException("Product is null");
+        cart.DeleteProduct(product);
+        _context.SaveChanges();
+        return cart;
+    }
 }
