@@ -52,4 +52,24 @@ public class CartLogicTest
         // Assert
         Assert.AreEqual(0, result.Products.Count);
     }
+    [TestMethod]
+    public void AddCart_Valid_OK()
+    {
+        // Arrange
+        var session = new SessionToken();
+        var cart = new Cart { Session = session};
+        
+        var mock = new Mock<ICartRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.AddCart(It.IsAny<Cart>())).Returns(() =>
+        {
+            return cart;
+        });
+        var logic = new CartLogic(mock.Object);
+        
+        // Act
+       var result = logic.AddCart(cart);
+       
+        // Assert
+        Assert.AreEqual(cart, result);
+    }
 }
