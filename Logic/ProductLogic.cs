@@ -24,5 +24,10 @@ public class ProductLogic : IProductLogic
     {
         return _productRepository.GetProducts(p => p.IsDeleted == false);
     }
+
+    public Product AddProduct(Product product)
+    {
+        return _productRepository.AddProduct(product);
+    }
     
 }

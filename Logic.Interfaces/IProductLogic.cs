@@ -6,4 +6,5 @@ public interface IProductLogic
 {
     Product GetProduct(int id);
     List<Product> GetProducts();
+    Product AddProduct(Product product);
 }

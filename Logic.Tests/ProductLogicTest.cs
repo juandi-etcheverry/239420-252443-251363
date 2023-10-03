@@ -115,4 +115,28 @@ public class ProductLogicTest
         // Assert
         Assert.AreEqual(products, result);
     }
+
+    [TestMethod]
+    public void AddProduct_OK()
+    {
+        // Arrange
+        var product = new Product
+        {
+            Name = "Prod", Price = 400, 
+            Description = "Test Description",
+            Category = new Category { Name = "Test" },
+            Brand = new Brand { Name = "Test" },
+            Colors = new List<Color> { new Color { Name = "Test" } }
+
+        };
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.AddProduct(product)).Returns(product);
+        var logic = new ProductLogic(mock.Object);
+        
+        // Act
+        var result = logic.AddProduct(product);
+        
+        // Assert
+        Assert.AreEqual(product, result);
+    }
 }
