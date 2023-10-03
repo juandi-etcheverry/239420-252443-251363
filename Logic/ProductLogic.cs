@@ -13,7 +13,7 @@ public class ProductLogic : IProductLogic
         _productRepository = productRepository;
     }
     
-    public Product GetProduct(int id)
+    public Product GetProduct(Guid id)
     {
         var product = _productRepository.GetProduct(id);
         if (product.IsDeleted) throw new ArgumentException($"Product with id {id} not found");

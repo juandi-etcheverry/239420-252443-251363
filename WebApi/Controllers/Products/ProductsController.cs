@@ -58,7 +58,7 @@ namespace WebApi.Controllers.Products
 
         [HttpGet]
         [Route("api/products/{id}")]
-        public IActionResult GetProduct([FromRoute] int id)
+        public IActionResult GetProduct([FromRoute] Guid id)
         {
             var product = _productLogic.GetProduct(id);
 
