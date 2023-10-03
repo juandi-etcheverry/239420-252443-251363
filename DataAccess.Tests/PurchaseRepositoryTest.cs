@@ -144,6 +144,22 @@ public class Test
         //Act
         var result = cartRepository.AddProducts(cartResult, products);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "There are no products to Add")]
+    public void AddProduct_NoProducts_Fail()
+    {
+        //Arrange
+        var context = CreateDbContext("AddProduct_NoProducts_Fail");
+        var cartRepository = new PurchaseRepository(context);
+        var session = new SessionToken();
+        var purchase = new Purchase();
+        var cartResult = cartRepository.AddPurchase(purchase);
+        var products = new List<Product>();
+        
+        //Act
+        var result = cartRepository.AddProducts(cartResult, products);
+    }
     
     [TestMethod]
     public void DeleteProduct_CorrectProductOK()
