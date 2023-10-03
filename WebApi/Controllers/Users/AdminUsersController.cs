@@ -4,24 +4,25 @@ using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters.User;
+using WebApi.Filters.User.Admin;
 
 namespace WebApi.Controllers.Users
 {
     [Route("/api/users/{id}")]
     [ApiController]
-    [ServiceFilter(typeof(UserAuthenticationFilter))]
-    public class UsersController : ControllerBase
+    public class AdminUsersController : ControllerBase
     {
 
         private IUserLogic _userLogic;
         private ISessionTokenLogic _sessionTokenLogic;
-        public UsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+        public AdminUsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
         {
             _userLogic = userLogic;
             _sessionTokenLogic = sessionTokenLogic;
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
         public IActionResult GetUser([FromRoute] Guid id)
         {
             User user = _userLogic.GetUser(id);
@@ -36,6 +37,7 @@ namespace WebApi.Controllers.Users
         }
 
         [HttpDelete]
+        [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
         public IActionResult DeleteUser([FromRoute] Guid id)
         {
             User user = _userLogic.DeleteUser(id);
@@ -51,6 +53,7 @@ namespace WebApi.Controllers.Users
         }
 
         [HttpPut]
+        [ServiceFilter(typeof(UpdateUserAuthenticationFilter))]
         public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
         {
             User user = _userLogic.UpdateUser(id, request.ToEntity());

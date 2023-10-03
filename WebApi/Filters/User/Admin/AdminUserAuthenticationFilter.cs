@@ -3,19 +3,19 @@ using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using TypeHelper;
 
-namespace WebApi.Filters.User;
+namespace WebApi.Filters.User.Admin;
 
-public class UserAuthenticationFilter : Attribute, IActionFilter
+public class AdminUserAuthenticationFilter : Attribute, IActionFilter
 {
     private readonly ISessionTokenLogic _sessionTokenLogic;
 
     private IUserLogic _userLogic;
 
-    public UserAuthenticationFilter()
+    public AdminUserAuthenticationFilter()
     {
     }
 
-    public UserAuthenticationFilter(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+    public AdminUserAuthenticationFilter(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
     {
         _userLogic = userLogic;
         _sessionTokenLogic = sessionTokenLogic;

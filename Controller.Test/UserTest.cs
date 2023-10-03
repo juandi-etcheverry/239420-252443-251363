@@ -37,7 +37,7 @@ namespace Controller.Test
                 User = user
             });
 
-            var controller = new UsersController(mock.Object, mockSession.Object);
+            var controller = new AdminUsersController(mock.Object, mockSession.Object);
 
             var response = controller.GetUser(new Guid()) as ObjectResult;
 
@@ -64,7 +64,7 @@ namespace Controller.Test
                 User = user
             });
 
-            var controller = new UsersController(mock.Object, mockSession.Object);
+            var controller = new AdminUsersController(mock.Object, mockSession.Object);
 
             var response = controller.DeleteUser(new Guid()) as ObjectResult;
 
