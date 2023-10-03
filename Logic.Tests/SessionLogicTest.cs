@@ -16,7 +16,7 @@ public class SessionLogicTest
         var user = new User
         {
             Email = "test@gmail.com",
-            Role = Role.Comprador,
+            Role = Role.Buyer,
             Address = "Cuareim 1234",
         };
         var session = new SessionToken
@@ -42,7 +42,7 @@ public class SessionLogicTest
         var user = new User
         {
             Email = "test@gmail.com",
-            Role = Role.Comprador,
+            Role = Role.Buyer,
             Address = "Cuareim 1234",
         };
         var session = new SessionToken
@@ -64,7 +64,7 @@ public class SessionLogicTest
         var user = new User
         {
             Email = "test@gmail.com",
-            Role = Role.Comprador,
+            Role = Role.Buyer,
             Address = "Cuareim 1234",
         };
         var session = new SessionToken
@@ -104,7 +104,7 @@ public class SessionLogicTest
         var user = new User
         {
             Email = "test@gmail.com",
-            Role = Role.Comprador,
+            Role = Role.Buyer,
             Address = "Cuareim 1234",
         };
         var session = new SessionToken
@@ -214,7 +214,7 @@ public class SessionLogicTest
         {
             Email = "test@test.com",
             Address = "Cuareim 1234",
-            Role = Role.Comprador,
+            Role = Role.Buyer,
             Password = "Password123"
         };
 

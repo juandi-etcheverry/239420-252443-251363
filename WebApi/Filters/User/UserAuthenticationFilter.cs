@@ -31,7 +31,7 @@ public class UserAuthenticationFilter : Attribute, IActionFilter
             throw new UnauthorizedAccessException("You must be logged in to perform this action!");
 
         var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
-        if (!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Administrador ||
+        if (!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Admin ||
               _sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Total))
             throw new InvalidCredentialException("You must be an administrator to perform this action!");
     }

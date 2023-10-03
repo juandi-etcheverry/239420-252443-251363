@@ -33,7 +33,7 @@ public class PurchaseController : ControllerBase
         User user = _userLogic.GetUser(userId);
         Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
         var userAuth = _sessionTokenLogic.GetSessionToken(auth).User;
-        if (userAuth.Role == Role.Administrador || userAuth.Id != user.Id)
+        if (userAuth.Role == Role.Admin || userAuth.Id != user.Id)
             throw new InvalidCredentialException("You are not authorized to see this information");
         var response = new GetPurchasesHistoryResponse()
             { Purchases = _purchaseLogic.GetAllPurchasesHistory(user) };
@@ -46,7 +46,7 @@ public class PurchaseController : ControllerBase
     {
         Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
         var user = _sessionTokenLogic.GetSessionToken(auth).User;
-        if (user.Role == Role.Administrador)
+        if (user.Role == Role.Admin)
             throw new InvalidCredentialException("You are not authorized to see this information");
         var purchase = _purchaseLogic.AddCart(request.ToEntity());
         if (purchase.User.Id != user.Id)

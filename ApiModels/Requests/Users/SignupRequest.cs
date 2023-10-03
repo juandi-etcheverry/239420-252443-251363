@@ -37,7 +37,7 @@ namespace ApiModels.Requests.Users
             {
                 Email = Email,
                 Address = Address,
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Password = Password
             };
         }

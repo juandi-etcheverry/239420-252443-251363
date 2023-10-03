@@ -13,7 +13,7 @@ namespace Domain.Tests
             {
                 Email = "",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234"
             };
         }   
@@ -26,7 +26,7 @@ namespace Domain.Tests
             {
                 Email = "userEmail",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234"
             };
         }
@@ -39,7 +39,7 @@ namespace Domain.Tests
             {
                 Email = "user@test.com",
                 Password = "",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234"
             };
         }
@@ -52,7 +52,7 @@ namespace Domain.Tests
             {
                 Email = "user@test.com",
                 Password = "1234",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234"
             };
         }
@@ -65,7 +65,7 @@ namespace Domain.Tests
             {
                 Email = "user@test.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = ""
             };
         }
