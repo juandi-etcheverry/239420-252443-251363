@@ -72,4 +72,20 @@ public class CartRepositoryTest
         //Assert
         Assert.AreEqual(result.Products[0].Id, product.Id);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "Product is null")]
+    public void AddProduct_NullProductFail()
+    {
+        //Arrange
+        var context = CreateDbContext("AddProduct_CorrectProductOK");
+        var cartRepository = new CartRepository(context);
+        var session = new SessionToken();
+        var cart = new Cart { Session = session};
+        var cartResult = cartRepository.AddCart(cart);
+        Product product = null;
+        
+        //Act
+        var result = cartRepository.AddProduct(cartResult, product);
+    }
 }
