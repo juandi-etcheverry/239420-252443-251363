@@ -269,6 +269,25 @@ namespace DataAccess.Tests
             //Assert
             Assert.AreEqual(user, result);
         }
+
+        [TestMethod]
+        public void FindUser_NotFound_OK()
+        {
+            var context = CreateDbContext("FindUser_NotFound_OK_Test");
+            var userRepository = new UserRepository(context);
+
+            var user = new User
+            {
+                Email = "test@gmail.com",
+                Password = "Password123",
+                Role = Role.Comprador,
+                Address = "Mercedes 2331",
+            };
+
+            var result = userRepository.FindUser(user.Email);
+
+            Assert.IsFalse(result);
+        }
     }
 }
 

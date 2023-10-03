@@ -56,18 +56,8 @@ namespace DataAccess
 
         public bool FindUser(string email)
         {
-            User user;
-            try
-            {
-                user = _context.Set<User>().Where(u => u.Email == email).FirstOrDefault();
-            }
-            catch (ArgumentNullException)
-            {
-                return false;
-            }
-            
-            if(user == null) return false;
-
+            var user = _context.Set<User>().Where(u => u.Email == email).FirstOrDefault();
+            if (user == null) return false;
             return true;
         }
     }
