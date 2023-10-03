@@ -7,6 +7,7 @@ public class Purchase
     
     public User User { get; set; }
     
+    public bool IsCompleted { get; set; }
     
     public void AddProducts(List<Product> products)
     {
@@ -32,6 +33,7 @@ public class Purchase
     {
         User = user;
     }
+    
 
 
 }

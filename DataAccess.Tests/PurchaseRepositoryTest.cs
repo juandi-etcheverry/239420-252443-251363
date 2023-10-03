@@ -283,4 +283,99 @@ public class Test
         //Act
         purchaseRepository.AssignUserToPurchase(purchaseResult, null);
     }
+
+    [TestMethod]
+    public void GetAllPurchasesHistory_Completed_OK()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User
+        {
+            Email = "test@gmail.com",
+            Address = "Cuareim123",
+            Password = "Cuareim123"
+        };
+        var purchase = new Purchase
+        {
+            User = user,
+            IsCompleted = true
+        };
+        var purchaseResult = purchaseRepository.AddPurchase(purchase);
+        
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory(user);
+        
+        //Assert
+        Assert.AreEqual(1, result.Count);
+    }
+    [TestMethod]
+    public void GetAllPurchasesHistory_NotCompleted_OK()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory_NotCompleted_OK");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User
+        {
+            Email = "test@gmail.com",
+            Address = "Cuareim123",
+            Password = "Cuareim123"
+        };
+        var purchase1 = new Purchase
+        {
+            User = user,
+            IsCompleted = true
+        };
+        var purchase2 = new Purchase
+        {
+            User = user,
+            IsCompleted = false
+        };
+        purchaseRepository.AddPurchase(purchase1);
+        purchaseRepository.AddPurchase(purchase2);
+        
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory(user);
+        
+        //Assert
+        Assert.AreEqual(1, result.Count);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "User is null")]
+    public void GetAllPurchasesHistory_NullUser_Fail()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory_NullUser_Fail");
+        var purchaseRepository = new PurchaseRepository(context);
+        var purchase = new Purchase();
+        var purchaseResult = purchaseRepository.AddPurchase(purchase);
+        
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory(null);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "There are no purchases")]
+    public void GetAllPurchasesHistory_NoPurchases_Fail()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory_NoPurchases_Fail");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User
+        {
+            Email = "test@gmail.com",
+            Address = "Cuareim123",
+            Password = "Cuareim123"
+        };
+        var purchase = new Purchase
+        {
+            User = user,
+            IsCompleted = false
+        };
+        var purchaseResult = purchaseRepository.AddPurchase(purchase);
+        
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory(user);
+    }
 }
