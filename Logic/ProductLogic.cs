@@ -29,5 +29,9 @@ public class ProductLogic : IProductLogic
     {
         return _productRepository.AddProduct(product);
     }
-    
+
+    public List<Product> GetProducts(Func<Product, bool> predicate)
+    {
+        return _productRepository.GetProducts(predicate);
+    }
 }

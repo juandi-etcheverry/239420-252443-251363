@@ -41,7 +41,18 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetProducts([FromQuery] GetProductsRequest request)
         {
-            return StatusCode(200, "Products retrieved successfully");
+            var products = _productLogic.GetProducts(p => p.Name.Contains(request.Text) ||
+                                                          p.Description.Contains(request.Text) ||
+                                                          p.Brand.Name.Contains(request.Brand) ||
+                                                          p.Category.Name.Contains(request.Category));
+
+             var response = new GetProductsResponse()
+            {
+                Message = "Products retrieved successfully",
+                Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList()
+            };
+
+             return StatusCode(200, response);
         }
 
     }
