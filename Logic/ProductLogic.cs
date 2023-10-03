@@ -13,7 +13,7 @@ public class ProductLogic : IProductLogic
         _productRepository = productRepository;
     }
     
-    public Product GetProduct(int id)
+    public Product GetProduct(Guid id)
     {
         var product = _productRepository.GetProduct(id);
         if (product.IsDeleted) throw new ArgumentException($"Product with id {id} not found");
@@ -24,5 +24,14 @@ public class ProductLogic : IProductLogic
     {
         return _productRepository.GetProducts(p => p.IsDeleted == false);
     }
-    
+
+    public Product AddProduct(Product product)
+    {
+        return _productRepository.AddProduct(product);
+    }
+
+    public List<Product> GetProducts(Func<Product, bool> predicate)
+    {
+        return _productRepository.GetProducts(predicate);
+    }
 }

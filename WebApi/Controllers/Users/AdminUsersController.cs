@@ -28,6 +28,7 @@ namespace WebApi.Controllers.Users
             User user = _userLogic.GetUser(id);
             var response = new GetUserResponse()
             {
+                Message = "User found",
                 Address = user.Address,
                 Email = user.Email,
                 Role = user.Role,
@@ -42,6 +43,7 @@ namespace WebApi.Controllers.Users
             User user = _userLogic.DeleteUser(id);
             var response = new DeleteUserResponse()
             {
+                Message = "User deleted",
                Email = user.Email,
                Address = user.Address,
                Role = user.Role,
@@ -57,6 +59,7 @@ namespace WebApi.Controllers.Users
             User user = _userLogic.UpdateUser(id, request.ToEntity());
             var response = new UpdateUserResponse()
             {
+                Message = "User updated",
                 Email = user.Email,
                 Address = user.Address,
                 Role = user.Role,

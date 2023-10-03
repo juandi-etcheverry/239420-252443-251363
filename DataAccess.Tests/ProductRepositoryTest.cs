@@ -106,7 +106,7 @@ public class ProductTests
         context.SaveChanges();
         
         // Act
-        productRepository.GetProduct(-1);
+        productRepository.GetProduct(new Guid());
     }
     
     [TestMethod]
@@ -387,6 +387,6 @@ public class ProductTests
         context.SaveChanges();
         
         // Act
-        productRepository.SoftDelete(-1);
+        productRepository.SoftDelete(new Guid());
     }
 }
