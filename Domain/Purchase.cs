@@ -1,10 +1,17 @@
 namespace Domain;
 
-public class Cart
+public class Purchase
 {
     public int Id { get; private set; }
     public List<Product> Products { get; set; } = new List<Product>();
-    public SessionToken Session { get; set; }
+    
+    public User User { get; set; }
+    
+    
+    public void AddProducts(List<Product> products)
+    {
+        foreach (var p in products) AddProduct(p);
+    }
     
     public Product AddProduct(Product product)
     {
@@ -18,4 +25,10 @@ public class Cart
         Products.Remove(product);
         return product;
     }
+    public void AssignUser(User user)
+    {
+        User = user;
+    }
+
+
 }

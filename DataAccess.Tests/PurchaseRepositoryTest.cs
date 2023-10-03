@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Tests;
 
 [TestClass]
-public class CartRepositoryTest
+public class PurchaseRepositoryTest
 {
     private DbContext CreateDbContext(string dbName)
     {
@@ -19,10 +19,7 @@ public class CartRepositoryTest
         var context = CreateDbContext("AddCart_CorrectCart");
         var cartRepository = new CartRepository(context);
         var session = new SessionToken();
-        var cart = new Cart
-        {
-            Session = session
-        };
+        var cart = new Purchase();
         //Act
         var result = cartRepository.AddCart(cart);
         
@@ -31,27 +28,12 @@ public class CartRepositoryTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException), "Session is null")]
-    public void AddCart_CartSessionNullFalse()
-    {
-        //Arrange
-        var context = CreateDbContext("AddCart_CartSessionNullFalse");
-        var cartRepository = new CartRepository(context);
-        SessionToken session = null;
-        var cart = new Cart
-        {
-            Session = session
-        };
-        //Act
-        var result = cartRepository.AddCart(cart);
-    }
-
-    [TestMethod]
     public void AddProduct_CorrectProductOK()
     {
         //Arrange
         var context = CreateDbContext("AddProduct_CorrectProductOK");
         var cartRepository = new CartRepository(context);
+        var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
             Description = "Test Description",
@@ -60,14 +42,15 @@ public class CartRepositoryTest
             Category = new Category(){Name="Bag"},
             Colors = new List<Color>() {new(){Name="Red"}},
         };
+        products.Add(product);
         context.Set<Product>().Add(product);
         context.SaveChanges();
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase();
         var cartResult = cartRepository.AddCart(cart);
         
         //Act
-        var result = cartRepository.AddProduct(cartResult, product);
+        var result = cartRepository.AddProducts(cartResult, products);
         
         //Assert
         Assert.AreEqual(result.Products[0].Id, product.Id);
@@ -81,12 +64,14 @@ public class CartRepositoryTest
         var context = CreateDbContext("AddProduct_CorrectProductOK");
         var cartRepository = new CartRepository(context);
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase();
         var cartResult = cartRepository.AddCart(cart);
+        var products = new List<Product>();
         Product product = null;
+        products.Add(product);
         
         //Act
-        var result = cartRepository.AddProduct(cartResult, product);
+        var result = cartRepository.AddProducts(cartResult, products);
     }
     
     [TestMethod]
@@ -95,6 +80,7 @@ public class CartRepositoryTest
         //Arrange
         var context = CreateDbContext("DeleteProduct_CorrectProductOK");
         var cartRepository = new CartRepository(context);
+        var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
             Description = "Test Description",
@@ -103,12 +89,13 @@ public class CartRepositoryTest
             Category = new Category(){Name="Bag"},
             Colors = new List<Color>() {new(){Name="Red"}},
         };
+        products.Add(product);
         context.Set<Product>().Add(product);
         context.SaveChanges();
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase {};
         var cartResult = cartRepository.AddCart(cart);
-        var cartResultWithProduct = cartRepository.AddProduct(cartResult, product);
+        var cartResultWithProduct = cartRepository.AddProducts(cartResult, products);
         
         //Act
         var result = cartRepository.DeleteProduct(cartResultWithProduct, product);
@@ -125,7 +112,7 @@ public class CartRepositoryTest
         var context = CreateDbContext("DeleteProduct_NullProductFail");
         var cartRepository = new CartRepository(context);
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase {};
         var cartResult = cartRepository.AddCart(cart);
         Product product = null;
         
@@ -140,6 +127,7 @@ public class CartRepositoryTest
         //Arrange
         var context = CreateDbContext("AddProduct_NullCartFail");
         var cartRepository = new CartRepository(context);
+        var products = new List<Product>();
         var product = new Product{
             Name = "Test Product",
             Description = "Test Description",
@@ -148,12 +136,13 @@ public class CartRepositoryTest
             Category = new Category(){Name="Bag"},
             Colors = new List<Color>() {new(){Name="Red"}},
         };
+        products.Add(product);
         context.Set<Product>().Add(product);
         context.SaveChanges();
-        Cart cart = null;
+        Purchase purchase = null;
         
         //Act
-        var result = cartRepository.AddProduct(cart, product);
+        var result = cartRepository.AddProducts(purchase, products);
     }
 
     [TestMethod]
@@ -173,9 +162,9 @@ public class CartRepositoryTest
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
-        Cart cart = null;
+        Purchase purchase = null;
         
         //Act
-        var result = cartRepository.DeleteProduct(cart, product);
+        var result = cartRepository.DeleteProduct(purchase, product);
     }
 }

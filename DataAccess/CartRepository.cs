@@ -11,27 +11,31 @@ public class CartRepository : ICartRepository
     {
         _context = context;
     }
-    public Cart AddCart(Cart cart)
+    public Purchase AddCart(Purchase purchase)
     {
-        if (cart.Session == null) throw new ArgumentException("Session is null");
-        _context.Set<Cart>().Add(cart);
+        _context.Set<Purchase>().Add(purchase);
         _context.SaveChanges();
-        return cart;
+        return purchase;
     }
-    public Cart AddProduct(Cart cart, Product product)
+    public Purchase AddProducts(Purchase purchase, List<Product> products)
     {
-        if (cart == null) throw new ArgumentException("Cart is null");
+        if (purchase == null) throw new ArgumentException("Cart is null");
+        if (products.Count == 0) throw new ArgumentException("There are no products to Add");
+        purchase.AddProducts(products);
+        _context.SaveChanges();
+        return purchase;
+    }
+    public Purchase DeleteProduct(Purchase purchase, Product product)
+    {
+        if (purchase == null) throw new ArgumentException("Cart is null");
         if (product == null) throw new ArgumentException("Product is null");
-        cart.AddProduct(product);
+        purchase.DeleteProduct(product);
         _context.SaveChanges();
-        return cart;
+        return purchase;
     }
-    public Cart DeleteProduct(Cart cart, Product product)
+    /*public Cart GetCartBySession(SessionToken sessionToken)
     {
-        if (cart == null) throw new ArgumentException("Cart is null");
-        if (product == null) throw new ArgumentException("Product is null");
-        cart.DeleteProduct(product);
-        _context.SaveChanges();
-        return cart;
-    }
+        //if (sessionToken == null) throw new ArgumentException("SessionToken is null");
+        return _context.Set<Cart>().Include(c => c.Products).FirstOrDefault(c => c.Session == sessionToken);
+    }*/
 }

@@ -5,7 +5,7 @@ using Moq;
 namespace Logic.Tests;
 
 [TestClass]
-public class CartLogicTest
+public class PurchaseLogicTest
 {
     [TestMethod]
     public void AddProductToCart_Valid_OK()
@@ -13,15 +13,15 @@ public class CartLogicTest
         // Arrange
         var product = new Product { Name = "Test", Price = 420, Description = "Test Description"};
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase();
         
         var mock = new Mock<ICartRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddProduct(It.IsAny<Cart>(), It.IsAny<Product>())).Returns(() =>
+        mock.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<Product>>())).Returns(() =>
         {
             cart.AddProduct(product);
             return cart;
         });
-        var logic = new CartLogic(mock.Object);
+        var logic = new PurchaseLogic(mock.Object);
         
         // Act
        var result = logic.AddProduct(product, cart);
@@ -36,15 +36,15 @@ public class CartLogicTest
         // Arrange
         var product = new Product { Name = "Test", Price = 420, Description = "Test Description"};
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase();
         
         var mock = new Mock<ICartRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.DeleteProduct(It.IsAny<Cart>(), It.IsAny<Product>())).Returns(() =>
+        mock.Setup(x => x.DeleteProduct(It.IsAny<Purchase>(), It.IsAny<Product>())).Returns(() =>
         {
             cart.DeleteProduct(product);
             return cart;
         });
-        var logic = new CartLogic(mock.Object);
+        var logic = new PurchaseLogic(mock.Object);
         
         // Act
        var result = logic.DeleteProduct(product, cart);
@@ -57,14 +57,14 @@ public class CartLogicTest
     {
         // Arrange
         var session = new SessionToken();
-        var cart = new Cart { Session = session};
+        var cart = new Purchase();
         
         var mock = new Mock<ICartRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddCart(It.IsAny<Cart>())).Returns(() =>
+        mock.Setup(x => x.AddCart(It.IsAny<Purchase>())).Returns(() =>
         {
             return cart;
         });
-        var logic = new CartLogic(mock.Object);
+        var logic = new PurchaseLogic(mock.Object);
         
         // Act
        var result = logic.AddCart(cart);
