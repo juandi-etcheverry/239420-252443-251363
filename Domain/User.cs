@@ -7,7 +7,7 @@ namespace Domain
 {
 	public class User
 	{
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
         private string _email;
 		public string Email
         {
@@ -42,7 +42,6 @@ namespace Domain
         public Role Role { get; set; }
 		
         public bool IsDeleted { get; set; } = false;
-        public SessionToken? Session { get; set; }
     }
 }
 

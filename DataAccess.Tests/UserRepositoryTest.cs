@@ -1,17 +1,40 @@
 ﻿using System;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 using TypeHelper;
 
 namespace DataAccess.Tests
 {
     [TestClass]
     public class UserRepositoryTest
-	{
+    {
+
+        private SessionToken _sessionToken;
+        private User _user;
+
         private DbContext CreateDbContext(string dbName)
         {
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(dbName).Options;
-            return new Context(options);
+            var context =  new Context(options);
+
+            _user = new User()
+            {
+                Email = "test@test.com",
+                Password = "Password123",
+                Role = Role.Buyer,
+                Address = "Mercedes 2331"
+            };
+            context.Set<User>().Add(_user);
+
+
+            _sessionToken = new SessionToken()
+            {
+                User = _user,
+            };
+            context.Set<SessionToken>().Add(_sessionToken);
+
+            return context;
         }
 
         [TestMethod]
@@ -21,19 +44,12 @@ namespace DataAccess.Tests
             var context = CreateDbContext("AddUser_CorrectUser_OK");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "test@gmail.com",
-                Password = "Password123",
-                Role = Role.Buyer,
-                Address = "Mercedes 2331"
-            };
 
             //Act
-            var result = userRepository.AddUser(user);
+            var result = userRepository.AddUser(_user);
 
             //Assert
-            Assert.AreEqual(user, result);
+            Assert.AreEqual(_user, result);
         }
 
         [TestMethod]
@@ -43,19 +59,11 @@ namespace DataAccess.Tests
             var context = CreateDbContext("AddUser_CorrectUser_OK");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "test@gmail.com",
-                Password = "Password123",
-                Role = Role.Buyer,
-                Address = "Mercedes 2331"
-            };
-
             //Act
-            userRepository.AddUser(user);
+            userRepository.AddUser(_user);
 
             //Assert
-            Assert.ThrowsException<ArgumentException>(() => userRepository.AddUser(user));
+            Assert.ThrowsException<ArgumentException>(() => userRepository.AddUser(_user));
         }
 
         [TestMethod]
@@ -182,17 +190,9 @@ namespace DataAccess.Tests
             var context = CreateDbContext("UpdateUser_CorrectUser_OK");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "test@gmail.com",
-                Password = "Password123",
-                Role = Role.Buyer,
-                Address = "Mercedes 2331",
-            };
+            userRepository.AddUser(_user);
 
-            userRepository.AddUser(user);
-
-            var result = userRepository.UpdateUser(user.Id,
+            var result = userRepository.UpdateUser(_user.Id,
                 new User() { Address = "new Address", Email = "newEmail@gmail.com", Role = Role.Total });
 
             Assert.AreEqual("new Address", result.Address);
@@ -206,17 +206,9 @@ namespace DataAccess.Tests
             var context = CreateDbContext("FindUser_OK_Test");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "test@gmail.com",
-                Password = "Password123",
-                Role = Role.Buyer,
-                Address = "Mercedes 2331",
-            };
+            userRepository.AddUser(_user);
 
-            userRepository.AddUser(user);
-
-            var result = userRepository.FindUser(user.Email);
+            var result = userRepository.FindUser(_user.Email);
 
             Assert.IsTrue(result);
         }
@@ -228,21 +220,13 @@ namespace DataAccess.Tests
             var context = CreateDbContext("GetUser_EmailAndPassword_OK");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "testing@gmial.com",
-                Address = "Mercedes 2331",
-                Password = "Password123",
-                Role = Role.Buyer
-            };
-
-            userRepository.AddUser(user);
+            userRepository.AddUser(_user);
 
             //Act
-            var result = userRepository.GetUser(user.Email, user.Password);
+            var result = userRepository.GetUser(_user.Email, _user.Password);
 
             //Assert
-            Assert.AreEqual(user.Id, result.Id);
+            Assert.AreEqual(_user.Id, result.Id);
         }
 
         [TestMethod]
@@ -253,21 +237,13 @@ namespace DataAccess.Tests
             var context = CreateDbContext("GetUser_EmailAndPassword_FAIL");
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "testing@gmial.com",
-                Address = "Mercedes 2331",
-                Password = "Password123",
-                Role = Role.Buyer
-            };
-
-            userRepository.AddUser(user);
+            userRepository.AddUser(_user);
 
             //Act
             var result = userRepository.GetUser("notTheEmail@test.com", "notThePassword");
 
             //Assert
-            Assert.AreEqual(user, result);
+            Assert.AreEqual(_user, result);
         }
 
         [TestMethod]

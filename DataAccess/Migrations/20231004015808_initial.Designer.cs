@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231003234732_initial")]
+    [Migration("20231004015808_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -117,13 +117,45 @@ namespace DataAccess.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int?>("PurchaseId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("PurchaseId");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Domain.Purchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("FinalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PromotionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Domain.SessionToken", b =>
@@ -132,10 +164,15 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -202,19 +239,45 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Purchase", null)
+                        .WithMany("Products")
+                        .HasForeignKey("PurchaseId");
+
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Domain.Purchase", b =>
+                {
+                    b.HasOne("Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.SessionToken", b =>
                 {
+                    b.HasOne("Domain.Purchase", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
+
                     b.HasOne("Domain.User", "User")
                         .WithOne("Session")
                         .HasForeignKey("Domain.SessionToken", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.Navigation("Cart");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Purchase", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Domain.User", b =>

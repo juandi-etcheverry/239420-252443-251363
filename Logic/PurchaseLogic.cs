@@ -30,6 +30,7 @@ public class PurchaseLogic : IPurchaseLogic
     }
     public Purchase AddCart(Purchase purchase)
     {
+        SetFinalPrice(purchase);
         var result = _purchaseRepository.AddPurchase(purchase);
         return result;
     }

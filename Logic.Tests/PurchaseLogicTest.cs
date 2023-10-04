@@ -3,6 +3,7 @@ using Domain;
 using Logic.Interfaces;
 using Moq;
 using PromotionStrategies;
+using TypeHelper;
 
 namespace Logic.Tests;
 
@@ -62,13 +63,29 @@ public class PurchaseLogicTest
         // Arrange
         var session = new SessionToken();
         var cart = new Purchase();
-        
-        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddPurchase(It.IsAny<Purchase>())).Returns(() =>
+        var user = new User()
+        {
+            Email = "test@test.com",
+            Address = "Cuareim 1234",
+            Role = Role.Buyer,
+            Password = "Password123"
+        };
+        Product newProduct = new Product { Name = "Test", Price = 420, Description = "Test Description" };
+
+        cart.User = user;
+        cart.Products = new List<Product>() { newProduct };
+
+        var mockPurchaseRepository = new Mock<IPurchaseRepository>(MockBehavior.Strict);
+        mockPurchaseRepository.Setup(x => x.AddPurchase(It.IsAny<Purchase>())).Returns(() =>
         {
             return cart;
         });
-        var logic = new PurchaseLogic(mock.Object);
+
+        var mockPromotionLogic = new Mock<IPromotionLogic>(MockBehavior.Strict);
+        mockPromotionLogic.Setup(m => m.GetBestPromotion(It.IsAny<List<Product>>()))
+            .Returns(new TwentyPercentPromotionStrategy());
+
+        var logic = new PurchaseLogic(mockPurchaseRepository.Object, mockPromotionLogic.Object);
         
         // Act
        var result = logic.AddCart(cart);

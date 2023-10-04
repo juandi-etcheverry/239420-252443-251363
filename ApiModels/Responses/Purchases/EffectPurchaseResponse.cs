@@ -1,9 +1,9 @@
 using Domain;
 
-namespace ApiModels.Responses;
+namespace ApiModels.Responses.Purchases;
 
 public class EffectPurchaseResponse
 {
-    public Purchase Purchase { get; set; }
+    public PurchaseDTO Purchase { get; set; }
     public string Message { get; set; }
 }

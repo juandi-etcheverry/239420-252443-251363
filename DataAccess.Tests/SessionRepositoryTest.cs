@@ -8,10 +8,33 @@ namespace DataAccess.Tests
     [TestClass]
     public class SessionRepositoryTest
     {
+
+        private User _user;
+        private SessionToken _session;
+        private Purchase _cart;
+
         private DbContext CreateDbContext(string dbName)
         {
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(dbName).Options;
-            return new Context(options);
+
+            var context = new Context(options);
+
+
+            _user = new User()
+            {
+                Email = "test@test.com",
+                Password = "Password123",
+                Role = Role.Buyer,
+                Address = "Cuareim 1234"
+            };
+            context.Set<User>().Add(_user);
+
+            _cart = new Purchase() { User = _user };
+            context.Set<Purchase>().Add(_cart);
+
+            _session = new SessionToken() { User = _user, Cart = _cart};
+
+            return context;
         }
 
         [TestMethod]
@@ -22,22 +45,11 @@ namespace DataAccess.Tests
             var sessionRepository = new SessionRepository(context);
             var userRepository = new UserRepository(context);
 
-            var user = new User
-            {
-                Email = "test@gmail.com",
-                Password = "Password123",
-                Role = Role.Buyer,
-                Address = "Cuareim 1234",
-            };
-            var userResult = userRepository.AddUser(user);
+            var userResult = userRepository.AddUser(_user);
 
-            var session = new SessionToken
-            {
-                User = userResult
-            };
 
             //Act
-            var sessionResult = sessionRepository.AddSessionToken(session);
+            var sessionResult = sessionRepository.AddSessionToken(_session);
 
             //Assert
             Assert.AreEqual(sessionResult.User.Id, userResult.Id);

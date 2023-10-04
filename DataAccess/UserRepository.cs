@@ -17,7 +17,7 @@ namespace DataAccess
 
 		public User AddUser(User user)
 		{
-			_context.Set<User>().Add(user);
+            _context.Set<User>().Add(user);
 			_context.SaveChanges();
 			return user;
 		}
