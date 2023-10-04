@@ -48,4 +48,11 @@ public class PurchaseRepository : IPurchaseRepository
         if(result.Count == 0) throw new ArgumentException("There are no purchases");
         return result;
     }
+
+    public List<Purchase> GetAllPurchasesHistory()
+    {
+        var result = _context.Set<Purchase>().Include(p => p.Products).ToList();
+        if (result.Count == 0) throw new ArgumentException("There are no purchases");
+        return result;
+    }
 }

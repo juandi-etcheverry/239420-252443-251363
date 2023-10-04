@@ -1,5 +1,6 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using TypeHelper;
 
 namespace DataAccess.Tests;
 
@@ -369,6 +370,49 @@ public class Test
         
         //Assert
         Assert.AreEqual(500, result.TotalPrice);
+    }
+
+    [TestMethod]
+    public void GetAllPurchasesHistory_AllPurchases_OK()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory_AllPurchases_OK");
+        var purchaseRepository = new PurchaseRepository(context);
+        var user = new User()
+        {
+            Email = "A@A.A",
+            Address = "A",
+            Password = "Password123",
+            Role = Role.Buyer
+        };
+        List<Product> products = new List<Product>();
+        var product1 = new Product
+        {   
+            Name = "A",
+            Description = "A",
+            Price = 300
+        };
+        var product2 = new Product
+        {
+            Name = "A",
+            Description = "A",
+            Price = 200
+        };
+        products.Add(product1);
+        products.Add(product2);
+        var purchase = new Purchase
+        {
+            User = user,
+            Products = products
+        };
+        purchaseRepository.AddProducts(purchase, products);
+        purchaseRepository.AddPurchase(purchase);
+
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory();
+        
+        //Assert
+        Assert.AreEqual(purchase, result[0]);
     }
 
 }
