@@ -280,7 +280,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
             };
 
