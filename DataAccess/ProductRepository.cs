@@ -20,7 +20,7 @@ public class ProductRepository : IProductRepository
         return product;
     }
     
-    public Product GetProduct(int id)
+    public Product GetProduct(Guid id)
     {
         var product = _context.Set<Product>().Find(id);
         if (product == null) throw new ArgumentException($"Product with id {id} not found");
@@ -37,7 +37,7 @@ public class ProductRepository : IProductRepository
         return _context.Set<Product>().Where(predicate).ToList();
     }
 
-    public Product SoftDelete(int id)
+    public Product SoftDelete(Guid id)
     {
         var product = _context.Set<Product>().Find(id);
         if (product == null) throw new ArgumentException($"Product with id {id} not found");

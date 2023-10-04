@@ -2,9 +2,9 @@ using ServerFactory;
 using WebApi.Filters;
 using WebApi.Filters.Login;
 using WebApi.Filters.Logout;
-using WebApi.Filters.User;
 using WebApi.Filters.Signup;
 using WebApi.Filters.User;
+using WebApi.Filters.User.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,8 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<CustomExceptionFilter>();
 });
-builder.Services.AddScoped<UserAuthenticationFilter>();
+builder.Services.AddScoped<UpdateUserAuthenticationFilter>();
+builder.Services.AddScoped<AdminUserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();
 builder.Services.AddScoped<LoginAuthenticationFilter>();
 builder.Services.AddScoped<IsLoggedInAuthenticationFilter>();

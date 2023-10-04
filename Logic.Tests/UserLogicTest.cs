@@ -140,5 +140,103 @@ namespace Logic.Tests
 
             var result = logic.GetUser("anyEmail@test.com", "anyPassword");
         }
-    }
+
+        [TestMethod]
+        public void CreateUser_Valid_OK()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "userTest@gmail.com",
+		        Password = "Password123",
+		        Role = Role.Comprador,
+		        Address = "Ejido 1234",
+	        };
+
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(u => u.AddUser(It.IsAny<User>())).Returns(user);
+	        mock.Setup(u => u.FindUser(It.IsAny<string>())).Returns(false);
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        var result = logic.CreateUser(user);
+	        
+	        //Assert
+	        Assert.AreEqual(user, result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with email abc@abc.com already exists")]
+        public void CreateUser_InvalidEmail_FAIL()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "abc@abc.com",
+		        Password = "Password123",
+		        Address = "Ejido 1234",
+		        Role = Role.Comprador
+	        };
+			
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur => ur.FindUser(It.IsAny<string>())).Returns(true);
+
+	        var logic = new UserLogic(mock.Object);
+	        //Act
+	        logic.CreateUser(user);
+	        
+	        //ERROR
+        }
+
+        [TestMethod]
+        public void UpdateUser_ValidUser_OK()
+        {
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "a@a.a",
+		        Password = "Password123",
+		        Role = Role.Administrador
+	        };
+	        
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur =>
+                ur.UpdateUser(It.IsAny<Guid>(), It.IsAny<User>()))
+		        .Returns(user);
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        var result = logic.UpdateUser(Guid.Empty, user);
+	        
+	        //Assert
+	        Assert.AreEqual(user, result);
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "User with id 0 not found")]
+        public void UpdateUser_InvalidUser_FAIL()
+		{
+	        //Arrange
+	        var user = new User
+	        {
+		        Email = "a@a.a",
+		        Password = "Password123",
+		        Role = Role.Administrador
+	        };
+	        
+	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+	        mock.Setup(ur =>
+			        ur.UpdateUser(It.IsAny<Guid>(), It.IsAny<User>()))
+		        .Throws(new ArgumentException("User with id 0 not found"));
+
+	        var logic = new UserLogic(mock.Object);
+	        
+	        //Act
+	        logic.UpdateUser(Guid.Empty, user);
+	        
+	        //ERROR
+		}
+	}
 }

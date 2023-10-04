@@ -24,5 +24,14 @@ namespace DataAccess
         //        optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess"));
         //    }
         //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Session)
+                .WithOne(s => s.User)
+                .HasForeignKey<SessionToken>(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
