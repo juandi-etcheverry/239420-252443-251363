@@ -37,7 +37,7 @@ public class PurchaseController : ControllerBase
         var response = new GetPurchasesHistoryResponse()
         {
             Message = "Purchases retrieved successfully",
-            Purchases = purchases.Select(p => GetPurchasesHistoryResponse.ToPurchaseDTO(p)).ToList()
+            Purchases = purchases.Select(p => PurchaseDTO.ToPurchaseDTO(p)).ToList()
         };
         return StatusCode(200, response);
     }
@@ -58,8 +58,12 @@ public class PurchaseController : ControllerBase
         };
         newPurchase.AddProducts(products);
         var purchase = _purchaseLogic.AddCart(newPurchase);
- 
-        var response = new EffectPurchaseResponse() { Purchase = purchase }; //traer solo lo relevante, no todo el purchase que incluye user.
+
+        var response = new EffectPurchaseResponse()
+        {
+            Message = "Purchase created successfully",
+            Purchase = PurchaseDTO.ToPurchaseDTO(purchase)
+        }; 
         return StatusCode(201, response);
     }
 
