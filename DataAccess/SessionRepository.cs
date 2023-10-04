@@ -15,6 +15,10 @@ public class SessionRepository : ISessionRepository
     }
     public SessionToken AddSessionToken(SessionToken session)
     {
+        User user = _context.Set<User>().Find(session.User.Id);
+        Purchase cart = _context.Set<Purchase>().Find(session.Cart.Id);
+        session.User = user;
+        session.Cart = cart;
         _context.Set<SessionToken>().Add(session);
         _context.SaveChanges();
         return session;
