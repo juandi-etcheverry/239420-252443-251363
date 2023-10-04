@@ -17,6 +17,8 @@ namespace DataAccess
 
 		public User AddUser(User user)
 		{
+            SessionToken session = _context.Set<SessionToken>().Find(user.Session.Id);
+            user.Session = session;
 			_context.Set<User>().Add(user);
 			_context.SaveChanges();
 			return user;
