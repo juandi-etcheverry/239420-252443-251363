@@ -28,9 +28,9 @@ public class PurchaseController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/purchase/{id:guid}")]
+    [Route("api/purchases/{id:guid}")]
     [ServiceFilter(typeof(GetPurchaseHistoryFilter))]
-    public IActionResult GetPurchaseHistory([FromRoute] Guid id)
+    public IActionResult GetMyPurchaseHistory([FromRoute] Guid id)
     {
         User user = _userLogic.GetUser(id);
         List<Purchase> purchases = _purchaseLogic.GetAllPurchasesHistory(user);
@@ -43,7 +43,7 @@ public class PurchaseController : ControllerBase
     }
     
     [HttpPost]
-    [Route("api/purchase")]
+    [Route("api/purchases")]
     [ServiceFilter(typeof(AddPurchaseFilter))]
     public IActionResult AddPurchase([FromBody] AddPurchaseRequest request)
     {
@@ -68,14 +68,14 @@ public class PurchaseController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/purchase")]
+    [Route("api/purchases")]
     [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
-    public IActionResult GetUserPurchaseHistory()
+    public IActionResult GetAllPurchasesHistory()
     {
         var allPurchases = _purchaseLogic.GetAllPurchasesHistory();
         var response = new ManyPurchasesResponse()
         {
-            Purchases = allPurchases,
+            Purchases = allPurchases.Select(p => PurchaseDTO.ToPurchaseDTO(p)).ToList()
         };
         return StatusCode(200, response);
     }
