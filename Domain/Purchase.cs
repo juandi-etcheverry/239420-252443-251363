@@ -2,7 +2,7 @@ namespace Domain;
 
 public class Purchase
 {
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public List<Product> Products { get; set; } = new List<Product>();
     
     public User User { get; set; }

@@ -7,7 +7,7 @@ namespace Domain
 {
 	public class User
 	{
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
         private string _email;
 		public string Email
         {

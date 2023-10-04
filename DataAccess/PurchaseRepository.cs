@@ -13,6 +13,10 @@ public class PurchaseRepository : IPurchaseRepository
     }
     public Purchase AddPurchase(Purchase purchase)
     {
+        List<Product> products = _context.Set<Product>().Where(p => purchase.Products.Select(pp => pp.Id).Contains(p.Id)).ToList();
+        User user = _context.Set<User>().Find(purchase.User.Id);
+        purchase.Products = products;
+        purchase.User = user;
         _context.Set<Purchase>().Add(purchase);
         _context.SaveChanges();
         return purchase;
