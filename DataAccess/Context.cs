@@ -31,6 +31,11 @@ namespace DataAccess
                 .WithOne(s => s.User)
                 .HasForeignKey<SessionToken>(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Colors)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("ProductColor"));
         }
     }
 }
