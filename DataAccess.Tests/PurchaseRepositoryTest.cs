@@ -414,5 +414,17 @@ public class Test
         //Assert
         Assert.AreEqual(purchase, result[0]);
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "There are no purchases")]
+    public void GetAllPurchasesHistory_AllPurchases_Fail()
+    {
+        //Arrange
+        var context = CreateDbContext("GetAllPurchasesHistory_AllPurchases_Fail");
+        var purchaseRepository = new PurchaseRepository(context);
+        
+        //Act
+        var result = purchaseRepository.GetAllPurchasesHistory();
+    }
 
 }
