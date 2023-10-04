@@ -35,7 +35,7 @@ namespace WebApi.Filters.Products
                         throw new UnauthorizedAccessException("You are not logged in");
                     }
 
-                    if (!(sessionToken.User?.Role == Role.Administrador ||
+                    if (!(sessionToken.User?.Role == Role.Admin ||
                           sessionToken.User?.Role == Role.Total))
                         throw new InvalidCredentialException("You must be an administrator to perform this action!");
                 }

@@ -37,7 +37,7 @@ namespace WebApi.Filters.User
                 throw new UnauthorizedAccessException("You must be logged in to perform this action!");
             }
 
-            if (session.User.Role == Role.Comprador)
+            if (session.User.Role == Role.Buyer)
             {
                 var guidString = (string)context.RouteData.Values["id"];
                 if (session.User.Id != Guid.Parse(guidString))
