@@ -35,12 +35,20 @@ public class ProductRepository : IProductRepository
     
     public List<Product> GetProducts()
     {
-        return _context.Set<Product>().ToList();
+        return _context.Set<Product>().Include(p => p.Brand)
+            .Include(pp => pp.Category)
+            .Include(ppp => ppp.Colors)
+            .ToList();
     }
     
     public List<Product> GetProducts(Func<Product, bool> predicate)
     {
-        return _context.Set<Product>().Where(predicate).ToList();
+        return _context.Set<Product>().
+            Include(p => p.Brand)
+            .Include(pp => pp.Category)
+            .Include(ppp => ppp.Colors)
+            .Where(predicate)
+            .ToList();
     }
 
     public Product SoftDelete(Guid id)
