@@ -27,12 +27,12 @@ namespace WebApi.Controllers.Products
             var response = new CreateProductResponse()
             {
                 Message = "Product created successfully",
-                Name = request.Name,
-                Brand = request.Brand,
-                Category = request.Category,
-                Colors = request.Colors,
-                Description = request.Description,
-                Price = request.Price
+                Name = product.Name,
+                Brand = product.Brand,
+                Category = product.Category,
+                Colors = product.Colors.ToList(),
+                Description = product.Description,
+                Price = product.Price
             };
             return StatusCode(201, response);
         }

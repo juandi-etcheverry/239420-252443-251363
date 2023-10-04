@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
+    /// <inheritdoc />
     public partial class initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -112,33 +114,33 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ColorProduct",
+                name: "ProductColor",
                 columns: table => new
                 {
                     ColorsId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ColorProduct", x => new { x.ColorsId, x.ProductsId });
+                    table.PrimaryKey("PK_ProductColor", x => new { x.ColorsId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_ColorProduct_Colors_ColorsId",
+                        name: "FK_ProductColor_Colors_ColorsId",
                         column: x => x.ColorsId,
                         principalTable: "Colors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ColorProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_ProductColor_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ColorProduct_ProductsId",
-                table: "ColorProduct",
-                column: "ProductsId");
+                name: "IX_ProductColor_ProductId",
+                table: "ProductColor",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
@@ -158,10 +160,11 @@ namespace DataAccess.Migrations
                 filter: "[UserId] IS NOT NULL");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ColorProduct");
+                name: "ProductColor");
 
             migrationBuilder.DropTable(
                 name: "SessionTokens");

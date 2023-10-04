@@ -15,6 +15,12 @@ public class ProductRepository : IProductRepository
 
     public Product AddProduct(Product product)
     {
+        Category category = _context.Set<Category>().Find(product.Category.Id);
+        Brand brand = _context.Set<Brand>().Find(product.Brand.Id);
+        List<Color> colors = _context.Set<Color>().Where(c => product.Colors.Select(pc => pc.Id).Contains(c.Id)).ToList();
+        product.Category = category;
+        product.Brand = brand;
+        product.Colors = colors;
         _context.Set<Product>().Add(product);
         _context.SaveChanges();
         return product;
