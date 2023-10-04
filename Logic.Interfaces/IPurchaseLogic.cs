@@ -8,4 +8,5 @@ public interface IPurchaseLogic
     public Purchase AddCart(Purchase purchase);
     public void SetFinalPrice(Purchase purchase);
     public List<Purchase> GetAllPurchasesHistory(User user);
+    public List<Purchase> GetAllPurchasesHistory();
 }

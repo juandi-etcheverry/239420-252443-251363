@@ -132,6 +132,26 @@ public class PurchaseLogicTest
         
         //Assert
         Assert.AreEqual(purchases, result);
+    }
+    
+    [TestMethod]
+    public void GetAllPurchasesHistory_Empty_OK()
+    {
+        //Arrange
+        var user = new User();
+        var purchases = new List<Purchase>();
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetAllPurchasesHistory(It.IsAny<User>())).Returns(() =>
+        {
+            return purchases;
+        });
+
+        var logic = new PurchaseLogic(mock.Object);
         
+        //Act
+        var result = logic.GetAllPurchasesHistory(user);
+        
+        //Assert
+        Assert.AreEqual(purchases, result);
     }
 }

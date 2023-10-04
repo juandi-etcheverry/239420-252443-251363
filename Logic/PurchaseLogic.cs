@@ -46,4 +46,9 @@ public class PurchaseLogic : IPurchaseLogic
         var result = _purchaseRepository.GetAllPurchasesHistory(user);
         return result;
     }
+
+    public List<Purchase> GetAllPurchasesHistory()
+    {
+        return _purchaseRepository.GetAllPurchasesHistory();
+    }
 }
