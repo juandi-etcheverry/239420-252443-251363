@@ -5,56 +5,62 @@ using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using TypeHelper;
-using WebApi.Filters;
 using WebApi.Filters.Logout;
+using WebApi.Filters.Purchase;
 using WebApi.Filters.User.Admin;
 
 namespace WebApi.Controllers;
 
 [ApiController]
-[ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
 public class PurchaseController : ControllerBase
 {
     private IPurchaseLogic _purchaseLogic;
     private readonly ISessionTokenLogic _sessionTokenLogic;
     private readonly IUserLogic _userLogic;
+    private readonly IProductLogic _productLogic;
 
-    public PurchaseController(IPurchaseLogic purchaseLogic, ISessionTokenLogic sessionTokenLogic, IUserLogic userLogic)
+    public PurchaseController(IPurchaseLogic purchaseLogic, ISessionTokenLogic sessionTokenLogic, IUserLogic userLogic, IProductLogic productLogic)
     {
         _purchaseLogic = purchaseLogic;
         _sessionTokenLogic = sessionTokenLogic;
         _userLogic = userLogic;
+        _productLogic = productLogic;
     }
 
     [HttpGet]
     [Route("api/purchase/{id:guid}")]
-    [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
+    [ServiceFilter(typeof(GetPurchaseHistoryFilter))]
     public IActionResult GetPurchaseHistory([FromRoute] Guid id)
     {
         User user = _userLogic.GetUser(id);
-        Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
-        var userAuth = _sessionTokenLogic.GetSessionToken(auth).User;
-        if (userAuth.Role == Role.Admin || userAuth.Id != user.Id)
-            throw new InvalidCredentialException("You are not authorized to see this information");
+        List<Purchase> purchases = _purchaseLogic.GetAllPurchasesHistory(user);
         var response = new GetPurchasesHistoryResponse()
-            { Purchases = _purchaseLogic.GetAllPurchasesHistory(user) };
+        {
+            Message = "Purchases retrieved successfully",
+            Purchases = purchases.Select(p => GetPurchasesHistoryResponse.ToPurchaseDTO(p)).ToList()
+        };
         return StatusCode(200, response);
     }
     
     [HttpPost]
     [Route("api/purchase")]
-    [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
+    [ServiceFilter(typeof(AddPurchaseFilter))]
     public IActionResult AddPurchase([FromBody] AddPurchaseRequest request)
     {
         Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
         var user = _sessionTokenLogic.GetSessionToken(auth).User;
-        if (user.Role == Role.Admin)
-            throw new InvalidCredentialException("You are not authorized to see this information");
-        var purchase = _purchaseLogic.AddCart(request.ToEntity());
-        if (purchase.User.Id != user.Id)
-            throw new InvalidCredentialException("You are not authorized to see this information");
-        var response = new EffectPurchaseResponse() { Purchase = purchase };
-        return StatusCode(200, response);
+
+        List<Product> products = _productLogic.GetProducts(p => request.ProductsIds.Contains(p.Id));
+
+        var newPurchase = new Purchase()
+        {
+            User = user
+        };
+        newPurchase.AddProducts(products);
+        var purchase = _purchaseLogic.AddCart(newPurchase);
+ 
+        var response = new EffectPurchaseResponse() { Purchase = purchase }; //traer solo lo relevante, no todo el purchase que incluye user.
+        return StatusCode(201, response);
     }
 
     [HttpGet]
