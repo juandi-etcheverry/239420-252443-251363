@@ -1,6 +1,6 @@
 using System.Security.Authentication;
 using ApiModels.Requests;
-using ApiModels.Responses;
+using ApiModels.Responses.Purchases;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using WebApi.Filters.Logout;
 using WebApi.Filters.Purchase;
 using WebApi.Filters.User.Admin;
 
-namespace WebApi.Controllers;
+namespace WebApi.Controllers.Purchases;
 
 [ApiController]
 public class PurchaseController : ControllerBase
@@ -41,7 +41,7 @@ public class PurchaseController : ControllerBase
         };
         return StatusCode(200, response);
     }
-    
+
     [HttpPost]
     [Route("api/purchases")]
     [ServiceFilter(typeof(AddPurchaseFilter))]
@@ -63,7 +63,7 @@ public class PurchaseController : ControllerBase
         {
             Message = "Purchase created successfully",
             Purchase = PurchaseDTO.ToPurchaseDTO(purchase)
-        }; 
+        };
         return StatusCode(201, response);
     }
 

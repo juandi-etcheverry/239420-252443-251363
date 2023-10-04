@@ -1,5 +1,5 @@
 using Domain;
-namespace ApiModels.Responses;
+namespace ApiModels.Responses.Purchases;
 
 public class GetPurchasesHistoryResponse
 {
