@@ -197,7 +197,7 @@ namespace Logic.Tests
 	        {
 		        Email = "a@a.a",
 		        Password = "Password123",
-		        Role = RoleAdmin
+		        Role = Role.Admin
 	        };
 	        
 	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
@@ -223,7 +223,7 @@ namespace Logic.Tests
 	        {
 		        Email = "a@a.a",
 		        Password = "Password123",
-		        Role = RoleAdmin
+		        Role = Role.Admin
 	        };
 	        
 	        var mock = new Mock<IUserRepository>(MockBehavior.Strict);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TypeHelper;
 using WebApi.Filters;
 using WebApi.Filters.Logout;
-using WebApi.Filters.User;
+using WebApi.Filters.User.Admin;
 
 namespace WebApi.Controllers;
 
@@ -59,7 +59,7 @@ public class PurchaseController : ControllerBase
 
     [HttpGet]
     [Route("api/purchase")]
-    [ServiceFilter(typeof(UserAuthenticationFilter))]
+    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
     public IActionResult GetUserPurchaseHistory()
     {
         var allPurchases = _purchaseLogic.GetAllPurchasesHistory();
