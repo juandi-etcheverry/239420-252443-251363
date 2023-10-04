@@ -5,13 +5,13 @@ using TypeHelper;
 
 namespace WebApi.Filters.Logout
 {
-    public class LogoutAuthenticationFilter : Attribute, IActionFilter
+    public class IsLoggedInAuthenticationFilter : Attribute, IActionFilter
     {
 
         private readonly ISessionTokenLogic _sessionTokenLogic;
 
-        public LogoutAuthenticationFilter() {}
-        public LogoutAuthenticationFilter(ISessionTokenLogic sessionTokenLogic)
+        public IsLoggedInAuthenticationFilter() {}
+        public IsLoggedInAuthenticationFilter(ISessionTokenLogic sessionTokenLogic)
         {
             _sessionTokenLogic = sessionTokenLogic;
         }

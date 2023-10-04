@@ -17,7 +17,7 @@ namespace Logic.Tests
 			{
 				Email = "userTest@gmail.com",
 				Password = "Password123",
-				Role = Role.Comprador,
+				Role = Role.Buyer,
 				Address = "Ejido 1234"
 			};
 			var mock = new Mock<IUserRepository>(MockBehavior.Strict);
@@ -40,7 +40,7 @@ namespace Logic.Tests
             {
                 Email = "userTest@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234"
             };
             var mock = new Mock<IUserRepository>(MockBehavior.Strict);
@@ -60,7 +60,7 @@ namespace Logic.Tests
 			{
 				Email = "userTest@gmail.com",
 				Password = "Password123",
-				Role = Role.Comprador,
+				Role = Role.Buyer,
 				Address = "Ejido 1234",
 				IsDeleted = true
             };
@@ -80,7 +80,7 @@ namespace Logic.Tests
             {
                 Email = "userTest@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234",
             };
 
@@ -106,7 +106,7 @@ namespace Logic.Tests
             {
                 Email = "userTest@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234",
             };
 
@@ -128,7 +128,7 @@ namespace Logic.Tests
             {
                 Email = "userTest@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Ejido 1234",
             };
 

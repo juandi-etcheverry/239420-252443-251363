@@ -23,7 +23,7 @@ builder.Services.AddScoped<UpdateUserAuthenticationFilter>();
 builder.Services.AddScoped<AdminUserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();
 builder.Services.AddScoped<LoginAuthenticationFilter>();
-builder.Services.AddScoped<LogoutAuthenticationFilter>();
+builder.Services.AddScoped<IsLoggedInAuthenticationFilter>();
 
 var app = builder.Build();
 

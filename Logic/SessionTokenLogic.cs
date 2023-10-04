@@ -45,4 +45,10 @@ public class SessionTokenLogic : ISessionTokenLogic
     {
         return _sessionRepository.UpdateUserSessionToken(id, user);
     }
+    public void UpdateCart(Guid id, Purchase purchase)
+    {
+        var session = _sessionRepository.GetSessionToken(id);
+        session.Cart = purchase;
+        _sessionRepository.UpdateUserSessionToken(id, session.User);
+    }
 }

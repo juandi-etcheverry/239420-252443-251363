@@ -11,6 +11,7 @@ namespace DataAccess
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<SessionToken> SessionTokens { get; set; }
+        public DbSet<Purchase> Carts { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {

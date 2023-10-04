@@ -2,8 +2,8 @@
 {
     public enum Role
     {
-        Comprador = 1,
-        Administrador = 2,
+        Buyer = 1,
+        Admin = 2,
         Total = 3 //comprador y administrador
     };
 }

@@ -25,7 +25,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331"
             };
 
@@ -47,7 +47,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331"
             };
 
@@ -69,7 +69,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331"
             };
             context.Set<User>().Add(user);
@@ -94,7 +94,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331"
             };
             context.Set<User>().Add(user);
@@ -115,7 +115,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
                 IsDeleted = true
             };
@@ -140,7 +140,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
             };
             context.Set<User>().Add(user);
@@ -165,7 +165,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
             };
             context.Set<User>().Add(user);
@@ -186,7 +186,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
             };
 
@@ -210,7 +210,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Mercedes 2331",
             };
 
@@ -233,7 +233,7 @@ namespace DataAccess.Tests
                 Email = "testing@gmial.com",
                 Address = "Mercedes 2331",
                 Password = "Password123",
-                Role = Role.Comprador
+                Role = Role.Buyer
             };
 
             userRepository.AddUser(user);
@@ -258,7 +258,7 @@ namespace DataAccess.Tests
                 Email = "testing@gmial.com",
                 Address = "Mercedes 2331",
                 Password = "Password123",
-                Role = Role.Comprador
+                Role = Role.Buyer
             };
 
             userRepository.AddUser(user);

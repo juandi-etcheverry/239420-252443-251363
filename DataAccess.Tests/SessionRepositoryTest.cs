@@ -26,7 +26,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             var userResult = userRepository.AddUser(user);
@@ -55,7 +55,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             var userResult = userRepository.AddUser(user);
@@ -90,7 +90,7 @@ namespace DataAccess.Tests
             {
                 Email = "test1@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             var userResult1 = userRepository.AddUser(user1);
@@ -99,7 +99,7 @@ namespace DataAccess.Tests
             {
                 Email = "test2@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             var userResult2 = userRepository.AddUser(user2);
@@ -131,7 +131,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             context.Set<User>().Add(user);
@@ -162,7 +162,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             context.Set<User>().Add(user);
@@ -190,7 +190,7 @@ namespace DataAccess.Tests
             {
                 Email = "test@gmail.com",
                 Password = "Password123",
-                Role = Role.Comprador,
+                Role = Role.Buyer,
                 Address = "Cuareim 1234",
             };
             context.Set<User>().Add(user);
@@ -238,7 +238,7 @@ namespace DataAccess.Tests
                     Email = "aaa@test.com",
                     Address = "Cuareim 1234",
                     Password = "Password123",
-                    Role = Role.Comprador
+                    Role = Role.Buyer
                 }
             });
 
@@ -259,7 +259,7 @@ namespace DataAccess.Tests
                 Email = "testing@test.com",
                 Address = "Dot Net 1234",
                 Password = "Password123",
-                Role = Role.Comprador
+                Role = Role.Buyer
             };
 
             var userResult = userRepository.AddUser(user);
