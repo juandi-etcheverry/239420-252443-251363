@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using TypeHelper;
 using WebApi.Filters;
 using WebApi.Filters.Logout;
+using WebApi.Filters.User;
 
 namespace WebApi.Controllers;
 
-[Route("api/purchase")]
 [ApiController]
 [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
 public class PurchaseController : ControllerBase
@@ -27,10 +27,11 @@ public class PurchaseController : ControllerBase
     }
 
     [HttpGet]
+    [Route("api/purchase/{id:guid}")]
     [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
-    public IActionResult GetPurchaseHistory([FromRoute] Guid userId)
+    public IActionResult GetPurchaseHistory([FromRoute] Guid id)
     {
-        User user = _userLogic.GetUser(userId);
+        User user = _userLogic.GetUser(id);
         Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
         var userAuth = _sessionTokenLogic.GetSessionToken(auth).User;
         if (userAuth.Role == Role.Admin || userAuth.Id != user.Id)
@@ -41,6 +42,7 @@ public class PurchaseController : ControllerBase
     }
     
     [HttpPost]
+    [Route("api/purchase")]
     [ServiceFilter(typeof(IsLoggedInAuthenticationFilter))]
     public IActionResult AddPurchase([FromBody] AddPurchaseRequest request)
     {
@@ -52,6 +54,19 @@ public class PurchaseController : ControllerBase
         if (purchase.User.Id != user.Id)
             throw new InvalidCredentialException("You are not authorized to see this information");
         var response = new EffectPurchaseResponse() { Purchase = purchase };
+        return StatusCode(200, response);
+    }
+
+    [HttpGet]
+    [Route("api/purchase")]
+    [ServiceFilter(typeof(UserAuthenticationFilter))]
+    public IActionResult GetUserPurchaseHistory()
+    {
+        var allPurchases = _purchaseLogic.GetAllPurchasesHistory();
+        var response = new ManyPurchasesResponse()
+        {
+            Purchases = allPurchases,
+        };
         return StatusCode(200, response);
     }
 
