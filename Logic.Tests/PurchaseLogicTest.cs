@@ -154,4 +154,22 @@ public class PurchaseLogicTest
         //Assert
         Assert.AreEqual(purchases, result);
     }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "There are no purchases")]
+    public void GetAllPurchasesHistory_AllPurchases_Fail()
+    {
+        //Arrange
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetAllPurchasesHistory()).Throws(() =>
+        {
+            throw new ArgumentException("There are no purchases");
+        });
+
+        var logic = new PurchaseLogic(mock.Object);
+
+        //Act
+        var result = logic.GetAllPurchasesHistory();
+    }
 }
