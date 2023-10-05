@@ -7,7 +7,7 @@ namespace DataAccess;
 public class ProductRepository : IProductRepository
 {
     private readonly DbContext _context;
-    
+
     public ProductRepository(DbContext context)
     {
         _context = context;
@@ -15,9 +15,9 @@ public class ProductRepository : IProductRepository
 
     public Product AddProduct(Product product)
     {
-        Category category = _context.Set<Category>().Find(product.Category.Id);
-        Brand brand = _context.Set<Brand>().Find(product.Brand.Id);
-        List<Color> colors = _context.Set<Color>().Where(c => product.Colors.Select(pc => pc.Id).Contains(c.Id)).ToList();
+        var category = _context.Set<Category>().Find(product.Category.Id);
+        var brand = _context.Set<Brand>().Find(product.Brand.Id);
+        var colors = _context.Set<Color>().Where(c => product.Colors.Select(pc => pc.Id).Contains(c.Id)).ToList();
         product.Category = category;
         product.Brand = brand;
         product.Colors = colors;
@@ -25,7 +25,7 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
         return product;
     }
-    
+
     public Product GetProduct(Guid id)
     {
         var product = _context.Set<Product>()
@@ -36,7 +36,7 @@ public class ProductRepository : IProductRepository
         if (product == null) throw new ArgumentException($"Product with id {id} not found");
         return product;
     }
-    
+
     public List<Product> GetProducts()
     {
         return _context.Set<Product>().Include(p => p.Brand)
@@ -44,11 +44,10 @@ public class ProductRepository : IProductRepository
             .Include(ppp => ppp.Colors)
             .ToList();
     }
-    
+
     public List<Product> GetProducts(Func<Product, bool> predicate)
     {
-        return _context.Set<Product>().
-            Include(p => p.Brand)
+        return _context.Set<Product>().Include(p => p.Brand)
             .Include(pp => pp.Category)
             .Include(ppp => ppp.Colors)
             .Where(predicate)
@@ -63,5 +62,4 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
         return product;
     }
-
 }

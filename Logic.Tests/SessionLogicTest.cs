@@ -1,4 +1,3 @@
-using System.Diagnostics.Contracts;
 using DataAccess.Interfaces;
 using Domain;
 using Moq;
@@ -17,7 +16,7 @@ public class SessionLogicTest
         {
             Email = "test@gmail.com",
             Role = Role.Buyer,
-            Address = "Cuareim 1234",
+            Address = "Cuareim 1234"
         };
         var session = new SessionToken
         {
@@ -43,7 +42,7 @@ public class SessionLogicTest
         {
             Email = "test@gmail.com",
             Role = Role.Buyer,
-            Address = "Cuareim 1234",
+            Address = "Cuareim 1234"
         };
         var session = new SessionToken
         {
@@ -65,7 +64,7 @@ public class SessionLogicTest
         {
             Email = "test@gmail.com",
             Role = Role.Buyer,
-            Address = "Cuareim 1234",
+            Address = "Cuareim 1234"
         };
         var session = new SessionToken
         {
@@ -74,14 +73,14 @@ public class SessionLogicTest
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
         mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
-        
+
         //Act
         var result = logic.AddSessionToken(session);
-        
+
         //Assert
         Assert.AreEqual(session, result);
     }
-    
+
     [TestMethod]
     public void AddSession_NullUser_OK()
     {
@@ -90,13 +89,14 @@ public class SessionLogicTest
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
         mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
-        
+
         //Act
         var result = logic.AddSessionToken(session);
-        
+
         //Assert
         Assert.AreEqual(result, session);
     }
+
     [TestMethod]
     public void AddSession_RepeatedSession_OK()
     {
@@ -105,7 +105,7 @@ public class SessionLogicTest
         {
             Email = "test@gmail.com",
             Role = Role.Buyer,
-            Address = "Cuareim 1234",
+            Address = "Cuareim 1234"
         };
         var session = new SessionToken
         {
@@ -116,10 +116,10 @@ public class SessionLogicTest
         var logic = new SessionTokenLogic(mock.Object);
 
         var result1 = logic.AddSessionToken(session);
-    
+
         //Act
         var result2 = logic.AddSessionToken(session);
-        
+
         //Assert
         Assert.AreEqual(result1, result2);
     }
@@ -136,13 +136,14 @@ public class SessionLogicTest
         var logic = new SessionTokenLogic(mock.Object);
 
         logic.AddSessionToken(session);
-        
+
         //Act
         var result = logic.DeleteSessionToken(session);
-        
+
         //Assert
         Assert.AreEqual(true, result);
     }
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException), "Session  not found")]
     public void DeleteSession_InvalidSession_FAIL()
@@ -150,7 +151,7 @@ public class SessionLogicTest
         //Arrange
         var session = new SessionToken();
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
-        mock.Setup((x => x.DeleteSession(It.IsAny<Guid>()))).Throws(new ArgumentException("Session  not found"));
+        mock.Setup(x => x.DeleteSession(It.IsAny<Guid>())).Throws(new ArgumentException("Session  not found"));
         var logic = new SessionTokenLogic(mock.Object);
 
         //Act
@@ -166,10 +167,10 @@ public class SessionLogicTest
         mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Throws(new ArgumentException("Session  not found"));
         mock.Setup(x => x.AddSessionToken(It.IsAny<SessionToken>())).Returns(session);
         var logic = new SessionTokenLogic(mock.Object);
-        
+
         //Act
         var result = logic.AddSessionToken(session);
-        
+
         //Assert
         Assert.AreEqual(session, result);
     }
@@ -182,10 +183,10 @@ public class SessionLogicTest
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
         mock.Setup(x => x.SessionTokenExists(It.IsAny<Guid>())).Returns(true);
         var logic = new SessionTokenLogic(mock.Object);
-        
+
         //Act
         var result = logic.SessionTokenExists(session.Id);
-        
+
         //Assert
         Assert.AreEqual(true, result);
     }
@@ -198,10 +199,10 @@ public class SessionLogicTest
         var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
         mock.Setup(x => x.SessionTokenExists(It.IsAny<Guid>())).Returns(false);
         var logic = new SessionTokenLogic(mock.Object);
-        
+
         //Act
         var result = logic.SessionTokenExists(session.Id);
-        
+
         //Assert
         Assert.AreEqual(false, result);
     }

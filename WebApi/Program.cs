@@ -17,10 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration.GetConnectionString("DA2DB"));
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<CustomExceptionFilter>();
-});
+builder.Services.AddControllers(options => { options.Filters.Add<CustomExceptionFilter>(); });
 builder.Services.AddScoped<UpdateUserAuthenticationFilter>();
 builder.Services.AddScoped<AdminUserAuthenticationFilter>();
 builder.Services.AddScoped<SignupAuthenticationFilter>();

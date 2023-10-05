@@ -1,10 +1,8 @@
 ﻿using ApiModels.Requests.Users;
 using ApiModels.Responses.Users;
-using DataAccess;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using TypeHelper;
 using WebApi.Filters.Login;
 
 namespace WebApi.Controllers.Users;
@@ -32,7 +30,7 @@ public class LoginController : ControllerBase
         SessionToken tokenResponse;
         if (Request.Cookies.ContainsKey("Authorization"))
         {
-            Guid auth = Guid.Parse(Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(Request.Cookies["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
                 tokenResponse = _sessionTokenLogic.AddUserToToken(auth, user);
             else

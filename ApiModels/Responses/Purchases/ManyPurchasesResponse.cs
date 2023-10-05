@@ -1,6 +1,4 @@
-﻿using Domain;
-
-namespace ApiModels.Responses.Purchases;
+﻿namespace ApiModels.Responses.Purchases;
 
 public class ManyPurchasesResponse
 {

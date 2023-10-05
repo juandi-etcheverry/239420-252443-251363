@@ -6,6 +6,7 @@ namespace PromotionStrategies;
 public class FidelityPromotionStrategy : IPromotionStrategy
 {
     public string Name => "Fidelity Promotion";
+
     public float GetDiscount(List<Product> products)
     {
         var validProducts = products.FindAll(p => !p.IsDeleted);
@@ -23,7 +24,7 @@ public class FidelityPromotionStrategy : IPromotionStrategy
         return orderedProducts.ToList();
     }
 
-    private static List<Brand> BrandsWithThreeProducts(List<Product> validProducts)
+    private List<Brand> BrandsWithThreeProducts(List<Product> validProducts)
     {
         var uniqueBrands = validProducts.Select(p => p.Brand).Distinct().ToList();
         var brandsWithThreeProducts = uniqueBrands.FindAll(b => validProducts.FindAll(p => p.Brand == b).Count >= 3);

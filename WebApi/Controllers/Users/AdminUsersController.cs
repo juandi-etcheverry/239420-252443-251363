@@ -1,71 +1,70 @@
 ﻿using ApiModels.Requests.Users;
 using ApiModels.Responses.Users;
-using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters.User;
 using WebApi.Filters.User.Admin;
 
-namespace WebApi.Controllers.Users
+namespace WebApi.Controllers.Users;
+
+[Route("/api/users/{id}")]
+[ApiController]
+public class AdminUsersController : ControllerBase
 {
-    [Route("/api/users/{id}")]
-    [ApiController]
-    public class AdminUsersController : ControllerBase
+    private ISessionTokenLogic _sessionTokenLogic;
+
+    private readonly IUserLogic _userLogic;
+
+    public AdminUsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
     {
+        _userLogic = userLogic;
+        _sessionTokenLogic = sessionTokenLogic;
+    }
 
-        private IUserLogic _userLogic;
-        private ISessionTokenLogic _sessionTokenLogic;
-        public AdminUsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+    [HttpGet]
+    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
+    public IActionResult GetUser([FromRoute] Guid id)
+    {
+        var user = _userLogic.GetUser(id);
+        var response = new GetUserResponse
         {
-            _userLogic = userLogic;
-            _sessionTokenLogic = sessionTokenLogic;
-        }
+            Message = "User found",
+            Address = user.Address,
+            Email = user.Email,
+            Role = user.Role
+        };
+        return StatusCode(200, response);
+    }
 
-        [HttpGet]
-        [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
-        public IActionResult GetUser([FromRoute] Guid id)
+    [HttpDelete]
+    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
+    public IActionResult DeleteUser([FromRoute] Guid id)
+    {
+        var user = _userLogic.DeleteUser(id);
+        var response = new DeleteUserResponse
         {
-            User user = _userLogic.GetUser(id);
-            var response = new GetUserResponse()
-            {
-                Message = "User found",
-                Address = user.Address,
-                Email = user.Email,
-                Role = user.Role,
-            };
-            return StatusCode(200, response);
-        }
+            Message = "User deleted",
+            Email = user.Email,
+            Address = user.Address,
+            Role = user.Role
+        };
 
-        [HttpDelete]
-        [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
-        public IActionResult DeleteUser([FromRoute] Guid id)
+        return StatusCode(200, response);
+    }
+
+    [HttpPut]
+    [ServiceFilter(typeof(UpdateUserAuthenticationFilter))]
+    public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
+    {
+        var user = _userLogic.UpdateUser(id, request.ToEntity());
+        var response = new UpdateUserResponse
         {
-            User user = _userLogic.DeleteUser(id);
-            var response = new DeleteUserResponse()
-            {
-                Message = "User deleted",
-               Email = user.Email,
-               Address = user.Address,
-               Role = user.Role,
-            };
+            Message = "User updated",
+            Email = user.Email,
+            Address = user.Address,
+            Role = user.Role
+        };
 
-            return StatusCode(200, response);
-        }
-
-        [HttpPut]
-        [ServiceFilter(typeof(UpdateUserAuthenticationFilter))]
-        public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
-        {
-            User user = _userLogic.UpdateUser(id, request.ToEntity());
-            var response = new UpdateUserResponse()
-            {
-                Message = "User updated",
-                Email = user.Email,
-                Address = user.Address,
-                Role = user.Role,
-            };
-
-            return StatusCode(200, response);
-        }
+        return StatusCode(200, response);
     }
 }

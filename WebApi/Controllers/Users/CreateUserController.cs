@@ -10,8 +10,8 @@ namespace WebApi.Controllers.Users;
 [ApiController]
 public class CreateUserController : ControllerBase
 {
-    private ISessionTokenLogic _sessionTokenLogic;
     private readonly IUserLogic _userLogic;
+    private ISessionTokenLogic _sessionTokenLogic;
 
     public CreateUserController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
     {

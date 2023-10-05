@@ -1,4 +1,5 @@
 using Domain;
+
 namespace Logic.Interfaces;
 
 public interface IPurchaseLogic

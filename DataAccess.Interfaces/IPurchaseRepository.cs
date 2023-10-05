@@ -1,7 +1,8 @@
 using Domain;
+
 namespace DataAccess.Interfaces;
 
-public interface IPurchaseRepository 
+public interface IPurchaseRepository
 {
     public Purchase AddPurchase(Purchase purchase);
     public Purchase AddProducts(Purchase purchase, List<Product> product);

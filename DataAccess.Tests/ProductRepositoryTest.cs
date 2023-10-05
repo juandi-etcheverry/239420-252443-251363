@@ -11,7 +11,7 @@ public class ProductTests
         var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(dbName).Options;
         return new Context(options);
     }
-    
+
     [TestMethod]
     public void AddProduct_CorrectProduct_OK()
     {
@@ -24,9 +24,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
 
         // Act
@@ -48,9 +48,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
@@ -61,7 +61,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product, result);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException), "Product with id -1 not found")]
     public void GetProduct_IncorrectId_Null()
@@ -75,17 +75,17 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
-        
+
         // Act
         productRepository.GetProduct(new Guid());
     }
-    
+
     [TestMethod]
     public void GetProducts_ValidProducts_OK()
     {
@@ -98,9 +98,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
@@ -111,7 +111,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product.Id, result[0].Id);
     }
-    
+
     [TestMethod]
     public void GetProducts_NoProducts_OK()
     {
@@ -138,9 +138,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } },
             IsDeleted = true
         };
         context.Set<Product>().Add(product);
@@ -165,9 +165,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
@@ -178,7 +178,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product.Id, result[0].Id);
     }
-    
+
     [TestMethod]
     public void GetProducts_TrivialFalsePredicate_OK()
     {
@@ -191,9 +191,9 @@ public class ProductTests
             Name = "Test Product",
             Description = "Test Description",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
@@ -204,7 +204,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(0, result.Count);
     }
-    
+
     [TestMethod]
     public void GetProducts_ProductsMatchingPredicate_OK()
     {
@@ -217,18 +217,18 @@ public class ProductTests
             Name = "Test Product 1",
             Description = "Test Description 1",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         var product2 = new Product
         {
             Name = "Test Product 2",
             Description = "Test Description 2",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product1);
         context.Set<Product>().Add(product2);
@@ -240,7 +240,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(product1.Id, result[0].Id);
     }
-    
+
     [TestMethod]
     public void GetProducts_ProductsNotMatchingPredicate_OK()
     {
@@ -253,18 +253,18 @@ public class ProductTests
             Name = "Test Product 1",
             Description = "Test Description 1",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         var product2 = new Product
         {
             Name = "Test Product 2",
             Description = "Test Description 2",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product1);
         context.Set<Product>().Add(product2);
@@ -289,9 +289,9 @@ public class ProductTests
             Name = "Test Product 1",
             Description = "Test Description 1",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } },
             IsDeleted = true
         };
         var product2 = new Product
@@ -299,9 +299,9 @@ public class ProductTests
             Name = "Test Product 2",
             Description = "Test Description 2",
             Price = 100,
-            Brand = new Brand() { Name = "Gucci" },
-            Category = new Category() { Name = "Bag" },
-            Colors = new List<Color>() { new() { Name = "Red" } },
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product1);
         context.Set<Product>().Add(product2);
@@ -309,12 +309,11 @@ public class ProductTests
 
         // Act
         var result = productRepository.GetProducts(p => p.IsDeleted);
-        
+
         // Assert
         Assert.AreEqual(product1, result[0]);
-
     }
-    
+
     [TestMethod]
     public void SoftDelete_CorrectId_OK()
     {
@@ -328,9 +327,9 @@ public class ProductTests
             Description = "Test Description",
             Price = 100,
             IsDeleted = false,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
@@ -341,7 +340,7 @@ public class ProductTests
         // Assert
         Assert.AreEqual(true, result.IsDeleted);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException), "Product with id -1 not found")]
     public void SoftDelete_IncorrectId_FAIL()
@@ -356,13 +355,13 @@ public class ProductTests
             Description = "Test Description",
             Price = 100,
             IsDeleted = false,
-            Brand = new Brand(){Name="Gucci"},
-            Category = new Category(){Name="Bag"},
-            Colors = new List<Color>() {new(){Name="Red"}},
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         context.Set<Product>().Add(product);
         context.SaveChanges();
-        
+
         // Act
         productRepository.SoftDelete(new Guid());
     }

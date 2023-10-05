@@ -2,6 +2,7 @@
 using Logic.Interfaces;
 
 namespace PromotionStrategies;
+
 /*
  POSSIBLE OPTIMIZATIONS :
     - Use a dictionary to store the colors and a tuple with the amount
@@ -9,8 +10,8 @@ namespace PromotionStrategies;
  */
 public class TotalLookPromotionStrategy : IPromotionStrategy
 {
-    public string Name => "Total Look Promotion";
     private const float DiscountPercentage = 0.5f;
+    public string Name => "Total Look Promotion";
 
     public float GetDiscount(List<Product> products)
     {
@@ -39,11 +40,10 @@ public class TotalLookPromotionStrategy : IPromotionStrategy
         var uniqueColors = products.SelectMany(p => p.Colors).Distinct().ToList();
         return uniqueColors.FindAll(c => products.FindAll(p => p.Colors.Contains(c)).Count >= 3);
     }
-    
+
     private List<Product> GetValidProducts(List<Product> products, List<Color> colors)
     {
         var validProducts = products.FindAll(p => p.Colors.Any(c => colors.Contains(c)));
         return validProducts;
     }
-
 }
