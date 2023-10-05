@@ -33,7 +33,7 @@ public class AddPurchaseFilter : IActionFilter
         if (session.User is null)
             throw new UnauthorizedAccessException("You must be logged in to perform this action!");
 
-        if (session.User.Role != Role.Buyer)
+        if (session.User.Role == Role.Admin)
             throw new InvalidCredentialException("You must be a buyer to perform this action!");
     }
 }
