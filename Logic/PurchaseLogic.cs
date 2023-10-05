@@ -41,10 +41,19 @@ public class PurchaseLogic : IPurchaseLogic
 
     public void SetFinalPrice(Purchase purchase)
     {
-        var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
-        var result = promotion.GetDiscount(purchase.Products);
-        purchase.FinalPrice = purchase.TotalPrice - result;
-        purchase.PromotionName = promotion.Name;
+        try
+        {
+
+            var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
+            var result = promotion.GetDiscount(purchase.Products);
+            purchase.FinalPrice = purchase.TotalPrice - result;
+            purchase.PromotionName = promotion.Name;
+        }
+        catch (ArgumentException)
+        {
+            purchase.FinalPrice = purchase.TotalPrice;
+            purchase.PromotionName = "No Promotion";
+        }
     }
 
     public List<Purchase> GetAllPurchasesHistory(User user)
