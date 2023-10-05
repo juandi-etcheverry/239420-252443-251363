@@ -10,12 +10,10 @@ namespace WebApi.Controllers.Products;
 public class ProductsController : ControllerBase
 {
     private readonly IProductLogic _productLogic;
-    private readonly ISessionTokenLogic _sessionTokenLogic;
 
     public ProductsController(IProductLogic productLogic, ISessionTokenLogic sessionTokenLogic)
     {
         _productLogic = productLogic;
-        _sessionTokenLogic = sessionTokenLogic;
     }
 
     [HttpPost]
