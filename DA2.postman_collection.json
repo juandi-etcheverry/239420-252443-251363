@@ -1,0 +1,1375 @@
+{
+	"info": {
+		"_postman_id": "aeacb7f5-a3c1-4e78-b938-478cb81ccc91",
+		"name": "DA2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25123014",
+		"_collection_link": "https://solar-satellite-239489.postman.co/workspace/Obligatorio-DA2~2151336d-73db-4fac-8803-258c583459c9/collection/25123014-aeacb7f5-a3c1-4e78-b938-478cb81ccc91?action=share&source=collection_link&creator=25123014"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": false,
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"Email@Email.com\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Password\",\r\n    \"PasswordConfirmation\": \"Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"signup"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "kmgrejkgre",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Incomplete Body 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Incomplete Body 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email\",\r\n    \"Address\": \"Address\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Incomplete Body 3",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Pass\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Passwords do not match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Pass\",\r\n    \"PasswordConfirmation\": \"Password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Invalid email",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Password\",\r\n    \"PasswordConfirmation\": \"Password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "User already exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email@Email.com\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Password\",\r\n    \"PasswordConfirmation\": \"Password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Successful User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "d1f3c24e-dc2d-4027-171a-08dbc12efb39",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email@EmailNotExists.com\",\r\n    \"Address\": \"Address\",\r\n    \"Password\": \"Password\",\r\n    \"PasswordConfirmation\": \"Password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"signup"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "kmgrejkgre",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"Email@Email.com\",\r\n    \"Password\": \"Password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Non Existant user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"UserThatDoesNot@Exist.com\",\r\n    \"Password\": \"Password123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Wrong Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"User@User.com\",\r\n    \"Password\": \"Password123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Valid Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Admin@Admin.com\",\r\n    \"Password\": \"Password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user (admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"ticu3@test.com\",\r\n    \"Address\": \"Ticus House 123\",\r\n    \"Role\": 3,\r\n    \"Password\": \"TicuPassword\",\r\n    \"PasswordConfirmation\": \"TicuPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Invalid user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"ticu3@test.com\",\r\n    \"Address\": \"Ticus House 123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "User Already Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"Email@Email.com\",\r\n    \"Address\": \"Ticus House 123\",\r\n    \"Role\": 3,\r\n    \"Password\": \"TicuPassword\",\r\n    \"PasswordConfirmation\": \"TicuPassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Successful User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"ticu3@test.com\",\r\n    \"Address\": \"Ticus House 123\",\r\n    \"Role\": 3,\r\n    \"Password\": \"TicuPassword\",\r\n    \"PasswordConfirmation\": \"TicuPassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "delete user (admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/users/665d8e77-9d40-4f00-af3e-08dbc52c5616",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"users",
+								"665d8e77-9d40-4f00-af3e-08dbc52c5616"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Invalid User",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7034/api/users/665d8e77-9d40-4f00-af3e-08dbc52c5616ot",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users",
+										"665d8e77-9d40-4f00-af3e-08dbc52c5616ot"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Successful Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7034/api/users/85225DED-1510-44DC-C1EA-08DBC5CFB1A6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users",
+										"85225DED-1510-44DC-C1EA-08DBC5CFB1A6"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"UpdateUser@test.com\",\r\n    \"Address\": \"New Address 123\",\r\n    \"Role\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/users/665d8e77-9d40-4f00-af3e-08dbc52c5616",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"users",
+								"665d8e77-9d40-4f00-af3e-08dbc52c5616"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Invalid User",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"MakeUserAdmin\",\r\n    \"Address\": \"New Address 123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users/CC9420BB-00CD-4ECB-C1FC-08DBC5CFB343",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users",
+										"CC9420BB-00CD-4ECB-C1FC-08DBC5CFB343"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Successful Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"UpdateUser@test.com\",\r\n    \"Address\": \"New Address 123\",\r\n    \"Role\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users/9FD20EDC-7771-4CB1-C1F2-08DBC5CFB1A6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users",
+										"9FD20EDC-7771-4CB1-C1F2-08DBC5CFB1A6"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update Other User",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Email\": \"UpdateUser2@test.com\",\r\n    \"Address\": \"New Address 12345\",\r\n    \"Role\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/users/CC9420BB-00CD-4ECB-C1FC-08DBC5CFB1A6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"users",
+										"CC9420BB-00CD-4ECB-C1FC-08DBC5CFB1A6"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get user (admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/users/665d8e77-9d40-4f00-af3e-08dbc52c5616",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"users",
+								"665d8e77-9d40-4f00-af3e-08dbc52c5616"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "create product (admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Product 8\",\r\n    \"Price\": 200,\r\n    \"Description\": \"Description of product 8\",\r\n     \"Brand\": {\r\n        \"Id\": 3,\r\n        \"Name\": \"brand3\"\r\n    },\r\n    \"Category\": {\r\n        \"Id\": 3,\r\n        \"Name\": \"category3\"\r\n    },\r\n    \"Colors\": [{\r\n        \"Id\": 1,\r\n        \"Name\": \"color1\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/products?Brand=b&Text=p",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "Brand",
+									"value": "b"
+								},
+								{
+									"key": "Text",
+									"value": "p"
+								},
+								{
+									"key": "Category",
+									"value": "a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/products/ABC4C3CE-20C6-4FE7-5F51-08DBC52E2293",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"products",
+								"ABC4C3CE-20C6-4FE7-5F51-08DBC52E2293"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product (admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/products/82E09B48-A32C-4D89-5F52-08DBC52E2293",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"products",
+								"82E09B48-A32C-4D89-5F52-08DBC52E2293"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchase",
+			"item": [
+				{
+					"name": "add purchase (buyer)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductsIds\": [\"3707354D-1E60-4620-5F50-08DBC52E2293\",\r\n                    \"ABC4C3CE-20C6-4FE7-5F51-08DBC52E2293\",\r\n                    \"82E09B48-A32C-4D89-5F52-08DBC52E2293\"] //list of ids you want\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7034/api/purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"purchases"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "No Promotion",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ProductsIds\": [\"0968ba15-c673-46a8-6596-08dbc55226b7\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Total Look",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ProductsIds\": [\"f7ed149b-1716-4205-43d8-08dbc5e12bef\",\r\n                    \"1718a315-e95f-48d1-6595-08dbc55226b7\",\r\n                    \"ad5085c3-92c8-4899-43d5-08dbc5e12bef\"] //list of ids you want\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "20% off",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ProductsIds\": [\r\n        \"0968ba15-c673-46a8-6596-08dbc55226b7\",\r\n        \"1718a315-e95f-48d1-6595-08dbc55226b7\"\r\n    ] //list of ids you want\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "3x2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ProductsIds\": [\"f7ed149b-1716-4205-43d8-08dbc5e12bef\",\r\n                    \"996c844e-d826-4bad-43d7-08dbc5e12bef\",\r\n                    \"d2f73f41-c2a5-46c4-43d6-08dbc5e12bef\"] //list of ids you want\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Fidelity",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ProductsIds\": [\"1718a315-e95f-48d1-6595-08dbc55226b7\",\r\n                    \"0968ba15-c673-46a8-6596-08dbc55226b7\",\r\n                    \"ad5085c3-92c8-4899-43d5-08dbc5e12bef\"] //list of ids you want\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7034/api/purchases",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7034",
+									"path": [
+										"api",
+										"purchases"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get my purchase history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/purchases/142db120-fe8d-4376-af3b-08dbc52c5616",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"purchases",
+								"142db120-fe8d-4376-af3b-08dbc52c5616"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all purchases (admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7034/api/purchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7034",
+							"path": [
+								"api",
+								"purchases"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
