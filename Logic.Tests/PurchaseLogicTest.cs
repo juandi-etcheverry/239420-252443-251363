@@ -189,4 +189,26 @@ public class PurchaseLogicTest
         //Act
         var result = logic.GetAllPurchasesHistory();
     }
+
+    [TestMethod]
+    public void GetAllPurchasesNoParams_OK()
+    {
+        //Arrange
+        var purchases = new List<Purchase>();
+        var purchase = new Purchase();
+        purchases.Add(purchase);
+        var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetAllPurchasesHistory()).Returns(() =>
+        {
+            return purchases;
+        });
+
+        var logic = new PurchaseLogic(mock.Object);
+        
+        //Act
+        var result = logic.GetAllPurchasesHistory();
+        
+        //Assert
+        Assert.AreEqual(purchases, result);
+    }
 }

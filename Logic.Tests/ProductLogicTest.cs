@@ -167,5 +167,25 @@ public class ProductLogicTest
 
         // Assert
         Assert.AreEqual(true, result.IsDeleted);
+
+    public void GetProducts_Predicate_OK()
+    {
+        var predicate = (Product p) => true;
+        var products = new List<Product>
+        {
+            new Product { Name = "Test", Price = 420, Description = "Test Description"},
+            new Product { Name = "Test2", Price = 69, Description = "Test Description2"}
+        };
+        
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProducts(predicate)).Returns(products);
+        var logic = new ProductLogic(mock.Object);
+        
+        // Act
+        var result = logic.GetProducts(predicate);
+        
+        // Assert
+        Assert.AreEqual(products, result);
+
     }
 }

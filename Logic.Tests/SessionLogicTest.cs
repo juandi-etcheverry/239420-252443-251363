@@ -235,4 +235,38 @@ public class SessionLogicTest
         //Assert
         Assert.AreEqual(session.User, result.User);
     }
+
+    [TestMethod]
+    public void UpdateCart_ValidSession_OK()
+    {
+        //Arrange
+        var user = new User
+        {
+            Email = "a@a.a",
+            Address = "Cuareim 1234",
+            Role = Role.Buyer,
+            Password = "Password123"
+        };
+        var session = new SessionToken
+        {
+            User = user
+        };
+        var purchase = new Purchase();
+
+        var mock = new Mock<ISessionRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetSessionToken(It.IsAny<Guid>())).Returns(session);
+        mock.Setup(x => x.UpdateUserSessionToken(It.IsAny<Guid>(), It.IsAny<User>())).Returns(() =>
+        {
+            session.User = user;
+            return session;
+        });
+
+        var logic = new SessionTokenLogic(mock.Object);
+
+        //Act
+        logic.UpdateCart(session.Id, purchase);
+
+        //Assert
+        Assert.AreEqual(session.Cart, purchase);
+    }
 }
