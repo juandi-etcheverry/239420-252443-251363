@@ -53,7 +53,7 @@ public class PurchaseRepository : IPurchaseRepository
 
     public List<Purchase> GetAllPurchasesHistory()
     {
-        var result = _context.Set<Purchase>().Include(p => p.Products).ToList();
+        var result = _context.Set<Purchase>().Include(p => p.Products).Include(p => p.User).ToList();
         if (result.Count == 0) throw new ArgumentException("There are no purchases");
         return result;
     }
