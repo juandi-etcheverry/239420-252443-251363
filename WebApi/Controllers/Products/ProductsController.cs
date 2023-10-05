@@ -7,7 +7,6 @@ using WebApi.Filters.Products;
 namespace WebApi.Controllers.Products
 {
     [ApiController]
-    [ServiceFilter(typeof(ProductAuthenticationFilter))]
     public class ProductsController : ControllerBase
     {
         private readonly IProductLogic _productLogic;
@@ -21,6 +20,7 @@ namespace WebApi.Controllers.Products
 
         [HttpPost]
         [Route("api/products")]
+        [ServiceFilter(typeof(ProductAuthenticationFilter))]
         public IActionResult CreateProduct([FromBody] CreateProductRequest request)
         {
             var product = _productLogic.AddProduct(request.ToEntity());
@@ -71,6 +71,22 @@ namespace WebApi.Controllers.Products
                 Brand = product.Brand,
                 Category = product.Category,
                 Colors = product.Colors
+            };
+
+            return StatusCode(200, response);
+        }
+
+        [HttpDelete]
+        [Route("api/products/{id}")]
+        [ServiceFilter(typeof(ProductAuthenticationFilter))]
+        public IActionResult DeleteProduct([FromRoute] Guid id)
+        {
+            var product = _productLogic.SoftDelete(id);
+
+            var response = new DeleteProductResponse()
+            {
+                Message = "Product deleted successfully",
+                ProductName = product.Name
             };
 
             return StatusCode(200, response);

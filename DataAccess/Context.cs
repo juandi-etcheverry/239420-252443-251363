@@ -31,6 +31,11 @@ namespace DataAccess
                 .HasMany(p => p.Colors)
                 .WithMany()
                 .UsingEntity(j => j.ToTable("ProductColor"));
+
+            modelBuilder.Entity<Purchase>()
+                .HasMany(p => p.Products)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("PurchaseProduct"));
         }
     }
 }

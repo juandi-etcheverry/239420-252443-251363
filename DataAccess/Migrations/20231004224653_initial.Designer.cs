@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231004015808_initial")]
+    [Migration("20231004224653_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -117,16 +117,11 @@ namespace DataAccess.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int?>("PurchaseId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("PurchaseId");
 
                     b.ToTable("Products");
                 });
@@ -174,9 +169,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("SessionTokens");
                 });
@@ -210,6 +203,21 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ProductPurchase", b =>
+                {
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "PurchaseId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("PurchaseProduct", (string)null);
+                });
+
             modelBuilder.Entity("ColorProduct", b =>
                 {
                     b.HasOne("Domain.Color", null)
@@ -239,10 +247,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Purchase", null)
-                        .WithMany("Products")
-                        .HasForeignKey("PurchaseId");
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
@@ -266,23 +270,27 @@ namespace DataAccess.Migrations
                         .HasForeignKey("CartId");
 
                     b.HasOne("Domain.User", "User")
-                        .WithOne("Session")
-                        .HasForeignKey("Domain.SessionToken", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Cart");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Purchase", b =>
+            modelBuilder.Entity("ProductPurchase", b =>
                 {
-                    b.Navigation("Products");
-                });
+                    b.HasOne("Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Domain.User", b =>
-                {
-                    b.Navigation("Session");
+                    b.HasOne("Domain.Purchase", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
