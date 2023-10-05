@@ -34,4 +34,9 @@ public class ProductLogic : IProductLogic
     {
         return _productRepository.GetProducts(predicate);
     }
+
+    public Product SoftDelete(Guid id)
+    {
+        return _productRepository.SoftDelete(id);
+    }
 }

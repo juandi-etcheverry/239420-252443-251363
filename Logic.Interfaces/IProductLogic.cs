@@ -8,4 +8,5 @@ public interface IProductLogic
     List<Product> GetProducts();
     List<Product> GetProducts(Func<Product, bool> predicate);
     Product AddProduct(Product product);
+    Product SoftDelete(Guid id);
 }
