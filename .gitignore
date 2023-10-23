@@ -4,10 +4,11 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 
+# Added by us
 node_modules
 .angular/cache
-.DS_Store
 .vscode
+*.DS_Store
 
 
 # User-specific files
