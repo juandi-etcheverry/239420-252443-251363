@@ -33,8 +33,8 @@ export class FilteredComponent {
     textInput: new FormControl(''),
     brandInput: new FormControl(''),
     categoryInput: new FormControl(''),
-    minPrice: new FormControl(0),
-    maxPrice: new FormControl(Number.MAX_VALUE)
+    minPrice: new FormControl(),
+    maxPrice: new FormControl()
   });
 
   @Input()
@@ -57,6 +57,7 @@ export class FilteredComponent {
 
   onSubmit():void{
     const form = this.filterForm.value;
+    console.log(form)
     const filterProducts = this.productService.filter(form.textInput ?? '', form.brandInput ?? '', form.categoryInput ?? '', form.minPrice ?? 0, form.maxPrice ?? Number.MAX_VALUE);
     this.submitClicked.emit(filterProducts);
   }
