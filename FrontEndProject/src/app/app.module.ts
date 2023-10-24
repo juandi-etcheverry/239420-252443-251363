@@ -15,6 +15,10 @@ import { Routes} from '@angular/router';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { FilteredComponent } from './products/filtered/filtered.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'products', pathMatch: 'full'},
@@ -33,7 +37,6 @@ const routes: Routes = [
     CartComponent,
     PagenotfoundComponent,
     CartItemComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,10 @@ const routes: Routes = [
     ToolbarComponent,
     TabsComponent,
     ProductCardComponent,
+    FormsModule,
+    ReactiveFormsModule,
     FilteredComponent,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

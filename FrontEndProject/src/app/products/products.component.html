@@ -1,7 +1,5 @@
 <h1>Products</h1>
-<app-filtered></app-filtered>
+<app-filtered [products]="productItems" [brand]="brandItems" [category]="categoryItems" (submitClicked)="updateProductList($event)"></app-filtered>
 
+<app-product-card *ngFor="let item of productItems" [productItem]="item" ></app-product-card>
 
-<app-product-card name="Pelotita" price="60" brand="Nike" category="Juegete" colour="Rojo"></app-product-card>
-<app-product-card name="Pelota" price="70" brand="Adidas" category="Juegete" colour="Negro"></app-product-card>
-<app-product-card name="Remera" price="100" brand="Nike" category="Ropa" colour="Azul"></app-product-card>

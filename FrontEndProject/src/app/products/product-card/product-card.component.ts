@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule} from '@angular/material/button';
+import { MatCardModule} from '@angular/material/card'; 
+import { ProductItem } from '../product-item';
 
 @Component({
   selector: 'app-product-card',
@@ -10,20 +11,9 @@ import {MatCardModule} from '@angular/material/card';
   imports: [MatCardModule, MatButtonModule],
 })
 export class ProductCardComponent implements OnInit{
-
-  @Input() name: string;
-  @Input() price: string;
-  @Input() brand: string;
-  @Input() category: string;
-  @Input() colour: string;
-
+  @Input()
+  productItem!: ProductItem;
   constructor(){
-    this.name="pelota";
-    this.price="$50";
-    this.brand="Nike";
-    this.category="Juguete";
-    this.colour="Rojo";
-
   }
 
   ngOnInit(): void {
