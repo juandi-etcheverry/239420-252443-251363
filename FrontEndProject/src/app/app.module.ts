@@ -13,6 +13,8 @@ import { CartComponent } from './cart/cart.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { Routes} from '@angular/router';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
+import { ProductCardComponent } from './products/product-card/product-card.component';
+import { FilteredComponent } from './products/filtered/filtered.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'products', pathMatch: 'full'},
@@ -31,6 +33,7 @@ const routes: Routes = [
     CartComponent,
     PagenotfoundComponent,
     CartItemComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     ToolbarComponent,
     TabsComponent,
+    ProductCardComponent,
+    FilteredComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
