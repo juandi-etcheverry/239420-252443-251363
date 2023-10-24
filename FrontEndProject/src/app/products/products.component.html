@@ -1,5 +1,5 @@
 <h1>Products</h1>
-<app-filtered [products]="productItems" [brand]="brandItems" [category]="categoryItems" (submitClicked)="updateProductList($event)"></app-filtered>
+<app-filtered (submitClicked)="updateProductList($event)"></app-filtered>
 
 <app-product-card *ngFor="let item of productItems" [productItem]="item" ></app-product-card>
 

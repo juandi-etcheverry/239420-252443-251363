@@ -40,10 +40,9 @@ export class FilteredComponent {
   @Input()
   products!:ProductItem[]
 
-  @Input()
+
   brand!:Brand[]
 
-  @Input()
   category!:Category[]
 
   @Output()
@@ -52,12 +51,13 @@ export class FilteredComponent {
 
   constructor(private productService : ProductsService){
     this.submitClicked = new EventEmitter();
+    this.brand = productService.brandItems;
+    this.category = productService.categoryItems;
   }
 
   onSubmit():void{
     const form = this.filterForm.value;
     const filterProducts = this.productService.filter(form.textInput ?? '', form.brandInput ?? '', form.categoryInput ?? '', form.minPrice ?? 0, form.maxPrice ?? Number.MAX_VALUE);
-    console.log(filterProducts);
-    //this.submitClicked.emit(filterProducts);
+    this.submitClicked.emit(filterProducts);
   }
 }
