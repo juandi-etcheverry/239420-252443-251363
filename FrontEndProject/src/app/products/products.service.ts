@@ -34,7 +34,7 @@ export class ProductsService {
 
   filter(text: string, brand: string, category: string, minPrice: number, maxPrice: number): ProductItem[] {
     const newList = this.productItems.filter((p) =>
-      p.name.includes(text) &&
+      p.name.toLowerCase().includes(text.toLowerCase()) &&
       p.brand.toLowerCase().includes(brand.toLowerCase()) &&
       p.category.toLowerCase().includes(category.toLowerCase()) &&
       (p.price >= minPrice && p.price <= maxPrice)
