@@ -1,0 +1,25 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.active-link{
+    background-color:blue;
+}
+
+.btnBackToProducts{
+    padding: 300px;
+}
+h1{
+    margin: 30px;
+    font-size: 40px;
+}
+
+p{
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
