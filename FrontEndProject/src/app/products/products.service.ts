@@ -11,10 +11,12 @@ export class ProductsService {
 
   //Import from back-end
   productItems: ProductItem[] = [
-    {name: "Pelota", price: 50, brand: "Nike", category: "Deporte", colour: "Negro"},
-    {name: "Remera", price: 70, brand: "Nike", category: "Ropa", colour: "Rojo"},
-    {name: "Buzo", price: 100, brand: "Zara", category: "Ropa", colour: "Verde"},
-    {name: "Pistola", price: 800, brand: "Nerf", category: "Jugetes", colour: "Azul"},
+    {id: 1, name: "Pelota", price: 50, brand: "Nike", category: "Deporte", colour: "Negro"},
+    {id: 2, name: "Remera", price: 70, brand: "Nike", category: "Ropa", colour: "Rojo"},
+    {id: 3, name: "Buzo", price: 100, brand: "Zara", category: "Ropa", colour: "Verde"},
+    {id: 4, name: "Pistola", price: 800, brand: "Nerf", category: "Jugetes", colour: "Azul"},
+    {id: 5, name: "Pelota", price: 60, brand: "Adidas", category: "Deporte", colour: "Azul"},
+    {id: 6, name: "Remera", price: 80, brand: "Zara", category: "Ropa", colour: "Roja"},
   ]
   brandItems: Brand[] = [
     {name: "Nike"},

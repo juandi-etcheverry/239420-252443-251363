@@ -11,22 +11,13 @@ import { ProductsComponent } from './products/products.component';
 import { UserComponent } from './user/user.component';
 import { CartComponent } from './cart/cart.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import { Routes} from '@angular/router';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { FilteredComponent } from './products/filtered/filtered.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
-
-
-const routes: Routes = [
-  {path: '', redirectTo: 'products', pathMatch: 'full'},
-  {path: 'products', component: ProductsComponent},
-  {path: 'user', component: UserComponent},
-  {path: 'cart', component: CartComponent},
-  {path: '**', component: PagenotfoundComponent}
-];
 
 @NgModule({
   declarations: [
@@ -48,7 +39,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FilteredComponent,
-    HttpClientModule
+    HttpClientModule,
+    ProductDetailComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
