@@ -1,5 +1,13 @@
-<p class="title">Mi cart</p>
-<app-cart-item></app-cart-item>
-<app-cart-item></app-cart-item>
-<app-cart-item></app-cart-item>
+<h1>Mi cart</h1>
 
+<p class="total"><span class="total-label">Total: $</span> {{total}}.0</p>
+<button mat-raised-button color="primary">Purchase</button>
+<p></p>
+<p></p>
+<!--<app-cart-item *ngFor="let item of cartItems" [cartItem]="item" (cartItemDelete)="deleteItem(item)"></app-cart-item>-->
+
+<!--<ng-template ngFor let-item [ngForOf]="cartItems" let-i="index" [ngForTrackBy]="trackByFn">
+    <app-cart-item [cartItem]="i"></app-cart-item>
+  </ng-template>-->
+<app-cart-item [cartItem]="cartItems[0]" (cartItemDelete)="deleteItem(cartItems[0])"></app-cart-item>
+<app-cart-item [cartItem]="cartItems[1]" (cartItemDelete)="deleteItem(cartItems[1])"></app-cart-item>

@@ -1,1 +1,6 @@
-<p>cart-item works!</p>
+<div class="info">
+    <span>{{cartItem?.name}}</span>
+    <span class="info-price">${{cartItem?.price}}</span>
+</div>
+<button id="exclude">Exclude</button>
+<button id="delete" (click)="onDeleteClick()">x </button>

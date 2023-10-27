@@ -25,9 +25,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     NuestroComponenteComponent,
     ProductsComponent,
     UserComponent,
-    CartComponent,
     PagenotfoundComponent,
-    CartItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +39,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     FilteredComponent,
     HttpClientModule,
     ProductDetailComponent,
+    CartComponent,
+    CartItemComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

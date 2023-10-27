@@ -1,0 +1,19 @@
+:host{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+#delete{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+.info{
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding: 0 24px;
+}
