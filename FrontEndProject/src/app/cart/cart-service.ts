@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CartItem } from "./cart-item";
+import { ProductItem } from "../products/product-item";
 
 
 @Injectable({
@@ -7,18 +8,27 @@ import { CartItem } from "./cart-item";
 })
 export class CartService{
 
-    items: CartItem[] = [
-        {id:1, name: "Product1", price: 30},
-        {id:2, name: "Product2", price: 40},
-        {id:3, name: "Product3", price: 50},
-        {id:4, name: "Product4", price: 60},
-      ];
+    items: CartItem[] = [];
 
-    deleteItem(ItemToDelete : CartItem) : void{
-        this.items = this.items.filter((item)=> item.id != ItemToDelete.id);
+    get itemsCount(): number{
+        return this.items.length;
     }
-    
+    deleteItem(ItemToDelete : CartItem){
+        this.items = this.items.filter((item)=> item != ItemToDelete);
+    }
+    addItem(item : CartItem){
+        this.items = [...this.items, item];
+    }
+    mapProductItemToCartItem(product: ProductItem): CartItem {
+        const cartItem: CartItem = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+        };
+        return cartItem;
+      }
     get total():number{
         return this.items.reduce(( acc, {price} ) => (acc += price), 0)
     }
+
 }

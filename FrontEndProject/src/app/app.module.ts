@@ -17,6 +17,9 @@ import { FilteredComponent } from './products/filtered/filtered.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import {MatIconModule} from '@angular/material/icon';
+import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.component';
+
 
 
 @NgModule({
@@ -41,6 +44,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     ProductDetailComponent,
     CartComponent,
     CartItemComponent,
+    MatIconModule,
+    PaymentmethodComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

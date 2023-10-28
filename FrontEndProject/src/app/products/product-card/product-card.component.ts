@@ -8,13 +8,16 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule} from '@angular/forms';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
+import { CartService } from 'src/app/cart/cart-service';
+import { CartItem } from 'src/app/cart/cart-item';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatCheckboxModule, FormsModule, MatFormFieldModule, MatInputModule, MatRippleModule, RouterModule],
+  imports: [MatCardModule, MatButtonModule, MatCheckboxModule, FormsModule, MatFormFieldModule, MatInputModule, MatRippleModule, RouterModule, MatSnackBarModule],
 })
 export class ProductCardComponent implements OnInit{
   @Input()
@@ -22,15 +25,20 @@ export class ProductCardComponent implements OnInit{
   centered = false;
   disabled = false;
   unbounded = false;
-  constructor(private router:Router){
+  constructor(private router:Router, private cartService : CartService, private _snackBar: MatSnackBar){
   }
 
   ngOnInit(): void {
   }
+  addProductToCart(): void {
+    const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+    this.cartService.addItem(cartItem);
+  }
 
   onAddClick($event : Event){
     $event.stopPropagation()
-    alert("Agregar al carrito");
+    this.addProductToCart();
+    this._snackBar.open("Product added to cart", "Close");
   }
 
   onCardClick(id: number){
