@@ -14,3 +14,17 @@
     padding: 30px;
     background-color: whitesmoke;
   }
+  .example-radio-button{
+    margin-top: -15px;
+  }
+
+  #laststep{
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-top: 40px;
+    padding: 0 5px;
+  }
+  h3{
+    margin-right: 100px;
+  }
