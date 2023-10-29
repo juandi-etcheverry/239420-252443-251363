@@ -5,3 +5,7 @@
 .active-link{
     background-color:blue;
 }
+
+.navbutton {
+  margin: 0 5px;
+}
