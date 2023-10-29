@@ -26,3 +26,6 @@
     -webkit-tap-highlight-color: transparent;
   }
   
+  mat-form-field {
+    margin-right: 12px;
+  }

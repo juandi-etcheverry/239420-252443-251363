@@ -6,6 +6,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import {MatDividerModule} from '@angular/material/divider';
 import { Router } from '@angular/router';
+import { CartService } from '../cart/cart-service';
 
 
 @Component({
@@ -18,9 +19,7 @@ import { Router } from '@angular/router';
 export class ToolbarComponent implements OnInit {
 
   constructor(private router:Router){
-
   }
-
   ngOnInit(): void {
     
   }
