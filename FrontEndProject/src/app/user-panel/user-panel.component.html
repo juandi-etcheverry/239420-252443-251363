@@ -1,0 +1,33 @@
+<div style="display: flex; justify-content: space-between; padding: 1rem">
+    <div style="display: flex; gap: 1rem">
+        <button id="vercarrito" class ="button" mat-raised-button color="primary" type="submit" (click)="goToPage('cart')">Ver Carrito</button>
+    </div>
+    <button id="logout" class="logout-button" mat-raised-button color="primary" type="submit">Log out</button>
+</div>
+
+
+<form [formGroup]="userForm" (submit)="onSubmit()">
+
+    <mat-form-field>
+      <mat-label>Correo electronico</mat-label>
+      <input *ngIf="data" [ngModel]="data.email" id="correo" formControlName="correo" matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Direccion de entrega</mat-label>
+      <input *ngIf="data" [ngModel]="data.address" value="Aca va la direccion" id="direccion" formControlName="direccion" matInput>
+    </mat-form-field>
+
+    <button id="modificar" 
+    class="button" 
+    mat-raised-button 
+    color="primary" 
+    type="submit"
+    [disabled]="userForm.pristine"
+    >Modificar
+    </button>
+</form>
+
+<div style="display: flex; justify-content: center;">
+    <button id="modulo" mat-raised-button color="primary" type="submit">Modulo Administrador</button>
+</div>

@@ -17,6 +17,7 @@ import { FilteredComponent } from './products/filtered/filtered.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { UserPanelComponent } from './user-panel/user-panel.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     FilteredComponent,
     HttpClientModule,
     ProductDetailComponent,
+    UserPanelComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
