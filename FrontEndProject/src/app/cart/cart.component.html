@@ -1,5 +1,19 @@
-<p class="title">Mi cart</p>
-<app-cart-item></app-cart-item>
-<app-cart-item></app-cart-item>
-<app-cart-item></app-cart-item>
+<h1>Mi cart</h1>
+
+<div id="contenedor">
+    <div id="left">
+        <p class="total"><span class="total-label">Total: $</span> {{total}}.0</p>
+        <p>Price with promotion: $</p>
+        <p>Promotion: </p>
+        
+        <app-cart-item *ngFor="let item of cartItems" [cartItem]="item" (cartItemDelete)="deleteItem(item)"></app-cart-item>
+    </div>
+    <div id="right">
+        <button mat-raised-button color="primary" (click)="showHide()">{{buttonMessage}}</button>
+        <app-paymentmethod *ngIf="showPayment"></app-paymentmethod>
+    </div>
+</div>
+
+
+
 

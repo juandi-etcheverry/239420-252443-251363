@@ -1,1 +1,13 @@
-<p>cart-item works!</p>
+<div id="cartItem" (click)="onCardClick(cartItem.id)" class="example-ripple-container mat-elevation-z4"
+     matRipple
+     [matRippleCentered]="centered"
+     [matRippleDisabled]="disabled"
+     [matRippleUnbounded]="unbounded">
+     <div class="info" >
+        <span id="itemName">{{cartItem?.name}}</span>
+        <span class="info-price">${{cartItem?.price}}</span>
+    </div>
+    <button id="exclude">Exclude</button>
+    <button id="delete" (click)="onDeleteClick()">X</button>
+</div>
+

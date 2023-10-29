@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NuestroComponenteComponent } from './nuestro-componente/nuestro-componente.component';
@@ -18,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import {MatIconModule} from '@angular/material/icon';
+import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.component';
 
 
 @NgModule({
@@ -26,9 +27,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     NuestroComponenteComponent,
     ProductsComponent,
     UserComponent,
-    CartComponent,
     PagenotfoundComponent,
-    CartItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +42,10 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     HttpClientModule,
     ProductDetailComponent,
     UserPanelComponent,
+    CartComponent,
+    CartItemComponent,
+    MatIconModule,
+    PaymentmethodComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
