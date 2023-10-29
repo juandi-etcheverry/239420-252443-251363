@@ -21,7 +21,7 @@ export class PaymentmethodComponent implements OnInit{
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
+    this.dialog.open(ConfirmPurchase, {
       width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
@@ -35,15 +35,15 @@ export class PaymentmethodComponent implements OnInit{
 
 @Component({
   selector: 'dialog-animations-example-dialog',
-  templateUrl: 'dialog-animations-example-dialog.html',
+  templateUrl: 'confirmPurchase.html',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatSnackBarModule],
 })
-export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, private _snackBar: MatSnackBar) {}
+export class ConfirmPurchase {
+  constructor(public dialogRef: MatDialogRef<ConfirmPurchase>, private _snackBar: MatSnackBar) {}
 
   processPurchase(){
-    this._snackBar.open('Successfull purchase!', 'Close');
+    this._snackBar.open('Successful purchase!', 'Close');
   }
 }
 

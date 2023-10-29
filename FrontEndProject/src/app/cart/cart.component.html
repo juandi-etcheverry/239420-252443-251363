@@ -9,8 +9,8 @@
         <app-cart-item *ngFor="let item of cartItems" [cartItem]="item" (cartItemDelete)="deleteItem(item)"></app-cart-item>
     </div>
     <div id="right">
-        <button mat-raised-button color="primary">Purchase</button>
-        <app-paymentmethod></app-paymentmethod>
+        <button mat-raised-button color="primary" (click)="showHide()">{{buttonMessage}}</button>
+        <app-paymentmethod *ngIf="showPayment"></app-paymentmethod>
     </div>
 </div>
 
