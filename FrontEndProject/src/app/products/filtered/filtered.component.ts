@@ -8,18 +8,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import { Brand } from '../brand';
-import { Category } from '../category';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { ProductsService } from '../products.service';
-import { ProductItem } from '../product-item';
+import { ProductItem, Products } from 'src/utils/interfaces';
 
-interface Brands{
-  value: string;
-}
-interface Categories{
-  value: string;
-}
 @Component({
   selector: 'app-filtered',
   templateUrl: './filtered.component.html',
@@ -38,27 +30,34 @@ export class FilteredComponent {
   });
 
   @Input()
-  products!:ProductItem[]
+  products!:Products
 
 
-  brand!:Brand[]
+  brands!:string[]
 
-  category!:Category[]
+  categories!:string[]
+
 
   @Output()
-  submitClicked!:EventEmitter<ProductItem[]>
+  submitClicked!:EventEmitter<Products>
 
 
   constructor(private productService : ProductsService){
     this.submitClicked = new EventEmitter();
-    this.brand = productService.brandItems;
-    this.category = productService.categoryItems;
+    
+      this.productService.getAllProducts().subscribe((products: Products) => {
+        this.brands = Array.from(new Set(products.products.map(product => product.brand)));
+        this.categories = Array.from(new Set(products.products.map(product => product.category)));
+    });
   }
 
   onSubmit():void{
     const form = this.filterForm.value;
     console.log(form)
-    const filterProducts = this.productService.filter(form.textInput ?? '', form.brandInput ?? '', form.categoryInput ?? '', form.minPrice ?? 0, form.maxPrice ?? Number.MAX_VALUE);
-    this.submitClicked.emit(filterProducts);
+    this.productService.getProducts(form.textInput ?? '', form.brandInput ?? '', form.categoryInput ?? '', form.minPrice ?? 0, form.maxPrice ?? Number.MAX_VALUE)
+    .subscribe((products) => {
+      this.products = products;
+      this.submitClicked.emit(products);
+    });
   }
 }

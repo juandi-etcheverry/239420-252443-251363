@@ -10,7 +10,7 @@
         <mat-card-subtitle>Price: ${{productItem?.price}}</mat-card-subtitle>
         <mat-card-subtitle>Brand: {{productItem?.brand}} </mat-card-subtitle>
         <mat-card-subtitle>Category: {{productItem?.category}} </mat-card-subtitle>
-        <mat-card-subtitle>Colour(s): {{productItem?.colour}} </mat-card-subtitle>
+        <mat-card-subtitle>Colour(s): {{getColors(productItem)}} </mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions align="end" id="actions">
         <button mat-button class="button" (click)="onAddClick($event)">Add</button>

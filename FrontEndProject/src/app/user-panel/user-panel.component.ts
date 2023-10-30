@@ -74,7 +74,8 @@ export class UserPanelComponent implements OnInit {
       return;
     }
 
-    this.usersService.updateUser(this.userId, formData.correo ?? '', formData.direccion ?? '', this.data?.role ?? 1).subscribe((response) => {
+    this.usersService.updateUser(this.userId, formData.correo ?? '', formData.direccion ?? '', this.data?.role ?? 1)
+    .subscribe((response) => {
       this.data = response;
       this._snackBar.open(response.message, 'Close');
     });
