@@ -9,4 +9,11 @@ export interface UpdateUserResponse extends GetUserResponse {};
 
 export interface ErrorStatus {
     status: number;
+    error: {
+        message: string;
+    }
+}
+
+export interface SignupResponse {
+    message: string;
 }

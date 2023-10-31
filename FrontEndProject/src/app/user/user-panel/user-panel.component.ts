@@ -6,7 +6,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService } from './users.service';
+import { UsersService } from '../users.service';
 import { ErrorStatus, GetUserResponse } from 'src/utils/interfaces';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
