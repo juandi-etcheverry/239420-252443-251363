@@ -9,21 +9,42 @@
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input id="email" formControlName="email" matInput>
+                <mat-error *ngIf="signupForm.controls.email.errors?.['required']">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="signupForm.controls.email.errors?.['email']">
+                    Wrong email format
+                </mat-error>
             </mat-form-field>
         
             <mat-form-field>
                 <mat-label>Address</mat-label>
                 <input id="address" formControlName="address" matInput>
+                <mat-error *ngIf="signupForm.controls.address.errors?.['required']">
+                    Address is required
+                </mat-error>
+                <mat-error *ngIf="signupForm.controls.address.errors?.['minlength']">
+                    Address has min length 2
+                </mat-error>
             </mat-form-field>
         
             <mat-form-field>
                 <mat-label>Password</mat-label>
                 <input id="password" type="password" formControlName="password" matInput>
+                <mat-error *ngIf="signupForm.controls.password.errors?.['required']">
+                    Password is required.
+                </mat-error>
+                <mat-error *ngIf="signupForm.controls.password.errors?.['minlength']">
+                    Password has min length 5
+                </mat-error>
             </mat-form-field>
         
             <mat-form-field>
                 <mat-label>Confirm Password</mat-label>
-                <input id="confirmPassword" type="password" formControlName="confirmPassword" matInput>
+                <input id="passwordConfirmation" type="password" formControlName="passwordConfirmation" matInput>
+                <mat-error *ngIf="signupForm.controls.passwordConfirmation.errors?.['passwordMismatch']">
+                    Password and Confirmation do not match
+                </mat-error>
             </mat-form-field>
         
             <button id="signup" 
@@ -31,7 +52,7 @@
             mat-raised-button 
             color="primary" 
             type="submit"
-            [disabled]="signupForm.pristine"
+            [disabled]="signupForm.invalid"
             >
             Submit
             </button>

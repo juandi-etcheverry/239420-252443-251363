@@ -15,6 +15,10 @@ export class AuthService {
     return localStorage.getItem(this.authTokenKey);
   }
 
+  hasAuthToken() : boolean {
+    return localStorage.getItem(this.authTokenKey) !== null
+  }
+
   removeAuthToken(): void{
     localStorage.removeItem(this.authTokenKey);
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,21 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { z } from 'zod'; 
 import { UsersService } from '../users.service';
 import { ErrorStatus, SignupResponse } from 'src/utils/interfaces';
 import { AuthService } from 'src/app/auth.service';
 import { HttpResponse } from '@angular/common/http';
-
-
-const SignupSchema = z.object({
-  email: z.string().email(),
-  address: z.string().min(2).max(100),
-  password: z.string().min(5).max(100),
-  confirmPassword: z.string().min(5).max(100),
-}).refine(data => data.password === data.confirmPassword, {
-  message: 'Passwords must match',
-});
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -29,19 +19,33 @@ const SignupSchema = z.object({
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
   standalone: true,
-  imports: [MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatSnackBarModule, MatSnackBarModule],
+  imports: [MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatSnackBarModule, MatSnackBarModule, CommonModule],
 })
 export class SignupComponent {
 
 
   constructor(private router: Router, private userService: UsersService, 
-    private _snackBar: MatSnackBar, private authService: AuthService) {}
+    private _snackBar: MatSnackBar, private authService: AuthService) {
+      if (authService.hasAuthToken()) {
+        _snackBar.open("You are already logged in", 'Close');
+        this.goToPage("/");
+      }
+    }
+
+  validatePasswords = (control: AbstractControl) : { passwordMismatch : boolean} | null => {
+    const pw = this.signupForm?.get("password")?.value;
+    const confirmpw = this.signupForm?.get("passwordConfirmation")?.value;
+
+    return pw === confirmpw ? null : {
+      passwordMismatch : true
+    };
+  }
 
   signupForm = new FormGroup({
-    email: new FormControl(''),
-    address: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
+    email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}, ),
+    address: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(2)]}),
+    password: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(5)]}),
+    passwordConfirmation: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(5), this.validatePasswords]}),
   });
 
   goToPage(url: string){
@@ -49,19 +53,9 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    const formData = this.signupForm.value;
+    const formData = this.signupForm.getRawValue();
 
-    try {
-      SignupSchema.parse(formData);
-
-    } catch (error) {
-      if(error instanceof z.ZodError){
-        this._snackBar.open(error.errors[0].message, 'Close');
-      }
-      return;
-    }
-
-    this.userService.signup(formData.email ?? '', formData.address ?? '', formData.password ?? '', formData.confirmPassword ?? '').subscribe({
+    this.userService.signup(formData).subscribe({
       next: (response) => {
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
         this._snackBar.open('User created successfully', 'Close');

@@ -6,7 +6,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import {MatDividerModule} from '@angular/material/divider';
 import { Router } from '@angular/router';
-import { CartService } from '../cart/cart-service';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -18,7 +18,8 @@ import { CartService } from '../cart/cart-service';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private router:Router){
+  constructor(private router:Router, private authService:AuthService){
+    
   }
   ngOnInit(): void {
     

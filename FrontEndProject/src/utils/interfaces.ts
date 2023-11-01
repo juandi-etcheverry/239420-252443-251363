@@ -17,3 +17,10 @@ export interface ErrorStatus {
 export interface SignupResponse {
     message: string;
 }
+
+export interface SignupRequest {
+    email: string;
+    address: string;
+    password: string;
+    passwordConfirmation: string;
+}
