@@ -22,4 +22,8 @@ export class UsersService {
     return this.http.post(`${url}/signup`, {Email: email, Address: address, Password: password, PasswordConfirmation: passwordConfirmation},
     {observe: 'response'});
   }
+
+  logout(){
+    return this.http.post(`${url}/logout`, {});
+  }
 }
