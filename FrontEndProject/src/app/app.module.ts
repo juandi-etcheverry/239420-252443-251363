@@ -14,11 +14,13 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
 import { FilteredComponent } from './products/filtered/filtered.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { UserPanelComponent } from './user-panel/user-panel.component';
+import { UserPanelComponent } from './user/user-panel/user-panel.component';
 import {MatIconModule} from '@angular/material/icon';
 import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.component';
+import { SignupComponent } from './user/signup/signup.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 @NgModule({
@@ -46,8 +48,15 @@ import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.compo
     CartItemComponent,
     MatIconModule,
     PaymentmethodComponent,
+    SignupComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
