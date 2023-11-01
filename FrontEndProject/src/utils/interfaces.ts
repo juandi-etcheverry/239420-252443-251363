@@ -41,3 +41,14 @@ export interface UpdateUserProps {
     address?: string | null;
     role?: number | null;
 }
+
+export interface SignupResponse {
+    message: string;
+}
+
+export interface SignupRequest {
+    email: string;
+    address: string;
+    password: string;
+    passwordConfirmation: string;
+}

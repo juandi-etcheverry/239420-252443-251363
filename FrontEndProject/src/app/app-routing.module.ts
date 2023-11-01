@@ -5,7 +5,8 @@ import { UserComponent } from './user/user.component';
 import { CartComponent } from './cart/cart.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { UserPanelComponent } from './user-panel/user-panel.component';
+import { UserPanelComponent } from './user/user-panel/user-panel.component';
+import { SignupComponent } from './user/signup/signup.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'products', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'user', component: UserComponent},
   {path: 'users/:id', component: UserPanelComponent},
   {path: 'cart', component: CartComponent},
+  {path: 'signup', component: SignupComponent},
   {path: '**', component: PagenotfoundComponent}
 ];
 
