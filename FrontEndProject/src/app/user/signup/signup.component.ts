@@ -62,7 +62,6 @@ export class SignupComponent {
         this.goToPage('/products');
       },
        error: (error: ErrorStatus) => {
-         console.log(error);
          this._snackBar.open(error.error.message, 'Close');
        }
     });

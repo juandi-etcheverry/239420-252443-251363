@@ -7,14 +7,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../users.service';
-import { ErrorStatus, GetUserResponse } from 'src/utils/interfaces';
+import { ErrorStatus, GetUserResponse, UpdateUserProps } from 'src/utils/interfaces';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { z } from 'zod';
 
 const UpdateUserSchema = z.object({
-  correo: z.string().email(),
-  direccion: z.string().min(2).max(100),
+  email: z.string().email(),
+  address: z.string().min(2).max(100),
 });
 
 @Component({
@@ -31,9 +31,9 @@ export class UserPanelComponent implements OnInit {
   userId: string = '';
 
   userForm = new FormGroup({
-    correo: new FormControl(''),
-    rol: new FormControl(''),
-    direccion: new FormControl(''),
+    email: new FormControl(''),
+    role: new FormControl(1),
+    address: new FormControl(''),
   });
 
   constructor(private router: Router, private usersService: UsersService, 
@@ -74,7 +74,10 @@ export class UserPanelComponent implements OnInit {
       return;
     }
 
-    this.usersService.updateUser(this.userId, formData.correo ?? '', formData.direccion ?? '', this.data?.role ?? 1).subscribe((response) => {
+    const completeFromData: UpdateUserProps = {id: this.userId, ...formData};
+
+    this.usersService.updateUser(completeFromData)
+    .subscribe((response) => {
       this.data = response;
       this._snackBar.open(response.message, 'Close');
     });
