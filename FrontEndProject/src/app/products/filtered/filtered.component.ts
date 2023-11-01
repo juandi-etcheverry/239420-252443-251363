@@ -46,6 +46,7 @@ export class FilteredComponent {
     this.submitClicked = new EventEmitter();
     
       this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
+        console.log(response);
         this.brands = response.brands;
         this.categories = response.categories;
       });
