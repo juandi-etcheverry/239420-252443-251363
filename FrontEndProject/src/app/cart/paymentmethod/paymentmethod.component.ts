@@ -45,5 +45,6 @@ export class ConfirmPurchase {
   processPurchase(){
     this._snackBar.open('Successful purchase!', 'Close');
   }
+
 }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetUserResponse, SignupRequest, UpdateUserProps, UpdateUserResponse } from 'src/utils/interfaces';
+import { GetUserResponse, SignupRequest, LoginRequest, UpdateUserProps, UpdateUserResponse } from 'src/utils/interfaces';
 import url from 'src/utils/url';
 
 @Injectable({
@@ -20,6 +20,10 @@ export class UsersService {
 
   signup({email, address, password, passwordConfirmation}: SignupRequest){
     return this.http.post(`${url}/signup`, {Email: email, Address: address, Password: password, PasswordConfirmation: passwordConfirmation},
+    {observe: 'response'});
+  }
+  login({email, password}: LoginRequest){
+    return this.http.post(`${url}/login`, {Email: email, Password: password},
     {observe: 'response'});
   }
 }
