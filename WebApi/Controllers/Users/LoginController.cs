@@ -28,9 +28,9 @@ public class LoginController : ControllerBase
         var user = _userLogic.GetUser(request.Email, request.Password);
 
         SessionToken tokenResponse;
-        if (Request.Cookies.ContainsKey("Authorization"))
+        if (Request.Headers.ContainsKey("Authorization"))
         {
-            var auth = Guid.Parse(Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(Request.Headers["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
                 tokenResponse = _sessionTokenLogic.AddUserToToken(auth, user);
             else
@@ -39,8 +39,7 @@ public class LoginController : ControllerBase
         else
         {
             tokenResponse = _sessionTokenLogic.AddSessionToken(new SessionToken { User = user });
-            Response.Cookies.Append("Authorization", tokenResponse.Id.ToString(),
-                new CookieOptions { HttpOnly = true });
+            Response.Headers.Append("Authorization", tokenResponse.Id.ToString());
         }
 
 

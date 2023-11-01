@@ -37,6 +37,7 @@ export class LoginComponent {
     const formData = this.loginForm.getRawValue();
     this.userService.login(formData).subscribe({
       next: (response) => {
+        console.log(response.headers.get('Authorization'));
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
         this._snackBar.open('Log In successfully', 'Close');
         this.goToPage('/products');
