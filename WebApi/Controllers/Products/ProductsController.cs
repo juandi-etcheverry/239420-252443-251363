@@ -50,7 +50,9 @@ public class ProductsController : ControllerBase
         var response = new GetProductsResponse
         {
             Message = "Products retrieved successfully",
-            Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList()
+            Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList(),
+            Brands = GetProductsResponse.GetBrands(products),
+            Categories = GetProductsResponse.GetCategories(products)
         };
 
         return StatusCode(200, response);

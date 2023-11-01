@@ -6,6 +6,8 @@ public class GetProductsResponse
 {
     public string Message { get; set; }
     public IList<ProductReponseObject> Products { get; set; }
+    public IList<string> Brands { get; set; }
+    public IList<string> Categories { get; set; }
 
     public static ProductReponseObject ToResponseObject(Product product)
     {
@@ -19,6 +21,16 @@ public class GetProductsResponse
             Brand = product.Brand.Name,
             Colors = product.Colors.Select(c => c.Name).ToList()
         };
+    }
+
+    public static IList<string> GetBrands(IList<Product> products)
+    {
+        return products.Select(p => p.Brand.Name).Distinct().ToList();
+    }
+
+    public static IList<string> GetCategories(IList<Product> products)
+    {
+        return products.Select(p => p.Category.Name).Distinct().ToList();
     }
 }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsService } from './products.service';
-import { Products } from 'src/utils/interfaces';
+import { Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-products',
@@ -10,24 +10,23 @@ import { Products } from 'src/utils/interfaces';
 })
 export class ProductsComponent implements OnInit {
 
-  productItems: Products | null = null;
+  products: Product[] = [];
 
 
   constructor(private changeDetector : ChangeDetectorRef, private productService : ProductsService){
   }
 
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe((products) => {
-      console.log(products);
-      this.productItems = products;
+    this.productService.getAllProducts().subscribe((response) => {
+      console.log(response);
+      this.products = response.products;
       this.changeDetector.detectChanges();
     });
 
   }
-  updateProductList($event: Products){
-    this.productItems = $event;
+  updateProductList($event: Product[]){
+    this.products = $event;
     this.changeDetector.detectChanges();
   }
-
 
 }

@@ -10,7 +10,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { ProductsService } from '../products.service';
-import { ProductItem, Products } from 'src/utils/interfaces';
+import { GetProductsResponse, Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-filtered',
@@ -30,7 +30,7 @@ export class FilteredComponent {
   });
 
   @Input()
-  products!:Products
+  products!:Product[]
 
 
   brands!:string[]
@@ -39,25 +39,24 @@ export class FilteredComponent {
 
 
   @Output()
-  submitClicked!:EventEmitter<Products>
+  submitClicked!:EventEmitter<Product[]>
 
 
   constructor(private productService : ProductsService){
     this.submitClicked = new EventEmitter();
     
-      this.productService.getAllProducts().subscribe((products: Products) => {
-        this.brands = Array.from(new Set(products.products.map(product => product.brand)));
-        this.categories = Array.from(new Set(products.products.map(product => product.category)));
-    });
+      this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
+        this.brands = response.brands;
+        this.categories = response.categories;
+      });
   }
 
   onSubmit():void{
     const form = this.filterForm.value;
-    console.log(form)
-    this.productService.getProducts(form.textInput ?? '', form.brandInput ?? '', form.categoryInput ?? '', form.minPrice ?? 0, form.maxPrice ?? Number.MAX_VALUE)
-    .subscribe((products) => {
-      this.products = products;
-      this.submitClicked.emit(products);
+    this.productService.getProducts(form)
+    .subscribe((response) => {
+      this.products = response.products;
+      this.submitClicked.emit(response.products);
     });
   }
 }

@@ -11,7 +11,7 @@ export interface ErrorStatus {
     status: number;
 }
 
-export interface ProductItem {
+export interface Product {
     id: number;
     name: string;
     price: number;
@@ -20,7 +20,24 @@ export interface ProductItem {
     colors: string[];
 }
 
-export interface Products {
+export interface GetProductsResponse {
     message: string;
-    products: ProductItem[];
+    products: Product[],
+    brands: string[],
+    categories: string[]
+};
+
+export interface ProductFilterForm {
+    textInput?: string | null;
+    brandInput?: string | null;
+    categoryInput?: string | null;
+    minPrice?: number | null;
+    maxPrice?: number | null;
+}
+
+export interface UpdateUserProps {
+    id?: string | null;
+    email?: string  | null;
+    address?: string | null;
+    role?: number | null;
 }

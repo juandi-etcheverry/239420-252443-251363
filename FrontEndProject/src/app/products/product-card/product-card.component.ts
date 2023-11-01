@@ -10,7 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CartService } from 'src/app/cart/cart-service';
 import { CartItem } from 'src/app/cart/cart-item';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { ProductItem } from 'src/utils/interfaces';
+import { Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-product-card',
@@ -21,7 +21,7 @@ import { ProductItem } from 'src/utils/interfaces';
 })
 export class ProductCardComponent implements OnInit{
   @Input()
-  productItem!: ProductItem;
+  productItem!: Product;
   centered = false;
   disabled = false;
   unbounded = false;
@@ -46,7 +46,7 @@ export class ProductCardComponent implements OnInit{
     this.router.navigate([url]);
   }
 
-  getColors(productItem: ProductItem): string {
-    return productItem.colors.map((color) => color).join(', ');
+  getColors(productItem: Product): string {
+    return productItem.colors.join(', ');
   }
 }
