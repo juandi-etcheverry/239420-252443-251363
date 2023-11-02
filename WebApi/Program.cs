@@ -4,6 +4,7 @@ using WebApi.Filters.Login;
 using WebApi.Filters.Logout;
 using WebApi.Filters.Products;
 using WebApi.Filters.Purchase;
+using WebApi.Filters.Sessions;
 using WebApi.Filters.Signup;
 using WebApi.Filters.User;
 using WebApi.Filters.User.Admin;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IsLoggedInAuthenticationFilter>();
 builder.Services.AddScoped<ProductAuthenticationFilter>();
 builder.Services.AddScoped<GetPurchaseHistoryFilter>();
 builder.Services.AddScoped<AddPurchaseFilter>();
+builder.Services.AddScoped<IsLoggedFilter>();
 
 var app = builder.Build();
 

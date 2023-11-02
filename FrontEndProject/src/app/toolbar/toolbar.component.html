@@ -1,17 +1,18 @@
 
-<p>
     <mat-toolbar color="primary">
-      <button mat-icon-button class="user-avatar-icon" aria-label="User Avatar">
-        <mat-icon *ngIf="auth">menu</mat-icon>
-      </button>
-      <span>My App</span>
+      <span>Ticu-Commerce</span>
       <span class="example-spacer"></span>
       <nav>
         <button mat-raised-button class="navbutton" color="primary" (click)="goToPage('products')">Products</button>
         <button mat-raised-button class="navbutton" color="primary" (click)="goToPage('cart')">Cart</button>
-        <button mat-raised-button class="navbutton" color="primary" (click)="goToPage('user')">User</button>
+        <button mat-raised-button class="navbutton" color="primary" *ngIf="isLoggedIn" [matMenuTriggerFor]="beforeMenu">{{avatar}}</button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="goToProfile()">View Profile</button>
+          <button mat-menu-item (click)="logout()">Log Out</button>
+        </mat-menu>
+        <button mat-raised-button class="navbutton" color="primary" *ngIf="!isLoggedIn" (click)="goToPage('signup')">Login</button>
+
       </nav>
     </mat-toolbar>
-  </p>
  
  
