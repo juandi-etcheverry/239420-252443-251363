@@ -1,0 +1,64 @@
+<div class="container">
+    <div id="Login">
+        <form [formGroup]="loginForm" (submit)="onSubmit()">
+
+            <h1>Log In</h1>
+    
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input id="email" formControlName="email" matInput>
+                <mat-error *ngIf="loginForm.controls.email.errors?.['required']">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="loginForm.controls.email.errors?.['email']">
+                    Wrong email format
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input id="password" type="password" formControlName="password" matInput>
+                <mat-error *ngIf="loginForm.controls.password.errors?.['required']">
+                    Password is required.
+                </mat-error>
+                <mat-error *ngIf="loginForm.controls.password.errors?.['minlength']">
+                    Password has min length 5
+                </mat-error>
+            </mat-form-field>
+    
+            <button id="submit" 
+                class="button" 
+                mat-raised-button 
+                color="primary" 
+                type="submit"
+                [disabled]="loginForm.invalid">
+                Submit
+                </button>
+    
+        </form>
+
+    </div>
+
+    <div id="Signup">
+        <div id="question">
+            <h2>Don't have an account?</h2>
+            <button id="signup" 
+                class="button" 
+                mat-raised-button 
+                color="primary"
+                (click)="SignUp()">
+                Sign Up
+            </button>
+        </div>
+        
+
+    </div>
+    
+
+    
+
+
+
+
+
+</div>

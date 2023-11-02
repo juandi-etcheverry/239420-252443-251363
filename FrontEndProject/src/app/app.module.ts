@@ -21,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { LoginComponent } from './user/login/login.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { AuthInterceptor } from './auth.interceptor';
     ProductsComponent,
     UserComponent,
     PagenotfoundComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { AuthInterceptor } from './auth.interceptor';
     CartItemComponent,
     MatIconModule,
     PaymentmethodComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent,
   ],
   providers: [
     {

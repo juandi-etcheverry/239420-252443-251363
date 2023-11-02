@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { PaymentmethodComponent } from './paymentmethod/paymentmethod.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -22,10 +24,12 @@ export class CartComponent implements OnInit{
   cartItems: CartItem[] = this.cartService.items;
   showPayment : Boolean = false;
   buttonMessage : String = "Purchase";
-  userLogged : Boolean = true;
-  constructor(private cartService : CartService, public dialog: MatDialog){
+  userLogged : Boolean = false;
+  
+  constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService){
 }
   ngOnInit(): void {
+    this.userLogged = this.authService.hasAuthToken();
   }
 
   deleteItem(ItemToDelete : CartItem) : void{
@@ -81,10 +85,14 @@ export class CartComponent implements OnInit{
   imports: [MatDialogModule, MatButtonModule, MatSnackBarModule],
 })
 export class askForLogIn {
-  constructor(public dialogRef: MatDialogRef<askForLogIn>, private _snackBar: MatSnackBar) {}
+  constructor(public dialogRef: MatDialogRef<askForLogIn>, private _snackBar: MatSnackBar, private router : Router) {}
 
   LogInNeeded(){
     this._snackBar.open('Successfull purchase!', 'Close');
+  }
+
+  redirectToLogin(){
+    this.router.navigate(['/login']);
   }
 }
 
