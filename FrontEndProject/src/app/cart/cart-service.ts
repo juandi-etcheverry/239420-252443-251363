@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CartItem } from "./cart-item";
-import { ProductItem } from "../products/product-item";
+import { Product } from "src/utils/interfaces";
 
 
 @Injectable({
@@ -19,7 +19,7 @@ export class CartService{
     addItem(item : CartItem){
         this.items = [...this.items, item];
     }
-    mapProductItemToCartItem(product: ProductItem): CartItem {
+    mapProductItemToCartItem(product: Product): CartItem {
         const cartItem: CartItem = {
           id: product.id,
           name: product.name,

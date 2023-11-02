@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatButtonModule} from '@angular/material/button';
 import { MatCardModule} from '@angular/material/card'; 
-import { ProductItem } from '../product-item';
 import { MatRippleModule} from '@angular/material/core';
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
@@ -11,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CartService } from 'src/app/cart/cart-service';
 import { CartItem } from 'src/app/cart/cart-item';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-product-card',
@@ -21,7 +21,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 })
 export class ProductCardComponent implements OnInit{
   @Input()
-  productItem!: ProductItem;
+  productItem!: Product;
   centered = false;
   disabled = false;
   unbounded = false;
@@ -44,5 +44,9 @@ export class ProductCardComponent implements OnInit{
   onCardClick(id: number){
     const url = 'products/' + id;
     this.router.navigate([url]);
+  }
+
+  getColors(productItem: Product): string {
+    return productItem.colors.join(', ');
   }
 }

@@ -9,13 +9,19 @@
 
     <mat-form-field>
       <mat-label>Correo electronico</mat-label>
-      <input *ngIf="data" [ngModel]="data.email" id="correo" formControlName="correo" matInput>
+      <input *ngIf="data" [ngModel]="data.email" id="email" formControlName="email" matInput>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Direccion de entrega</mat-label>
-      <input *ngIf="data" [ngModel]="data.address" value="Aca va la direccion" id="direccion" formControlName="direccion" matInput>
+      <input *ngIf="data" [ngModel]="data.address" value="Aca va la direccion" id="address" formControlName="address" matInput>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rol</mat-label>
+      <input *ngIf="data" [ngModel]="data.role"  id="role" formControlName="role" matInput readonly>
+    </mat-form-field>
+
 
     <button id="modificar" 
     class="button" 

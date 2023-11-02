@@ -12,8 +12,8 @@
             <mat-label>Brand</mat-label>
             <mat-select id="brandInput" formControlName="brandInput">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let bra of brand" [value]="bra.name">
-                {{bra.name}}
+                <mat-option *ngFor="let brand of brands" [value]="brand">
+                {{brand}}
                 </mat-option>
             </mat-select>
             </mat-form-field></tr>
@@ -23,8 +23,8 @@
                 <mat-label >Category</mat-label>
                 <mat-select id="categoryInput" formControlName="categoryInput">
                     <mat-option>None</mat-option>
-                    <mat-option *ngFor="let cat of category" [value]="cat.name">
-                    {{cat.name}}
+                    <mat-option *ngFor="let cat of categories" [value]="cat">
+                    {{cat}}
                     </mat-option>
                 </mat-select>
                 </mat-form-field></tr>
