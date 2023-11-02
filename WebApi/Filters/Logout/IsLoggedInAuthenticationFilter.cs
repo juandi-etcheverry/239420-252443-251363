@@ -18,16 +18,16 @@ public class IsLoggedInAuthenticationFilter : Attribute, IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
+        if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
         {
-            var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(context.HttpContext.Request.Headers["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
             {
                 if (_sessionTokenLogic.GetSessionToken(auth).User is null)
                     throw new UnauthorizedAccessException("You are not logged in");
                 var sessionTokenToDelete = _sessionTokenLogic.GetSessionToken(auth);
                 _sessionTokenLogic.DeleteSessionToken(sessionTokenToDelete);
-                context.HttpContext.Response.Cookies.Delete("Authorization");
+                context.HttpContext.Response.Headers.Remove("Authorization");
             }
             else
             {

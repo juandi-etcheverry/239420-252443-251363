@@ -25,9 +25,9 @@ public class ProductAuthenticationFilter : IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
+        if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
         {
-            var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(context.HttpContext.Request.Headers["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
             {
                 var sessionToken = _sessionTokenLogic.GetSessionToken(auth);

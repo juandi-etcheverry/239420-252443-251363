@@ -43,10 +43,9 @@ public class PurchaseController : ControllerBase
     [HttpPost]
     [Route("api/purchases")]
     [ServiceFilter(typeof(AddPurchaseFilter))]
-    public IActionResult AddPurchase([FromBody] AddPurchaseRequest request)
+    public IActionResult AddPurchase([FromBody] AddPurchaseRequest request, [FromHeader] Guid Authorization)
     {
-        var auth = Guid.Parse(Request.Cookies["Authorization"]);
-        var user = _sessionTokenLogic.GetSessionToken(auth).User;
+        var user = _sessionTokenLogic.GetSessionToken(Authorization).User;
 
         var products = _productLogic.GetProducts(p => request.ProductsIds.Contains(p.Id));
 

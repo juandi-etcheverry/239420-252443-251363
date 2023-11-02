@@ -1,4 +1,5 @@
 export interface GetUserResponse {
+    id: string;
     message: string;
     email: string;
     address: string;

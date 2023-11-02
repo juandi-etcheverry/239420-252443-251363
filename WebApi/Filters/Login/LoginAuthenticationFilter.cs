@@ -18,9 +18,9 @@ public class LoginAuthenticationFilter : Attribute, IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
+        if (context.HttpContext.Request.Headers.ContainsKey("Authorization"))
         {
-            var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(context.HttpContext.Request.Headers["Authorization"]);
 
             if (_sessionTokenLogic.GetSessionToken(auth).User != null)
                 throw new ArgumentException("You are already logged in!");

@@ -27,10 +27,10 @@ public class AdminUserAuthenticationFilter : Attribute, IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (!context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
+        if (!context.HttpContext.Request.Headers.ContainsKey("Authorization"))
             throw new UnauthorizedAccessException("You must be logged in to perform this action!");
 
-        var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
+        var auth = Guid.Parse(context.HttpContext.Request.Headers["Authorization"]);
         if (!(_sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Admin ||
               _sessionTokenLogic.GetSessionToken(auth).User?.Role == Role.Total))
             throw new InvalidCredentialException("You must be an administrator to perform this action!");

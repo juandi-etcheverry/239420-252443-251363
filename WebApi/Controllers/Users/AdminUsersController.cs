@@ -22,7 +22,7 @@ public class AdminUsersController : ControllerBase
     }
 
     [HttpGet]
-    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
+    [ServiceFilter(typeof(UpdateUserAuthenticationFilter))]
     public IActionResult GetUser([FromRoute] Guid id)
     {
         var user = _userLogic.GetUser(id);
