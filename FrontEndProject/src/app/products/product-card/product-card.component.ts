@@ -32,17 +32,14 @@ export class ProductCardComponent implements OnInit{
   ngOnInit(): void {
     this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
-  addProductToCart(): void {
-    const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
-    this.cartService.addItem(cartItem);
-    this.cartService.getCantOfItem(this.productItem.id);
-  }
 
   onIncrease($event : Event){
     $event.stopPropagation()
-    this.cant++;
-    this.addProductToCart();
+    const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+    this.cartService.addItem(cartItem);
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
+  
   onDecrease($event : Event){
     $event.stopPropagation()
     if(this.cant > 0){

@@ -52,7 +52,7 @@ export class ToolbarComponent implements OnInit {
     this.userService.logout();
     this.user = null;
     this.authService.removeAuthToken();
-    this.cartService.removeCartFromLocalStorage();
+    this.cartService.logout();
     this.goToPage('/products');
   }
 

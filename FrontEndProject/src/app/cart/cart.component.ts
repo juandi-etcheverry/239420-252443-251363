@@ -31,6 +31,7 @@ export class CartComponent implements OnInit{
 
   ngOnInit(): void {
     this.userLogged = this.authService.hasAuthToken();
+    this.cartService.loadCartFromLocalStorage();
     this.cartItems = this.cartService.items;
   }
 

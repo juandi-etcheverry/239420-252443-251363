@@ -1,19 +1,41 @@
 import { Injectable } from "@angular/core";
 import { CartItem } from "./cart-item";
 import { Product } from "src/utils/interfaces";
+import { AuthService } from "../auth.service";
+import { UsersService } from "../user/users.service";
+import { User } from "../user/user-model";
+import { Router } from "@angular/router";
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class CartService{
-    private cartKey: string = 'Cart';
+    private cartKey: string = 'AnonymusCart';
     items: CartItem[] = [];
+    isLoggedIn : boolean = this.authService.hasAuthToken();
+    user : User | null = null;
 
+    constructor(private authService: AuthService, private userService : UsersService, private router : Router){
+        router.events.subscribe((event) => {
+            this.isLoggedIn = this.authService.hasAuthToken();
+            this.updatecartKey();
+            if (this.user === null && this.isLoggedIn) {
+              this.fetchUserData(() => {
+                this.updatecartKey();
+              });
+            }
+          })
+          this.loadCartFromLocalStorage();
+    }
+
+    updatecartKey(){
+        this.cartKey = this.user?.id ?? 'AnonymusCart';
+    }
     get itemsCount(): number{
         return this.items.length;
     }
-
+    
     saveCartToLocalStorage(){
         localStorage.setItem(this.cartKey, JSON.stringify(this.items));
     }
@@ -23,8 +45,10 @@ export class CartService{
             this.items = JSON.parse(cartItemsStr);
         }
     }
-    removeCartFromLocalStorage(){
-        localStorage.removeItem(this.cartKey);
+    logout(){
+        this.user = null;
+        this.cartKey = 'AnonymusCart';
+        this.loadCartFromLocalStorage();
     }
 
     deleteItem(ItemToDelete : CartItem){
@@ -76,5 +100,14 @@ export class CartService{
             return 0;
         }
     }
+    private fetchUserData(internalSubscribeLogic : () => void) {
+        return this.userService.getLoggedUser()?.subscribe(({id, email, address, role}) => {
+          this.user = {
+            id, email, address, role
+          }
+          this.cartKey = this.user.id;
+          internalSubscribeLogic();
+        })
+      }
 
 }
