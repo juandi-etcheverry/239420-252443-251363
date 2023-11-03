@@ -16,7 +16,7 @@ export interface ErrorStatus {
 }
 
 export interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
     brand: string;

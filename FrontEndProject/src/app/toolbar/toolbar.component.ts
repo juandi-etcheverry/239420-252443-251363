@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 import { UsersService } from '../user/users.service';
 import { User } from '../user/user-model';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../cart/cart-service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ToolbarComponent implements OnInit {
   isLoggedIn : boolean = this.authService.hasAuthToken();
   user : User | null = null;
   avatar : string = "";
-  constructor(private router:Router, private authService:AuthService, private userService : UsersService){
+  constructor(private router:Router, private authService:AuthService, private userService : UsersService, private cartService : CartService){
     router.events.subscribe((event) => {
       this.isLoggedIn = this.authService.hasAuthToken();
       this.updateAvatar();
@@ -51,6 +52,7 @@ export class ToolbarComponent implements OnInit {
     this.userService.logout();
     this.user = null;
     this.authService.removeAuthToken();
+    this.cartService.removeCartFromLocalStorage();
     this.goToPage('/products');
   }
 

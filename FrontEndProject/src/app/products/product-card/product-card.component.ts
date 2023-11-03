@@ -22,6 +22,7 @@ import { Product } from 'src/utils/interfaces';
 export class ProductCardComponent implements OnInit{
   @Input()
   productItem!: Product;
+  cant: number = 0;
   centered = false;
   disabled = false;
   unbounded = false;
@@ -29,19 +30,28 @@ export class ProductCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
   addProductToCart(): void {
     const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
     this.cartService.addItem(cartItem);
+    this.cartService.getCantOfItem(this.productItem.id);
   }
 
-  onAddClick($event : Event){
+  onIncrease($event : Event){
     $event.stopPropagation()
+    this.cant++;
     this.addProductToCart();
-    this._snackBar.open("Product added to cart", "Close");
+  }
+  onDecrease($event : Event){
+    $event.stopPropagation()
+    if(this.cant > 0){
+      this.cant--;
+      this.cartService.getCantOfItem(this.productItem.id);
+    }
   }
 
-  onCardClick(id: number){
+  onCardClick(id: string){
     const url = 'products/' + id;
     this.router.navigate([url]);
   }

@@ -5,8 +5,9 @@
         <p class="total"><span class="total-label">Total: $</span> {{total}}.0</p>
         <p>Price with promotion: $</p>
         <p>Promotion: </p>
-        
-        <app-cart-item *ngFor="let item of cartItems" [cartItem]="item" (cartItemDelete)="deleteItem(item)"></app-cart-item>
+        <div class="cart-list-wrapper">
+            <app-cart-item  *ngFor="let item of cartItems" [cartItem]="item" (changeItemCant)="Refresh()"></app-cart-item>
+        </div>
     </div>
     <div id="right">
         <button mat-raised-button color="primary" (click)="showHide()">{{buttonMessage}}</button>

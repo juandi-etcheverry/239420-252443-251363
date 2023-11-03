@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -28,16 +28,10 @@ export class CartComponent implements OnInit{
   
   constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService){
 }
+
   ngOnInit(): void {
     this.userLogged = this.authService.hasAuthToken();
-  }
-
-  deleteItem(ItemToDelete : CartItem) : void{
-    this.cartService.deleteItem(ItemToDelete);
     this.cartItems = this.cartService.items;
-    if(this.cartItems.length == 0){
-      this.hidePaymentPanel();
-    }
   }
 
   get total():number{
@@ -45,6 +39,7 @@ export class CartComponent implements OnInit{
   }
 
   showHide(){
+    this.cartItems = this.cartService.items;
     if(this.cartItems.length == 0){
       alert("Cannot purchase 0 items");
     }
@@ -75,6 +70,12 @@ export class CartComponent implements OnInit{
       enterAnimationDuration,
       exitAnimationDuration,
     });
+  }
+  Refresh(){
+    this.cartItems = this.cartService.items;
+    if(this.cartItems.length == 0){
+      this.hidePaymentPanel();
+    }
   }
 }
 

@@ -16,3 +16,7 @@
     padding-right: 50px;
 }
 
+.cart-list-wrapper {
+    height: 80%;
+    overflow: auto;
+}
