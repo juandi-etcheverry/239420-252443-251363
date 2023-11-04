@@ -66,3 +66,6 @@ export interface LoginResponse {
     Address: string;
     Role: number;
 }
+export interface PurchaseRequest{
+    cart : {id : string, cant : number}[];
+}

@@ -12,6 +12,7 @@ import { ErrorStatus, SignupResponse } from 'src/utils/interfaces';
 import { AuthService } from 'src/app/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { CartService } from 'src/app/cart/cart-service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class SignupComponent {
 
 
   constructor(private router: Router, private userService: UsersService, 
-    private _snackBar: MatSnackBar, private authService: AuthService) {
+    private _snackBar: MatSnackBar, private authService: AuthService, private cartService : CartService) {
       if (authService.hasAuthToken()) {
         _snackBar.open("You are already logged in", 'Close');
         this.goToPage("/");
@@ -58,6 +59,7 @@ export class SignupComponent {
     this.userService.signup(formData).subscribe({
       next: (response) => {
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
+        this.cartService.signIn();
         this._snackBar.open('User created successfully', 'Close');
         this.goToPage('/products');
       },

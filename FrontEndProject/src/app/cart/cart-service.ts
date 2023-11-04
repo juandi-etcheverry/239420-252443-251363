@@ -11,29 +11,46 @@ import { Router } from "@angular/router";
     providedIn: 'root',
 })
 export class CartService{
-    private cartKey: string = 'AnonymusCart';
+    public cartKey: string = 'AnonymousCart';
     items: CartItem[] = [];
     isLoggedIn : boolean = this.authService.hasAuthToken();
     user : User | null = null;
 
     constructor(private authService: AuthService, private userService : UsersService, private router : Router){
-        router.events.subscribe((event) => {
-            this.isLoggedIn = this.authService.hasAuthToken();
-            this.updatecartKey();
-            if (this.user === null && this.isLoggedIn) {
-              this.fetchUserData(() => {
-                this.updatecartKey();
-              });
-            }
-          })
-          this.loadCartFromLocalStorage();
+        this.fetchUserData(() => {
+            this.sayHello();
+          });
     }
 
-    updatecartKey(){
-        this.cartKey = this.user?.id ?? 'AnonymusCart';
+    signIn(){
+        this.fetchUserData(() => {
+            this.mergeInOne();
+          });
     }
+
+    mergeInOne(){
+        const sourceKey: string = 'AnonymousCart';
+        const targetKey: string = this.user?.id ?? 'AnonymousCart';
+        const sourceCartItems: CartItem[] = JSON.parse(localStorage.getItem(sourceKey) || '[]');
+        const targetCartItems: CartItem[] = JSON.parse(localStorage.getItem(targetKey) || '[]');
+
+        sourceCartItems.forEach((sourceItem) => {
+            const existingItem = targetCartItems.find(targetItem => targetItem.id === sourceItem.id);
+            if(existingItem){
+                existingItem.cant += sourceItem.cant;
+            } else{
+                targetCartItems.push(sourceItem);
+            }
+        });
+        localStorage.setItem(targetKey, JSON.stringify(targetCartItems));
+        localStorage.removeItem(sourceKey);
+    }
+
     get itemsCount(): number{
         return this.items.length;
+    }
+    removeCartId(id : string){
+        localStorage.removeItem(id);
     }
     
     saveCartToLocalStorage(){
@@ -47,7 +64,8 @@ export class CartService{
     }
     logout(){
         this.user = null;
-        this.cartKey = 'AnonymusCart';
+        this.cartKey = 'AnonymousCart';
+        localStorage.setItem(this.cartKey, JSON.stringify([]));
         this.loadCartFromLocalStorage();
     }
 
@@ -109,5 +127,7 @@ export class CartService{
           internalSubscribeLogic();
         })
       }
+    private sayHello(){
+    }
 
 }
