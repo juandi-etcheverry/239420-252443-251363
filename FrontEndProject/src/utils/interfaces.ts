@@ -27,6 +27,7 @@ export interface Product {
     brand: Brand;
     category: Category;
     colors: string[];
+    stock: number;
     description: string;
 }
 export interface GetProductReponse{
@@ -35,6 +36,7 @@ export interface GetProductReponse{
     price: number;
     brand: Brand;
     category: Category;
+    stock: number;
     colors: string[];
     description: string;
 }

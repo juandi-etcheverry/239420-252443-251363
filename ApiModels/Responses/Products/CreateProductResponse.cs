@@ -11,4 +11,5 @@ public class CreateProductResponse
     public Category Category { get; set; }
     public Brand Brand { get; set; }
     public IList<Color> Colors { get; set; }
+    public int Stock { get; set; }
 }
