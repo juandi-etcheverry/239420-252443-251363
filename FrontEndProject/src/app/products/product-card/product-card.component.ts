@@ -7,10 +7,9 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule} from '@angular/forms';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from 'src/app/cart/cart-service';
-import { CartItem } from 'src/app/cart/cart-item';
+import { CartService } from 'src/app/cart/cart.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { Product } from 'src/utils/interfaces';
+import { Product, CartItem } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-product-card',
@@ -36,8 +35,16 @@ export class ProductCardComponent implements OnInit{
 
   onIncrease($event : Event){
     $event.stopPropagation()
-    const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
-    this.cartService.addItem(cartItem);
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
+    if(this.cant < this.productItem.stock){
+      const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+      this.cartService.addItem(cartItem);
+    }
+    else{
+      this._snackBar.open('No more stock', 'Cerrar', {
+        duration: 2000,
+      });
+    }
     this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
   

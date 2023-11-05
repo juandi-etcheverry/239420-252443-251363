@@ -36,6 +36,8 @@
     background: none;
     border: none;
     text-align: center;
+    font-weight: bold;
+    padding-left: 20px;
   }
   #actions{
     cursor: auto;

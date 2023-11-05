@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 import { UsersService } from '../user/users.service';
 import { User } from '../user/user-model';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../cart/cart-service';
+import { CartService } from '../cart/cart.service';
 
 
 @Component({

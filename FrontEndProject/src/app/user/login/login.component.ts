@@ -9,7 +9,7 @@ import { UsersService } from '../users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/auth.service';
 import { ErrorStatus } from 'src/utils/interfaces';
-import { CartService } from 'src/app/cart/cart-service';
+import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
   selector: 'app-login',

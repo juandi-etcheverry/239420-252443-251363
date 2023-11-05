@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CartService } from "../cart/cart-service";
+import { CartService } from "../cart/cart.service";
 import { CartItem } from "../cart/cart-item";
 import { HttpClient } from "@angular/common/http";
 import url from "src/utils/url";

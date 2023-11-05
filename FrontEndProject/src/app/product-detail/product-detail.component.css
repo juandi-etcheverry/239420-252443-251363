@@ -30,4 +30,11 @@ input{
     background: none;
     border: none;
     text-align: center;
+    font-weight: bold;
+    padding-left: 20px;
   }
+
+.return {
+    margin-top: 20px;
+    margin-left: 30px;
+}

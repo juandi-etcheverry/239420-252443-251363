@@ -1,8 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsService } from './products.service';
 import { Product } from 'src/utils/interfaces';
-import { CartService } from '../cart/cart-service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -28,9 +27,11 @@ export class ProductsComponent implements OnInit {
   }
   updateProductList($event: Product[]){
     this.products = $event;
+    this.updateProductsCant();
     this.changeDetector.detectChanges();
   }
   updateProductsCant(){
+    this.cants = [];
     for(let product of this.products){
       this.cants.push({product : product, cant : this.cartService.getCantOfItem(product.id)});
     }

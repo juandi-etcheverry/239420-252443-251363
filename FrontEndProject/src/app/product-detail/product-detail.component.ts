@@ -5,14 +5,15 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ProductsService } from '../products/products.service';
 import { ErrorStatus, GetProductReponse, GetProductsResponse, Product } from 'src/utils/interfaces';
-import { CartService } from '../cart/cart-service';
+import { CartService } from '../cart/cart.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
   standalone: true,
-  imports: [MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [MatButtonModule, MatDividerModule, MatIconModule, MatSnackBarModule],
 })
 export class ProductDetailComponent implements OnInit {
 
@@ -21,7 +22,8 @@ export class ProductDetailComponent implements OnInit {
   cant : number = 0;
 
   constructor(private router : Router, private productService : ProductsService, 
-    private route: ActivatedRoute, private cartService :CartService){
+    private route: ActivatedRoute, private cartService :CartService,
+    private _snackBar: MatSnackBar){
   }
 
   ngOnInit(): void {
@@ -54,8 +56,16 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onIncrease(){
+    this.cant = this.cartService.getCantOfItem(this.product.id);
     const cartItem = this.cartService.mapProductItemToCartItem(this.product);
-    this.cartService.addItem(cartItem);
+    if(this.cant < this.product.stock){
+      this.cartService.addItem(cartItem);
+    }
+    else{
+      this._snackBar.open('No more stock', 'Cerrar', {
+        duration: 2000,
+      });
+    }
     this.cant = this.cartService.getCantOfItem(this.product.id);
   }
 }

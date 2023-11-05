@@ -86,3 +86,10 @@ export interface LoginResponse {
 export interface PurchaseRequest{
     cart : {id : string, cant : number}[];
 }
+
+export interface CartItem {
+    id: string,
+    name: string;
+    price: number;
+    cant: number;
+}

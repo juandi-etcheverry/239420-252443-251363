@@ -12,7 +12,7 @@ import { ErrorStatus, SignupResponse } from 'src/utils/interfaces';
 import { AuthService } from 'src/app/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { CartService } from 'src/app/cart/cart-service';
+import { CartService } from 'src/app/cart/cart.service';
 
 
 @Component({
