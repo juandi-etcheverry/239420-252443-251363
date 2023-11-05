@@ -14,14 +14,29 @@ export interface ErrorStatus {
         message: string;
     }
 }
-
+export interface Brand{
+    name: string;
+}
+export interface Category{
+    name: string;
+}
 export interface Product {
     id: string;
     name: string;
     price: number;
-    brand: string;
-    category: string;
+    brand: Brand;
+    category: Category;
     colors: string[];
+    description: string;
+}
+export interface GetProductReponse{
+    id: string;
+    name: string;
+    price: number;
+    brand: Brand;
+    category: Category;
+    colors: string[];
+    description: string;
 }
 
 export interface GetProductsResponse {

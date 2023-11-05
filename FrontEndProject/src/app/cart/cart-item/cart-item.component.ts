@@ -30,12 +30,7 @@ export class CartItemComponent implements OnInit{
   }
   onDeleteClick($event : Event):void {
     $event.stopPropagation()
-    if(this.cant > 1){
-      this.cartService.decreaseItem(this.cartItem);
-    }
-    else{
-      this.cartService.deleteItem(this.cartItem);
-    }
+    this.cartService.decreaseItem(this.cartItem);
     this.cant = this.cartService.getCantOfItem(this.cartItem.id);
     this.changeItemCant.emit();
   }

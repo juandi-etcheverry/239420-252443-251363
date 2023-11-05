@@ -66,6 +66,7 @@ public class ProductsController : ControllerBase
 
         var response = new GetProductResponse
         {
+            id = product.Id,
             Message = "Product retrieved successfully",
             Name = product.Name,
             Description = product.Description,

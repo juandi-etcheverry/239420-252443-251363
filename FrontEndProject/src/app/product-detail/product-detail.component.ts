@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { ProductsService } from '../products/products.service';
+import { ErrorStatus, GetProductReponse, GetProductsResponse, Product } from 'src/utils/interfaces';
+import { CartService } from '../cart/cart-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,18 +16,47 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class ProductDetailComponent implements OnInit {
 
+  product!: Product;
+  productId: string = '';
+  cant : number = 0;
 
-  constructor(private router : Router){
-
+  constructor(private router : Router, private productService : ProductsService, 
+    private route: ActivatedRoute, private cartService :CartService){
   }
+
   ngOnInit(): void {
-    
+    this.route.params.subscribe(params => {
+      this.productId = params['id'];
+  });
+  this.productService.getProduct(this.productId).subscribe({
+    next: (response: GetProductReponse) => {
+      this.product = response;
+      this.cant = this.cartService.getCantOfItem(this.product.id);
+    },
+    error: (error: ErrorStatus) => {
+      if(error.status == 400) this.goToPage('/products');
+      if(error.status == 401) this.goToPage('/login');
+    }
+  });
   }
+
   goToPage(url: string){
     this.router.navigate([url]);
   }
-  onAddClick(){
-    alert("agregar al carrito");
+
+  onDecrease(){
+    this.cant = this.cartService.getCantOfItem(this.product.id);
+    if(this.cant > 0){
+      const cartItem = this.cartService.mapProductItemToCartItem(this.product);
+      this.cartService.decreaseItem(cartItem);
+      this.cant = this.cartService.getCantOfItem(this.product.id);
+    }
+  }
+
+  onIncrease(){
+    const cartItem = this.cartService.mapProductItemToCartItem(this.product);
+    this.cartService.addItem(cartItem);
+    this.cant = this.cartService.getCantOfItem(this.product.id);
   }
 }
 

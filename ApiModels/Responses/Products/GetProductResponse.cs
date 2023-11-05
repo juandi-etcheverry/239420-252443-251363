@@ -4,6 +4,7 @@ namespace ApiModels.Responses.Products;
 
 public class GetProductResponse
 {
+    public Guid id { get; set; }
     public string Message { get; set; }
     public string Name { get; set; }
     public float Price { get; set; }

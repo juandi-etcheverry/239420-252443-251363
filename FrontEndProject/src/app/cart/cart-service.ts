@@ -44,6 +44,7 @@ export class CartService{
         });
         localStorage.setItem(targetKey, JSON.stringify(targetCartItems));
         localStorage.removeItem(sourceKey);
+        this.loadCartFromLocalStorage();
     }
 
     get itemsCount(): number{
@@ -69,10 +70,10 @@ export class CartService{
         this.loadCartFromLocalStorage();
     }
 
-    deleteItem(ItemToDelete : CartItem){
+    /*deleteItem(ItemToDelete : CartItem){
         this.items = this.items.filter((item)=> item != ItemToDelete);
         this.saveCartToLocalStorage();
-    }
+    }*/
     addItem(item : CartItem){
         if(this.items.find((i)=> i.id == item.id)){
             this.items = this.items.map((i)=>{
@@ -87,7 +88,7 @@ export class CartService{
         }
         this.saveCartToLocalStorage();
     }
-    decreaseItem(item : CartItem){
+    /*decreaseItem(item : CartItem){
         if(this.items.find((i)=> i.id == item.id)){
             this.items = this.items.map((i)=>{
                 if(i.id == item.id){
@@ -97,7 +98,21 @@ export class CartService{
             })
         }
         this.saveCartToLocalStorage();
+    }*/
+
+    decreaseItem(itemToDecrease : CartItem){
+        this.loadCartFromLocalStorage();
+        for (let item of this.items){
+            if(itemToDecrease.id == item.id){
+                item.cant--;
+                if(item.cant == 0){
+                    this.items = this.items.filter((item)=> item.id != itemToDecrease.id);
+                }
+            }
+        }
+        this.saveCartToLocalStorage();
     }
+
     mapProductItemToCartItem(product: Product): CartItem {
         const cartItem: CartItem = {
           id: product.id,
@@ -111,6 +126,7 @@ export class CartService{
         return this.items.reduce(( acc, {price} ) => (acc += price), 0)
     }
     getCantOfItem(id : string) : number{
+        this.loadCartFromLocalStorage();
         if(this.items.find((item)=> item.id == id)){
             return this.items.find((item)=> item.id == id)!.cant;
         }

@@ -23,3 +23,11 @@ p{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
+
+input{
+    width: 40px;
+    height: 30px;
+    background: none;
+    border: none;
+    text-align: center;
+  }

@@ -22,7 +22,8 @@ import { Product } from 'src/utils/interfaces';
 export class ProductCardComponent implements OnInit{
   @Input()
   productItem!: Product;
-  cant: number = 0;
+  @Input()
+  cant!: number;
   centered = false;
   disabled = false;
   unbounded = false;
@@ -42,10 +43,13 @@ export class ProductCardComponent implements OnInit{
   
   onDecrease($event : Event){
     $event.stopPropagation()
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
     if(this.cant > 0){
-      this.cant--;
-      this.cartService.getCantOfItem(this.productItem.id);
+      const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+      this.cartService.decreaseItem(cartItem);
+      this.cant = this.cartService.getCantOfItem(this.productItem.id);
     }
+    
   }
 
   onCardClick(id: string){

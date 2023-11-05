@@ -1,14 +1,19 @@
 <button mat-raised-button color="primary" id="btnBackToProducts" (click)="goToPage('products')">Return to products</button>
 <div class="container">
-    <h1>Product name</h1>
-    <button mat-raised-button color="primary" id="btnBackToProducts" (click)="onAddClick()">Add to cart</button>
+    <h1>{{product.name}}</h1>
+    <div id="actions">
+        <button mat-raised-button color="primary" id="btnBackToProducts" (click)="onDecrease()">-</button>
+        <input matInput  type="number" min="0" readonly [value]="cant" >
+        <button mat-raised-button color="primary" id="btnBackToProducts" (click)="onIncrease()">+</button> 
 </div>
 
-<p>Price: </p>
-<p>Brand: </p>
-<p>Categroy: </p>
-<p>Color(s): </p>
-<p>Description: </p>
+    </div>
+    
+<p>Price: ${{product.price}}</p>
+<p>Brand: {{product.brand.name}}</p>
+<p>Categroy: {{product.category.name}}</p>
+<p>Color(s): {{product.colors}}</p>
+<p>Description: {{product.description}}</p>
 
 
 
