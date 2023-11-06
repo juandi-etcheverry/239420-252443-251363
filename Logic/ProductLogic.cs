@@ -39,4 +39,18 @@ public class ProductLogic : IProductLogic
     {
         return _productRepository.SoftDelete(id);
     }
+
+    public Product DecreaseStock(Guid id, int quantity)
+    {
+        var product = GetProduct(id);
+        if (product.Stock < quantity) throw new ArgumentException("Not enough stock");
+        product.Stock -= quantity;
+        return _productRepository.UpdateProduct(id, product);
+    }
+
+    public void IsPurchaseValid(IList<PurchaseProduct> cart)
+    {
+        bool isValid = cart.All(item => GetProduct(item.ProductId).Stock >= item.Quantity);
+        if (!isValid) throw new ArgumentException("Not enough stock");
+    }
 }

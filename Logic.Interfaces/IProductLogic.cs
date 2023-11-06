@@ -9,4 +9,6 @@ public interface IProductLogic
     List<Product> GetProducts(Func<Product, bool> predicate);
     Product AddProduct(Product product);
     Product SoftDelete(Guid id);
+    public Product DecreaseStock(Guid id, int quantity);
+    public void IsPurchaseValid(IList<PurchaseProduct> cart);
 }

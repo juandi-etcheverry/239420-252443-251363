@@ -167,6 +167,7 @@ public class ProductLogicTest
         Assert.AreEqual(true, result.IsDeleted);
     }
 
+    [TestMethod]
     public void GetProducts_Predicate_OK()
     {
         var predicate = (Product p) => true;
@@ -185,5 +186,50 @@ public class ProductLogicTest
 
         // Assert
         Assert.AreEqual(products, result);
+    }
+
+    [TestMethod]
+    public void IsPurchaseValid_Valid_OK()
+    {
+        var cart = new List<PurchaseProduct>
+        {
+            new() { ProductId = Guid.NewGuid(), Quantity = 1 },
+        };
+        var products = new List<Product>
+        {
+            new() { Id = cart[0].ProductId, Stock = 2 },
+        };
+
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProduct(It.IsAny<Guid>())).Returns(products[0]);
+        var logic = new ProductLogic(mock.Object);
+
+        // Act
+        logic.IsPurchaseValid(cart);
+
+        // Assert
+        Assert.IsTrue(true);
+    }
+
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void IsPurchaseValid_Valid_FAIL()
+    {
+        var cart = new List<PurchaseProduct>
+        {
+            new() { ProductId = Guid.NewGuid(), Quantity = 5 },
+        };
+        var products = new List<Product>
+        {
+            new() { Id = cart[0].ProductId, Stock = 2 },
+        };
+
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProduct(It.IsAny<Guid>())).Returns(products[0]);
+        var logic = new ProductLogic(mock.Object);
+
+        // Act
+        logic.IsPurchaseValid(cart);
     }
 }
