@@ -54,6 +54,24 @@ public class ProductRepository : IProductRepository
             .ToList();
     }
 
+    public Product UpdateProduct(Guid id, Product product)
+    {
+        var productToModify = GetProduct(id);
+
+        productToModify.Price = product.Price;
+        productToModify.Brand = product.Brand;
+        productToModify.Category = product.Category;
+        productToModify.Colors = product.Colors;
+        productToModify.Description = product.Description;
+        productToModify.Name = product.Name;
+        productToModify.Stock = product.Stock;
+        productToModify.IsDeleted = product.IsDeleted;
+
+        _context.Set<Product>().Update(productToModify);
+        _context.SaveChanges();
+        return productToModify;
+    }
+
     public Product SoftDelete(Guid id)
     {
         var product = _context.Set<Product>().Find(id);
