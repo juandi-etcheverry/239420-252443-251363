@@ -232,4 +232,52 @@ public class ProductLogicTest
         // Act
         logic.IsPurchaseValid(cart);
     }
+
+    [TestMethod]
+    public void DecreaseStock_Valid_OK()
+    {
+        var product = new Product
+        {
+            Name = "Prod",
+            Price = 400,
+            Description = "Test Description",
+            Category = new Category { Name = "Test" },
+            Brand = new Brand { Name = "Test" },
+            Colors = new List<Color> { new() { Name = "Test" } },
+            Stock = 5
+        };
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProduct(It.IsAny<Guid>())).Returns(product);
+        mock.Setup(x => x.UpdateProduct(It.IsAny<Guid>(), It.IsAny<Product>())).Returns(product);
+        var logic = new ProductLogic(mock.Object);
+
+        // Act
+        var result = logic.DecreaseStock(product.Id, 2);
+
+        // Assert
+        Assert.AreEqual(3, result.Stock);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void DecreaseStock_Valid_FAIL()
+    {
+        var product = new Product
+        {
+            Name = "Prod",
+            Price = 400,
+            Description = "Test Description",
+            Category = new Category { Name = "Test" },
+            Brand = new Brand { Name = "Test" },
+            Colors = new List<Color> { new() { Name = "Test" } },
+            Stock = 10
+        };
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProduct(It.IsAny<Guid>())).Returns(product);
+        mock.Setup(x => x.UpdateProduct(It.IsAny<Guid>(), It.IsAny<Product>())).Returns(product);
+        var logic = new ProductLogic(mock.Object);
+
+        // Act
+        var result = logic.DecreaseStock(product.Id, 20);
+    }
 }

@@ -12,3 +12,9 @@ public class Product
     public bool IsDeleted { get; set; } = false;
     public int Stock { get; set; }
 }
+
+public class PurchaseProduct
+{
+    public Guid ProductId { get; set; }
+    public int Quantity { get; set; }
+}

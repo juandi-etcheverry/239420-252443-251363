@@ -47,12 +47,21 @@ public class PurchaseController : ControllerBase
     {
         var user = _sessionTokenLogic.GetSessionToken(Authorization).User;
 
-        var products = _productLogic.GetProducts(p => request.ProductsIds.Contains(p.Id));
-
-        var newPurchase = new Purchase
+        _productLogic.IsPurchaseValid(request.Cart);
+        foreach (var pp in request.Cart)
         {
-            User = user
-        };
+            
+            _productLogic.DecreaseStock(pp.ProductId, pp.Quantity);
+        }
+
+        var newPurchase = new Purchase { User = user };
+
+        var products = _productLogic.GetProducts(p =>
+        {
+            var productsIds = request.Cart.Select(p => p.ProductId).ToList();
+            return productsIds.Contains(p.Id);
+        });
+
         newPurchase.AddProducts(products);
         var purchase = _purchaseLogic.AddCart(newPurchase);
 
