@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -11,6 +11,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { UsersService } from '../user/users.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,12 +22,14 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit{
 
+  
   cartItems: CartItem[] = this.cartService.items;
   showPayment : Boolean = false;
   buttonMessage : String = "Purchase";
   userLogged : Boolean = false;
   
-  constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService){
+  constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService,
+    private userService: UsersService){
 }
 
   ngOnInit(): void {
@@ -77,6 +80,20 @@ export class CartComponent implements OnInit{
     if(this.cartItems.length == 0){
       this.hidePaymentPanel();
     }
+  }
+
+  deleteCart(){
+    this.userService.getLoggedUser()?.subscribe({
+      next: (user) => {
+        this.cartService.removeCartId(user.id);
+        this.cartItems = [];
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+
+    this.Refresh();
   }
 }
 

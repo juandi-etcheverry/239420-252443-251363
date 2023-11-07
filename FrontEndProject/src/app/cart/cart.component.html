@@ -11,7 +11,7 @@
     </div>
     <div id="right">
         <button mat-raised-button color="primary" (click)="showHide()">{{buttonMessage}}</button>
-        <app-paymentmethod *ngIf="showPayment"></app-paymentmethod>
+        <app-paymentmethod *ngIf="showPayment" (deleteCart)="deleteCart()"></app-paymentmethod>
     </div>
 </div>
 

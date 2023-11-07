@@ -93,3 +93,14 @@ export interface CartItem {
     price: number;
     cant: number;
 }
+
+export interface PurchaseResponse {
+    message: string,
+    Purchase: {
+        ProductNames: string[],
+        UserEmail: string,
+        TotalPrice: number,
+        FinalPrice: number,
+        PromotionName?: string
+    }
+}

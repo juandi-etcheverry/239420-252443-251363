@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Product, CartItem } from "src/utils/interfaces";
+import { Product, CartItem, PurchaseResponse } from "src/utils/interfaces";
 import { AuthService } from "../auth.service";
 import { UsersService } from "../user/users.service";
 import { User } from "../user/user-model";
 import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import url from "src/utils/url";
 
 
 @Injectable({
@@ -15,10 +17,9 @@ export class CartService{
     isLoggedIn : boolean = this.authService.hasAuthToken();
     user : User | null = null;
 
-    constructor(private authService: AuthService, private userService : UsersService, private router : Router){
-        this.fetchUserData(() => {
-            this.sayHello();
-          });
+    constructor(private authService: AuthService, private userService : UsersService, private router : Router,
+                private http: HttpClient){
+        this.fetchUserData(() => {});
     }
 
     signIn(){
@@ -46,22 +47,27 @@ export class CartService{
         this.loadCartFromLocalStorage();
     }
 
-    get itemsCount(): number{
+    get itemsCount(): number {
         return this.items.length;
     }
+
     removeCartId(id : string){
+        console.log(id);
         localStorage.removeItem(id);
+        this.items = [];
     }
     
     saveCartToLocalStorage(){
         localStorage.setItem(this.cartKey, JSON.stringify(this.items));
     }
+
     loadCartFromLocalStorage(){
         const cartItemsStr = localStorage.getItem(this.cartKey);
         if(cartItemsStr){
             this.items = JSON.parse(cartItemsStr);
         }
     }
+
     logout(){
         this.user = null;
         this.cartKey = 'AnonymousCart';
@@ -69,10 +75,6 @@ export class CartService{
         this.loadCartFromLocalStorage();
     }
 
-    /*deleteItem(ItemToDelete : CartItem){
-        this.items = this.items.filter((item)=> item != ItemToDelete);
-        this.saveCartToLocalStorage();
-    }*/
     addItem(item : CartItem){
         if(this.items.find((i)=> i.id == item.id)){
             this.items = this.items.map((i)=>{
@@ -87,18 +89,7 @@ export class CartService{
         }
         this.saveCartToLocalStorage();
     }
-    /*decreaseItem(item : CartItem){
-        if(this.items.find((i)=> i.id == item.id)){
-            this.items = this.items.map((i)=>{
-                if(i.id == item.id){
-                    i.cant--; 
-                }
-                return i;
-            })
-        }
-        this.saveCartToLocalStorage();
-    }*/
-
+    
     decreaseItem(itemToDecrease : CartItem){
         this.loadCartFromLocalStorage();
         for (let item of this.items){
@@ -121,9 +112,11 @@ export class CartService{
         };
         return cartItem;
       }
-    get total():number{
+
+    get total(): number{
         return this.items.reduce(( acc, {price} ) => (acc += price), 0)
     }
+
     getCantOfItem(id : string) : number{
         this.loadCartFromLocalStorage();
         if(this.items.find((item)=> item.id == id)){
@@ -133,6 +126,7 @@ export class CartService{
             return 0;
         }
     }
+
     private fetchUserData(internalSubscribeLogic : () => void) {
         return this.userService.getLoggedUser()?.subscribe(({id, email, address, role}) => {
           this.user = {
@@ -142,7 +136,13 @@ export class CartService{
           internalSubscribeLogic();
         })
       }
-    private sayHello(){
+    
+    addPurchase(){
+        const body = this.items.map((item) => (
+            {ProductId: item.id, Quantity: item.cant}
+        ));
+        return this.http.post<PurchaseResponse>(`${url}/purchases`,
+        {"Cart": body})
     }
 
 }
