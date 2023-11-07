@@ -84,5 +84,13 @@ public class PromotionLogicTest
         
         Assert.IsFalse(result);
     }
-    
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "No promotion with that name exists")]
+    public void TogglePromotion_NoPromotion_FAIL()
+    {
+        var logic = new PromotionLogic(mock.Object);
+
+        var result = logic.TogglePromotion("No Promotion");
+    }
 }
