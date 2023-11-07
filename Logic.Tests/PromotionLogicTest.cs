@@ -74,4 +74,15 @@ public class PromotionLogicTest
         
         var result = logic.GetBestPromotion(products);
     }
+    
+    [TestMethod]
+    public void TogglePromotion_OK()
+    {
+        var logic = new PromotionLogic(mock.Object);
+        
+        var result = logic.TogglePromotion("Fidelity Promotion");
+        
+        Assert.IsFalse(result);
+    }
+    
 }

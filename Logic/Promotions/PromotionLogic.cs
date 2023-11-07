@@ -33,6 +33,15 @@ public class PromotionLogic : IPromotionLogic
         _cachedPromotions.Clear();
         UpdatePromotions();
     }
+    
+    public bool TogglePromotion(string name)
+    {
+        var promotion = _cachedPromotions.FirstOrDefault(c => c._promotionStrategy.Name == name);
+        if (promotion == null)
+            throw new ArgumentException("No promotion with that name exists");
+        promotion.IsEnabled = !promotion.IsEnabled;
+        return promotion.IsEnabled;
+    }
 
     private void VerifyPromotions()
     {
