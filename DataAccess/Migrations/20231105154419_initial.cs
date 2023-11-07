@@ -76,7 +76,8 @@ namespace DataAccess.Migrations
                     Price = table.Column<float>(type: "real", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

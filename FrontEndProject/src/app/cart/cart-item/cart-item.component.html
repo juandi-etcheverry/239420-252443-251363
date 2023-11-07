@@ -1,13 +1,18 @@
-<div id="cartItem" (click)="onCardClick(cartItem.id)" class="example-ripple-container mat-elevation-z4"
+<div id="cartItem" (click)="onCardClick(cartItem.id)" 
      matRipple
      [matRippleCentered]="centered"
      [matRippleDisabled]="disabled"
      [matRippleUnbounded]="unbounded">
-     <div class="info" >
+     
+    <div id="info">
         <span id="itemName">{{cartItem?.name}}</span>
-        <span class="info-price">${{cartItem?.price}}</span>
+        <div class="cartItemDetails">
+            <span class="info-price">${{cartItem?.price}}</span>
+            <span>Cant: {{cant}}</span>
+        </div>    
     </div>
-    <button id="exclude">Exclude</button>
-    <button id="delete" (click)="onDeleteClick()">X</button>
+    <div id="actions">
+        <button mat-raised-button color="primary" (click)="onDeleteClick($event)">-</button>
+    </div>
 </div>
 

@@ -10,4 +10,11 @@ public class Product
     public Brand Brand { get; set; } = null;
     public List<Color> Colors { get; set; }
     public bool IsDeleted { get; set; } = false;
+    public int Stock { get; set; }
+}
+
+public class PurchaseProduct
+{
+    public Guid ProductId { get; set; }
+    public int Quantity { get; set; }
 }

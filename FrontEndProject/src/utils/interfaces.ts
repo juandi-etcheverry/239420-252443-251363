@@ -14,14 +14,31 @@ export interface ErrorStatus {
         message: string;
     }
 }
-
+export interface Brand{
+    name: string;
+}
+export interface Category{
+    name: string;
+}
 export interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
-    brand: string;
-    category: string;
+    brand: Brand;
+    category: Category;
     colors: string[];
+    stock: number;
+    description: string;
+}
+export interface GetProductReponse{
+    id: string;
+    name: string;
+    price: number;
+    brand: Brand;
+    category: Category;
+    stock: number;
+    colors: string[];
+    description: string;
 }
 
 export interface GetProductsResponse {
@@ -65,4 +82,25 @@ export interface LoginResponse {
     email: string;
     Address: string;
     Role: number;
+}
+export interface PurchaseRequest{
+    cart : {id : string, cant : number}[];
+}
+
+export interface CartItem {
+    id: string,
+    name: string;
+    price: number;
+    cant: number;
+}
+
+export interface PurchaseResponse {
+    message: string,
+    Purchase: {
+        ProductNames: string[],
+        UserEmail: string,
+        TotalPrice: number,
+        FinalPrice: number,
+        PromotionName?: string
+    }
 }

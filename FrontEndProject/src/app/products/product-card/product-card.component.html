@@ -1,11 +1,11 @@
 
 
-     <mat-card (click)="onCardClick(productItem.id)" id="productCard" class="example-ripple-container mat-elevation-z4"
+     <mat-card  id="productCard" class="example-ripple-container mat-elevation-z4"
      matRipple
      [matRippleCentered]="centered"
      [matRippleDisabled]="disabled"
      [matRippleUnbounded]="unbounded">
-      <mat-card-header>
+      <mat-card-header (click)="onCardClick(productItem.id)">
         <mat-card-title id="title">{{productItem?.name}}</mat-card-title>
         <mat-card-subtitle>Price: ${{productItem?.price}}</mat-card-subtitle>
         <mat-card-subtitle>Brand: {{productItem?.brand}} </mat-card-subtitle>
@@ -13,7 +13,9 @@
         <mat-card-subtitle>Colour(s): {{getColors(productItem)}} </mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions align="end" id="actions">
-        <button mat-button class="button" (click)="onAddClick($event)">Add</button>
+        <button mat-button class="button" (click)="onDecrease($event)">-</button>
+        <input matInput  type="number" min="0" readonly [value]="cant" >
+        <button mat-button class="button" (click)="onIncrease($event)">+</button>
       </mat-card-actions>
     </mat-card>
 

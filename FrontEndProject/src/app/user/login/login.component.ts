@@ -9,6 +9,7 @@ import { UsersService } from '../users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/auth.service';
 import { ErrorStatus } from 'src/utils/interfaces';
+import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ import { ErrorStatus } from 'src/utils/interfaces';
 export class LoginComponent {
 
   constructor(private router: Router, private userService: UsersService,
-    private _snackBar: MatSnackBar, private authService: AuthService) {
+    private _snackBar: MatSnackBar, private authService: AuthService, private cartService : CartService) {
       if (authService.hasAuthToken()) {
         _snackBar.open("You are already logged in", 'Close');
         this.goToPage("/");
@@ -37,8 +38,8 @@ export class LoginComponent {
     const formData = this.loginForm.getRawValue();
     this.userService.login(formData).subscribe({
       next: (response) => {
-        console.log(response.headers.get('Authorization'));
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
+        this.cartService.signIn();
         this._snackBar.open('Log In successfully', 'Close');
         this.goToPage('/products');
       },

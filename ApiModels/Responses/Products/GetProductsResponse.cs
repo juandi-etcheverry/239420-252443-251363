@@ -19,7 +19,8 @@ public class GetProductsResponse
             Price = product.Price,
             Category = product.Category.Name,
             Brand = product.Brand.Name,
-            Colors = product.Colors.Select(c => c.Name).ToList()
+            Colors = product.Colors.Select(c => c.Name).ToList(),
+            Stock = product.Stock,
         };
     }
 
@@ -43,4 +44,5 @@ public class ProductReponseObject
     public string Category { get; set; }
     public string Brand { get; set; }
     public IList<string> Colors { get; set; }
+    public int Stock { get; set; }
 }

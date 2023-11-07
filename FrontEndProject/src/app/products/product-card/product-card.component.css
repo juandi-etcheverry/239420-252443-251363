@@ -9,6 +9,7 @@
 .button{
     background-color: #3c54b4;
     color: white;
+    height: 25px;
 }
 
 .example-ripple-container {
@@ -28,4 +29,18 @@
   
   mat-form-field {
     margin-right: 12px;
+  }
+  input{
+    width: 40px;
+    height: 30px;
+    background: none;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    padding-left: 20px;
+  }
+  #actions{
+    cursor: auto;
+    background-color: rgb(241, 240, 240);
+    margin-top: 5px;
   }

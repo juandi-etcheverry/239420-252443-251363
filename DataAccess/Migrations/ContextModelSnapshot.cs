@@ -114,6 +114,9 @@ namespace DataAccess.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");

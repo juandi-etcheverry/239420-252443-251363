@@ -30,7 +30,8 @@ public class ProductsController : ControllerBase
             Category = product.Category,
             Colors = product.Colors.ToList(),
             Description = product.Description,
-            Price = product.Price
+            Price = product.Price,
+            Stock = product.Stock
         };
         return StatusCode(201, response);
     }
@@ -66,13 +67,15 @@ public class ProductsController : ControllerBase
 
         var response = new GetProductResponse
         {
+            id = product.Id,
             Message = "Product retrieved successfully",
             Name = product.Name,
             Description = product.Description,
             Price = product.Price,
             Brand = product.Brand,
             Category = product.Category,
-            Colors = product.Colors
+            Colors = product.Colors,
+            Stock = product.Stock
         };
 
         return StatusCode(200, response);

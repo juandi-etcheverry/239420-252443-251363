@@ -7,10 +7,9 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule} from '@angular/forms';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from 'src/app/cart/cart-service';
-import { CartItem } from 'src/app/cart/cart-item';
+import { CartService } from 'src/app/cart/cart.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { Product } from 'src/utils/interfaces';
+import { Product, CartItem } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-product-card',
@@ -22,6 +21,8 @@ import { Product } from 'src/utils/interfaces';
 export class ProductCardComponent implements OnInit{
   @Input()
   productItem!: Product;
+  @Input()
+  cant!: number;
   centered = false;
   disabled = false;
   unbounded = false;
@@ -29,19 +30,36 @@ export class ProductCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-  }
-  addProductToCart(): void {
-    const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
-    this.cartService.addItem(cartItem);
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
 
-  onAddClick($event : Event){
+  onIncrease($event : Event){
     $event.stopPropagation()
-    this.addProductToCart();
-    this._snackBar.open("Product added to cart", "Close");
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
+    if(this.cant < this.productItem.stock){
+      const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+      this.cartService.addItem(cartItem);
+    }
+    else{
+      this._snackBar.open('No more stock', 'Cerrar', {
+        duration: 2000,
+      });
+    }
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
+  }
+  
+  onDecrease($event : Event){
+    $event.stopPropagation()
+    this.cant = this.cartService.getCantOfItem(this.productItem.id);
+    if(this.cant > 0){
+      const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
+      this.cartService.decreaseItem(cartItem);
+      this.cant = this.cartService.getCantOfItem(this.productItem.id);
+    }
+    
   }
 
-  onCardClick(id: number){
+  onCardClick(id: string){
     const url = 'products/' + id;
     this.router.navigate([url]);
   }
