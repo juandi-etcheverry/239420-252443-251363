@@ -53,4 +53,25 @@ public class PromotionLogicTest
         
         Assert.AreEqual("Fidelity Promotion", result.Name);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "No promotion is applicable to these products")]
+    public void BestPromotion_ProductsDontApply_FAIL()
+    {
+        var b1 = new Brand { Name = "ORT Merch" };
+        var c1 = new Category { Name = "T-Shirt" };
+
+        var products = new List<Product>
+        {
+            new() { Brand = b1, Category = c1, Price = 100, PromotionsApply = false },
+            new() { Brand = b1, Category = c1, Price = 200, PromotionsApply = false },
+            new() { Brand = b1, Category = c1, Price = 300, PromotionsApply = false },
+            new() { Brand = b1, Category = c1, Price = 400, PromotionsApply = false },
+            new() { Brand = b1, Category = c1, Price = 500, PromotionsApply = false }
+        };
+
+        var logic = new PromotionLogic(mock.Object);
+        
+        var result = logic.GetBestPromotion(products);
+    }
 }

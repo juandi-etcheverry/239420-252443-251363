@@ -10,7 +10,7 @@ public class ThreeForTwoPromotionStrategy : IPromotionStrategy
 
     public float GetDiscount(List<Product> products)
     {
-        var filteredProducts = products.FindAll(p => !p.IsDeleted);
+        var filteredProducts = products.FindAll(p => !p.IsDeleted && p.PromotionsApply);
         if (filteredProducts.Count < 3) return 0f;
         var categories = CategoriesWithAtLeastThreeProducts(filteredProducts);
         if (categories.Count == 0) return 0f;

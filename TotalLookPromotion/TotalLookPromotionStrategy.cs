@@ -23,7 +23,7 @@ public class TotalLookPromotionStrategy : IPromotionStrategy
 
     private List<Product> FilterValidProductsForPromotion(List<Product> products)
     {
-        return products.FindAll(p => p is { IsDeleted: false, Colors.Count: > 0 });
+        return products.FindAll(p => p is { IsDeleted: false, Colors.Count: > 0, PromotionsApply : true });
     }
 
     // Due to how distinct works, the products MUST share the same reference to the colors

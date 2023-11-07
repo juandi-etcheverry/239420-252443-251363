@@ -17,7 +17,7 @@ public class TwentyPercentPromotionStrategy : IPromotionStrategy
 
     private List<Product> FilterValidProductsForPromotion(List<Product> products)
     {
-        return products.FindAll(p => !p.IsDeleted);
+        return products.FindAll(p => !p.IsDeleted && p.PromotionsApply);
     }
 
     private float GetFinalDiscountAmount(List<Product> products)

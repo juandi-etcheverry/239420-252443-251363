@@ -9,7 +9,7 @@ public class FidelityPromotionStrategy : IPromotionStrategy
 
     public float GetDiscount(List<Product> products)
     {
-        var validProducts = products.FindAll(p => !p.IsDeleted);
+        var validProducts = products.FindAll(p => !p.IsDeleted && p.PromotionsApply);
         if (validProducts.Count < 3) return 0;
         var orderedProducts = OrderedProductsValidForPromotion(validProducts);
         var discount = orderedProducts.TakeWhile((_, idx) => idx < 2).ToList().Sum(p => p.Price);
