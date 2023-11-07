@@ -4,7 +4,6 @@ using Logic;
 using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PromotionStrategies;
 
 namespace ServerFactory;
 
@@ -24,11 +23,7 @@ public static class ServiceExtension
         services.AddScoped<ISessionTokenLogic, SessionTokenLogic>();
         services.AddScoped<IPurchaseLogic, PurchaseLogic>();
         services.AddScoped<IPromotionLogic, PromotionLogic>();
-
-        services.AddScoped<IPromotionStrategy, TwentyPercentPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, FidelityPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, ThreeForTwoPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, TotalLookPromotionStrategy>();
+        services.AddScoped<IFileDataReader, FileDataReader>();
         return services;
     }
 }

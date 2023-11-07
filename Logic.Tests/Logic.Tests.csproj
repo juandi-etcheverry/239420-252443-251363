@@ -23,6 +23,7 @@
         <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj"/>
         <ProjectReference Include="..\Logic\Logic.csproj"/>
         <ProjectReference Include="..\PromotionStrategies\PromotionStrategies.csproj"/>
+        <ProjectReference Include="..\TwentyPercentPromotion\TwentyPercentPromotion.csproj" />
     </ItemGroup>
 
 </Project>

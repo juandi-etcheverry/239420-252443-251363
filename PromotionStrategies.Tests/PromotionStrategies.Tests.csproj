@@ -18,7 +18,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\FidelityPromotion\FidelityPromotion.csproj" />
         <ProjectReference Include="..\PromotionStrategies\PromotionStrategies.csproj"/>
+        <ProjectReference Include="..\ThreeForTwoPromotion\ThreeForTwoPromotion.csproj" />
+        <ProjectReference Include="..\TotalLookPromotion\TotalLookPromotion.csproj" />
+        <ProjectReference Include="..\TwentyPercentPromotion\TwentyPercentPromotion.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,23 +1,33 @@
 ﻿using Domain;
 using Logic.Interfaces;
-using PromotionStrategies;
+using Moq;
+using System;
+using System.Configuration;
 
 namespace Logic.Tests;
 
 [TestClass]
 public class PromotionLogicTest
 {
+    private Mock<IFileDataReader> mock;
+    private const string _directoryPath = "../../../../PromotionsDllFiles";
+   
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        var paths = new FileDataReader().GetDirectoryFilePaths(_directoryPath);
+
+        mock = new Mock<IFileDataReader>(MockBehavior.Strict);
+        mock.Setup(fr => fr.GetDirectoryFilePaths(It.IsAny<string>())).Returns(paths);
+        mock.Setup(fr => fr.GetLastModified(It.IsAny<string>())).Returns(DateTime.Now);
+    }
+    
     [TestMethod]
     [ExpectedException(typeof(ArgumentException), "No promotion is applicable to these products")]
     public void NoBestPromotion_FAIL()
     {
         var products = new List<Product>();
-        var strat1 = new FidelityPromotionStrategy();
-        var strat2 = new TwentyPercentPromotionStrategy();
-        var strat3 = new ThreeForTwoPromotionStrategy();
-        var strat4 = new TotalLookPromotionStrategy();
-
-        var logic = new PromotionLogic(new List<IPromotionStrategy> { strat1, strat2, strat3, strat4 });
+        var logic = new PromotionLogic(mock.Object);
 
         var result = logic.GetBestPromotion(products);
     }
@@ -37,15 +47,10 @@ public class PromotionLogicTest
             new() { Brand = b1, Category = c1, Price = 500 }
         };
 
-        var strat1 = new FidelityPromotionStrategy();
-        var strat2 = new TwentyPercentPromotionStrategy();
-        var strat3 = new ThreeForTwoPromotionStrategy();
-        var strat4 = new TotalLookPromotionStrategy();
-
-        var logic = new PromotionLogic(new List<IPromotionStrategy> { strat1, strat2, strat3, strat4 });
-
+        var logic = new PromotionLogic(mock.Object);
+        
         var result = logic.GetBestPromotion(products);
-
-        Assert.AreEqual(strat1, result);
+        
+        Assert.AreEqual("Fidelity Promotion", result.Name);
     }
 }
