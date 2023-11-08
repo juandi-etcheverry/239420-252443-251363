@@ -116,4 +116,16 @@ public class PromotionLogicTest
         var newResult = logic.GetBestPromotion(products);
         Assert.AreEqual(result.GetDiscount(products), newResult.GetDiscount(products));
     }
+    
+    [TestMethod]
+    public void GetAllPromotions_OK()
+    {
+        var promotionCount = mock.Object.GetDirectoryFilePaths("").Length;
+        var logic = new PromotionLogic(mock.Object);
+        
+        var result = logic.GetAllPromotions();
+        
+        Assert.AreEqual(promotionCount, result.Count);
+    }
+   
 }

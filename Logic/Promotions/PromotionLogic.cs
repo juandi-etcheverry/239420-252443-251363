@@ -27,6 +27,12 @@ public class PromotionLogic : IPromotionLogic
         return bestPromotion;
     }
     
+    public List<IPromotionStrategy> GetAllPromotions()
+    {
+        VerifyPromotions();
+        return _cachedPromotions.Select(c => c.PromotionStrategy).ToList();
+    }
+    
     public void ForceRefresh()
     {
         _promotionsLastModified = DateTime.MinValue;
