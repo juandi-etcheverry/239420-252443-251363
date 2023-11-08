@@ -282,7 +282,7 @@ public class ProductLogicTest
     }
 
     [TestMethod]
-    public void UpdateProduct_FAIL()
+    public void UpdateProduct_OK()
     {
         var product = new Product
         {
