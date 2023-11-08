@@ -36,7 +36,6 @@ export class AdministrationPanelComponent {
   addNewProduct(){
     const dialogRef = this.dialog.open(NewProductComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this._snackBar.open('Product Added', 'Close');
       this.refresh();
     });
     

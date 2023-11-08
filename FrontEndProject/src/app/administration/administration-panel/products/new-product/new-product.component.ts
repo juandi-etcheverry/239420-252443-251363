@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/products/products.service';
 import { Brand, Category, CreateProductRequest, GetProductsResponse, Product } from 'src/utils/interfaces';
@@ -15,7 +16,7 @@ import { Brand, Category, CreateProductRequest, GetProductsResponse, Product } f
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.css'],
   standalone: true,
-  imports: [MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, CommonModule],
+  imports: [MatSelectModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatSnackBarModule],
 })
 export class NewProductComponent {
 
@@ -23,7 +24,7 @@ export class NewProductComponent {
   categories!:Category[]
   colors!:string[]
   
-  constructor(public dialogRef : MatDialogRef<NewProductComponent>, private productService : ProductsService, private router: Router) {
+  constructor(public dialogRef : MatDialogRef<NewProductComponent>, private productService : ProductsService, private router: Router, private _snackBar : MatSnackBar) {
     this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
       this.brands = response.brands;
       this.categories = response.categories;
@@ -31,13 +32,13 @@ export class NewProductComponent {
    }
 
    newProductForm = new FormGroup({
-    name: new FormControl('', {nonNullable: true}),
-    price: new FormControl('', {nonNullable: true, validators: [Validators.pattern("^[0-9]*$")]}),
-    description: new FormControl('', {nonNullable: true}),
-    brand: new FormControl('', {nonNullable: true}),
-    category: new FormControl('', {nonNullable: true}),
+    name: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(1)]}),
+    price: new FormControl('', {nonNullable: true, validators: [Validators.pattern("^[0-9]*$"), Validators.required]}),
+    description: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(1)]}),
+    brand: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    category: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     colors : new FormControl('', {nonNullable: true}),
-    stock: new FormControl('', {nonNullable: true}),
+    stock: new FormControl('', {nonNullable: true, validators: [Validators.pattern("^[0-9]*$"), Validators.required]}),
   });
 
   onSubmit(): void{
@@ -54,6 +55,7 @@ export class NewProductComponent {
     console.log(productData);
     this.productService.addProduct(productData).subscribe((response: Product) => {
       this.dialogRef.close();
+      this._snackBar.open("Product added successfully", 'Close');
     });
     
   }
