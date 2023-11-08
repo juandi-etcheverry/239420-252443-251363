@@ -55,6 +55,9 @@ public class PromotionsController : ControllerBase
    [HttpGet]
    public IActionResult GetAllPromotions()
    {
-      return StatusCode(200, _promotionLogic.GetAllPromotions());
+      return StatusCode(200, new GetPromotionsResponse()
+      {
+         Promotions = _promotionLogic.GetAllPromotions().Select(p => p.Name).ToList()
+      });
    }
 }
