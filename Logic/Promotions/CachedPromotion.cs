@@ -7,7 +7,7 @@ public class CachedPromotion
 {
     private DateTime _lastModified = DateTime.MinValue;
     public string _filePath { get; set; }
-    public IPromotionStrategy _promotionStrategy { get; private set; }
+    public IPromotionStrategy PromotionStrategy { get; private set; }
     public bool IsEnabled { get; set; } = true;
 
     //PRE: filePath is a valid path to a file
@@ -28,7 +28,7 @@ public class CachedPromotion
         var type = assembly.GetTypes().FirstOrDefault(t => t.IsClass && interfaceType.IsAssignableFrom(t));
         if (type != null)
         {
-            _promotionStrategy = (IPromotionStrategy)Activator.CreateInstance(type)!;
+            PromotionStrategy = (IPromotionStrategy)Activator.CreateInstance(type)!;
         }
         else
         {

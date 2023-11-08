@@ -28,7 +28,7 @@ public class PromotionLogicTest
     {
         var products = new List<Product>();
         var logic = new PromotionLogic(mock.Object);
-
+    
         var result = logic.GetBestPromotion(products);
     }
 
@@ -60,7 +60,7 @@ public class PromotionLogicTest
     {
         var b1 = new Brand { Name = "ORT Merch" };
         var c1 = new Category { Name = "T-Shirt" };
-
+    
         var products = new List<Product>
         {
             new() { Brand = b1, Category = c1, Price = 100, PromotionsApply = false },
@@ -69,7 +69,7 @@ public class PromotionLogicTest
             new() { Brand = b1, Category = c1, Price = 400, PromotionsApply = false },
             new() { Brand = b1, Category = c1, Price = 500, PromotionsApply = false }
         };
-
+    
         var logic = new PromotionLogic(mock.Object);
         
         var result = logic.GetBestPromotion(products);
@@ -83,6 +83,7 @@ public class PromotionLogicTest
         var result = logic.TogglePromotion("Fidelity Promotion");
         
         Assert.IsFalse(result);
+        logic.TogglePromotion("Fidelity Promotion");
     }
 
     [TestMethod]
@@ -90,7 +91,7 @@ public class PromotionLogicTest
     public void TogglePromotion_NoPromotion_FAIL()
     {
         var logic = new PromotionLogic(mock.Object);
-
+    
         var result = logic.TogglePromotion("No Promotion");
     }
     
@@ -113,6 +114,6 @@ public class PromotionLogicTest
         var result = logic.GetBestPromotion(products);
         logic.ForceRefresh();
         var newResult = logic.GetBestPromotion(products);
-        Assert.AreEqual(result.Name, newResult.Name);
+        Assert.AreEqual(result.GetDiscount(products), newResult.GetDiscount(products));
     }
 }

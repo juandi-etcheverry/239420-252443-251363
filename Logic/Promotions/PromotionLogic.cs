@@ -20,7 +20,7 @@ public class PromotionLogic : IPromotionLogic
     {
         VerifyPromotions();
         var enabledPromotions = _cachedPromotions.Where(c => c.IsEnabled);
-        var promotions = enabledPromotions.Select(c => c._promotionStrategy);
+        var promotions = enabledPromotions.Select(c => c.PromotionStrategy);
         var bestPromotion = promotions.MaxBy(st => st.GetDiscount(products));
         if (bestPromotion == null || bestPromotion.GetDiscount(products) <= 0)
             throw new ArgumentException("No promotion is applicable to these products");
@@ -36,7 +36,7 @@ public class PromotionLogic : IPromotionLogic
     
     public bool TogglePromotion(string name)
     {
-        var promotion = _cachedPromotions.FirstOrDefault(c => c._promotionStrategy.Name == name);
+        var promotion = _cachedPromotions.FirstOrDefault(c => c.PromotionStrategy.Name == name);
         if (promotion == null)
             throw new ArgumentException("No promotion with that name exists");
         promotion.IsEnabled = !promotion.IsEnabled;
@@ -46,11 +46,11 @@ public class PromotionLogic : IPromotionLogic
     private void VerifyPromotions()
     {
         var currentLastModified = _fileDataReader.GetLastModified(PROMOTIONS_DIRECTORY);
-        if (!currentLastModified.Equals(_promotionsLastModified))
+        if (currentLastModified.ToLongDateString() != _promotionsLastModified.ToLongDateString())
         {
             _promotionsLastModified = currentLastModified;
             UpdatePromotions();
-            _cachedPromotions = _cachedPromotions.OrderBy(c => c._promotionStrategy.Name).ToList();
+            _cachedPromotions = _cachedPromotions.OrderBy(c => c.PromotionStrategy.Name).ToList();
         }
     }
 
