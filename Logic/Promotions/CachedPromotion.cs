@@ -8,7 +8,6 @@ public class CachedPromotion
     private DateTime _lastModified = DateTime.MinValue;
     public string _filePath { get; set; }
     public IPromotionStrategy PromotionStrategy { get; private set; }
-    public bool IsEnabled { get; set; } = true;
 
     //PRE: filePath is a valid path to a file
     public void Verify()

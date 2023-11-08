@@ -2,5 +2,5 @@
 
 public class GetPromotionsResponse
 {
-    public List<string> Promotions { get; set; }
+    public List<PromotionDTO> Promotions { get; set; }
 }

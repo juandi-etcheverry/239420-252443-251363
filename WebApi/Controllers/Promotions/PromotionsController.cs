@@ -55,9 +55,14 @@ public class PromotionsController : ControllerBase
    [HttpGet]
    public IActionResult GetAllPromotions()
    {
+      var promotionDTOs = _promotionLogic.GetAllPromotions().Select(p => new PromotionDTO()
+      {
+         Name = p.Name,
+         IsEnabled = p.IsEnabled
+      }).ToList();
       return StatusCode(200, new GetPromotionsResponse()
       {
-         Promotions = _promotionLogic.GetAllPromotions().Select(p => p.Name).ToList()
+         Promotions = promotionDTOs
       });
    }
 }

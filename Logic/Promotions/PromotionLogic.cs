@@ -19,7 +19,7 @@ public class PromotionLogic : IPromotionLogic
     public IPromotionStrategy GetBestPromotion(List<Product> products)
     {
         VerifyPromotions();
-        var enabledPromotions = _cachedPromotions.Where(c => c.IsEnabled);
+        var enabledPromotions = _cachedPromotions.Where(c => c.PromotionStrategy.IsEnabled);
         var promotions = enabledPromotions.Select(c => c.PromotionStrategy);
         var bestPromotion = promotions.MaxBy(st => st.GetDiscount(products));
         if (bestPromotion == null || bestPromotion.GetDiscount(products) <= 0)
@@ -45,8 +45,8 @@ public class PromotionLogic : IPromotionLogic
         var promotion = _cachedPromotions.FirstOrDefault(c => c.PromotionStrategy.Name == name);
         if (promotion == null)
             throw new ArgumentException("No promotion with that name exists");
-        promotion.IsEnabled = !promotion.IsEnabled;
-        return promotion.IsEnabled;
+        promotion.PromotionStrategy.IsEnabled = !promotion.PromotionStrategy.IsEnabled;
+        return promotion.PromotionStrategy.IsEnabled;
     }
 
     private void VerifyPromotions()
