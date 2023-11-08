@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import url from 'src/utils/url';
-import { GetProductReponse, GetProductsResponse, Product, ProductFilterForm } from 'src/utils/interfaces';
+import { CreateProductRequest, GetProductReponse, GetProductsResponse, Product, ProductFilterForm } from 'src/utils/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +35,27 @@ export class ProductsService {
       if(maxPrice) params = params.set('MaxPrice', maxPrice);
       return this.http.get<GetProductsResponse>(`${url}/products`, {params: params})
   }
+
+  addProduct({
+    name,
+    price,
+    description,
+    brand,
+    category,
+    colors,
+    stock,
+  } : CreateProductRequest){
+    return this.http.post<Product>(`${url}/products`, {
+      Name: name,
+      Price: price,
+      Description: description,
+      Brand: brand,
+      Category: category,
+      Colors: colors,
+      Stock: stock,
+    });
+    }
+
+  
+
 }

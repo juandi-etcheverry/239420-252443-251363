@@ -22,6 +22,9 @@ import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.compo
 import { SignupComponent } from './user/signup/signup.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginComponent } from './user/login/login.component';
+import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
+import { ProductItemComponent } from './administration/products/product-item/product-item.component';
+import { NewProductComponent } from './administration/products/new-product/new-product.component';
 
 
 @NgModule({
@@ -31,7 +34,7 @@ import { LoginComponent } from './user/login/login.component';
     ProductsComponent,
     UserComponent,
     PagenotfoundComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,9 @@ import { LoginComponent } from './user/login/login.component';
     PaymentmethodComponent,
     SignupComponent,
     LoginComponent,
+    ProductItemComponent,
+    AdministrationPanelComponent,
+    NewProductComponent,
   ],
   providers: [
     {

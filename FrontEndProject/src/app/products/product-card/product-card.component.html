@@ -8,8 +8,8 @@
       <mat-card-header (click)="onCardClick(productItem.id)">
         <mat-card-title id="title">{{productItem?.name}}</mat-card-title>
         <mat-card-subtitle>Price: ${{productItem?.price}}</mat-card-subtitle>
-        <mat-card-subtitle>Brand: {{productItem?.brand}} </mat-card-subtitle>
-        <mat-card-subtitle>Category: {{productItem?.category}} </mat-card-subtitle>
+        <mat-card-subtitle>Brand: {{productItem?.brand?.name}} </mat-card-subtitle>
+        <mat-card-subtitle>Category: {{productItem?.category?.name}} </mat-card-subtitle>
         <mat-card-subtitle>Colour(s): {{getColors(productItem)}} </mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions align="end" id="actions">

@@ -1,0 +1,9 @@
+<h1>Administration Module</h1>
+
+<div id="productList">
+    <div class="title">
+        <h2>Products List</h2>
+        <button mat-button class="button" (click)="addNewProduct()">Add New</button>
+    </div>
+    <app-product-item *ngFor="let item of products" [product]="item"></app-product-item>
+</div>

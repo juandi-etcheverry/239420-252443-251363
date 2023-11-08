@@ -1,0 +1,18 @@
+
+<mat-card  id="productCard" class="example-ripple-container mat-elevation-z4"
+     matRipple
+     [matRippleCentered]="centered"
+     [matRippleDisabled]="disabled"
+     [matRippleUnbounded]="unbounded">
+
+     <mat-card-header>
+        <mat-card-title id="title">{{product?.name}}    -    ${{product?.price}}</mat-card-title>
+        <mat-card-subtitle>Stock: {{product?.stock}} units    -    Brand: {{product?.brand?.name}}    -    Category: {{product?.category?.name}} </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end" id="actions">
+        <button mat-button class="button">Exclude</button>
+        <button mat-button class="button">Modify</button>
+        <button mat-button class="button">Delete</button>
+      </mat-card-actions>
+
+</mat-card>

@@ -15,10 +15,15 @@ export interface ErrorStatus {
     }
 }
 export interface Brand{
-    name: string;
+    id?: string;
+    name?: string;
 }
 export interface Category{
-    name: string;
+    id?: string;
+    name?: string;
+}
+export interface Color{
+    name?: string;
 }
 export interface Product {
     id: string;
@@ -26,7 +31,7 @@ export interface Product {
     price: number;
     brand: Brand;
     category: Category;
-    colors: string[];
+    colors: Color[];
     stock: number;
     description: string;
 }
@@ -37,15 +42,15 @@ export interface GetProductReponse{
     brand: Brand;
     category: Category;
     stock: number;
-    colors: string[];
+    colors: Color[];
     description: string;
 }
 
 export interface GetProductsResponse {
     message: string;
     products: Product[],
-    brands: string[],
-    categories: string[]
+    brands: Brand[],
+    categories: Category[]
 };
 
 export interface ProductFilterForm {
@@ -103,4 +108,13 @@ export interface PurchaseResponse {
         FinalPrice: number,
         PromotionName?: string
     }
+}
+export interface CreateProductRequest{
+    name?: string;
+    price?: number;
+    brand?: Brand;
+    category?: Category;
+    colors?: string[];
+    stock?: number;
+    description?: string;
 }
