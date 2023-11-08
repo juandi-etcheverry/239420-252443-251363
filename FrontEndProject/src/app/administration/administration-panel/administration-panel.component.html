@@ -5,5 +5,5 @@
         <h2>Products List</h2>
         <button mat-button class="button" (click)="addNewProduct()">Add New</button>
     </div>
-    <app-product-item *ngFor="let item of products" [product]="item"></app-product-item>
+    <app-product-item *ngFor="let item of products" [product]="item" (refresh)="refresh()"></app-product-item>
 </div>

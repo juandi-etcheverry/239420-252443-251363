@@ -56,6 +56,10 @@ export class ProductsService {
     });
     }
 
+    deleteProduct(id : string){
+      return this.http.delete<Product>(`${url}/products/${id}`);
+    }
+
   
 
 }

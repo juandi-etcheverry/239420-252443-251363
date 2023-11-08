@@ -23,8 +23,8 @@ import { SignupComponent } from './user/signup/signup.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginComponent } from './user/login/login.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
-import { ProductItemComponent } from './administration/products/product-item/product-item.component';
-import { NewProductComponent } from './administration/products/new-product/new-product.component';
+import { ProductItemComponent } from './administration/administration-panel/products/product-item/product-item.component';
+import { NewProductComponent } from './administration/administration-panel/products/new-product/new-product.component';
 
 
 @NgModule({

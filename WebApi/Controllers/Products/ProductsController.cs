@@ -46,7 +46,8 @@ public class ProductsController : ControllerBase
                                                       p.Brand.Name.ToLower().Contains(request.Brand.ToLower()) &&
                                                       p.Category.Name.ToLower().Contains(request.Category.ToLower()) &&
                                                       p.Price >= request.MinPrice &&
-                                                      p.Price <= request.MaxPrice);
+                                                      p.Price <= request.MaxPrice &&
+                                                      p.IsDeleted == false);
 
         var response = new GetProductsResponse
         {
