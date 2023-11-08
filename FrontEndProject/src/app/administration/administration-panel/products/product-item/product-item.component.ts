@@ -5,6 +5,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { ProductsService } from 'src/app/products/products.service';
 import { Product } from 'src/utils/interfaces';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ModifyProductComponent } from './modify-product/modify-product.component';
 
 @Component({
   selector: 'app-product-item',
@@ -21,12 +23,18 @@ export class ProductItemComponent {
 
   @Output() refresh = new EventEmitter<void>();
 
-  constructor(private productService : ProductsService, private _snackBar : MatSnackBar){}
+  constructor(private productService : ProductsService, private _snackBar : MatSnackBar, public dialog: MatDialog){}
 
   onDelete(){
     this.productService.deleteProduct(this.product.id).subscribe((response) => {
       this.refresh.emit();
       this._snackBar.open('Product Deleted', 'Close');
+    });
+  }
+  onModify(){
+    const dialogRef = this.dialog.open(ModifyProductComponent, {data: this.product});
+    dialogRef.afterClosed().subscribe(result => {
+      this.refresh.emit();
     });
   }
 

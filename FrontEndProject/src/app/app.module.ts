@@ -25,6 +25,7 @@ import { LoginComponent } from './user/login/login.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
 import { ProductItemComponent } from './administration/administration-panel/products/product-item/product-item.component';
 import { NewProductComponent } from './administration/administration-panel/products/new-product/new-product.component';
+import { ModifyProductComponent } from './administration/administration-panel/products/product-item/modify-product/modify-product.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { NewProductComponent } from './administration/administration-panel/produ
     ProductItemComponent,
     AdministrationPanelComponent,
     NewProductComponent,
+    ModifyProductComponent,
   ],
   providers: [
     {
