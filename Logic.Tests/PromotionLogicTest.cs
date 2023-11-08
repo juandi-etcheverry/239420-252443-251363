@@ -93,4 +93,26 @@ public class PromotionLogicTest
 
         var result = logic.TogglePromotion("No Promotion");
     }
+    
+    [TestMethod]
+    public void ForceRefresh_OK()
+    {
+        var b1 = new Brand { Name = "ORT Merch" };
+        var c1 = new Category { Name = "T-Shirt" };
+
+        var products = new List<Product>
+        {
+            new() { Brand = b1, Category = c1, Price = 100 },
+            new() { Brand = b1, Category = c1, Price = 200 },
+            new() { Brand = b1, Category = c1, Price = 300 },
+            new() { Brand = b1, Category = c1, Price = 400 },
+            new() { Brand = b1, Category = c1, Price = 500 }
+        };
+
+        var logic = new PromotionLogic(mock.Object);
+        var result = logic.GetBestPromotion(products);
+        logic.ForceRefresh();
+        var newResult = logic.GetBestPromotion(products);
+        Assert.AreEqual(result.Name, newResult.Name);
+    }
 }

@@ -5,9 +5,9 @@ namespace Logic;
 
 public class PromotionLogic : IPromotionLogic
 {
-    private static readonly IList<CachedPromotion> _cachedPromotions = new List<CachedPromotion>();
+    private static IList<CachedPromotion> _cachedPromotions = new List<CachedPromotion>();
     private string PROMOTIONS_DIRECTORY = "./Promotions";
-    private DateTime _promotionsLastModified;
+    private static DateTime _promotionsLastModified;
     private IFileDataReader _fileDataReader;
     
     public PromotionLogic(IFileDataReader fileDataReader)
@@ -50,6 +50,7 @@ public class PromotionLogic : IPromotionLogic
         {
             _promotionsLastModified = currentLastModified;
             UpdatePromotions();
+            _cachedPromotions = _cachedPromotions.OrderBy(c => c._promotionStrategy.Name).ToList();
         }
     }
 
@@ -57,7 +58,7 @@ public class PromotionLogic : IPromotionLogic
     {
         var filePaths = _fileDataReader.GetDirectoryFilePaths(PROMOTIONS_DIRECTORY);
         RemoveOrVerifyCachedPromotions(filePaths);
-        AddNewPromotionsFromDirectory(filePaths);
+        AddNewPromotionsFromDirectory(filePaths); 
     }
     
     private void AddNewPromotionsFromDirectory(string[] filePaths)
