@@ -118,3 +118,13 @@ export interface CreateProductRequest{
     stock?: number;
     description?: string;
 }
+export interface UpdateProductRequest{
+    id?: string;
+    name?: string;
+    price?: number;
+    brand?: Brand;
+    category?: Category;
+    colors?: string[];
+    stock?: number;
+    description?: string;
+}

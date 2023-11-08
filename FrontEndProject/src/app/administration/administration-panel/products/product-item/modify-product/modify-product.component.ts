@@ -42,6 +42,20 @@ export class ModifyProductComponent {
 
   onSubmit(){
     const formData = this.ModifyProductForm.value;
+    const productData = {
+      id: this.data.id,
+      name: formData.name,
+      price: Number(formData.price),
+      description: formData.description,
+      brand: formData?.brand as Brand,
+      category: formData?.category as Category,
+      colors: [],
+      stock: Number(formData.stock),
+    };
+    this.productService.updateProduct(productData).subscribe((response: Product) => {
+      this.dialogRef.close();
+      this._snackBar.open("Product modified successfully", 'Close');
+    });
   }
   onCloseClick(){
     this.dialogRef.close();
