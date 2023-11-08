@@ -57,6 +57,7 @@ public class ProductRepository : IProductRepository
     public Product UpdateProduct(Guid id, Product product)
     {
         var productToModify = GetProduct(id);
+        if (productToModify.IsDeleted) throw new ArgumentException($"Product with id {id} not found");
 
         productToModify.Price = product.Price;
         productToModify.Brand = product.Brand;

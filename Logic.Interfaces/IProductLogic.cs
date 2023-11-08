@@ -11,4 +11,5 @@ public interface IProductLogic
     Product SoftDelete(Guid id);
     public Product DecreaseStock(Guid id, int quantity);
     public void IsPurchaseValid(IList<PurchaseProduct> cart);
+    public Product UpdateProduct(Guid id, Product product);
 }

@@ -53,4 +53,8 @@ public class ProductLogic : IProductLogic
         bool isValid = cart.All(item => GetProduct(item.ProductId).Stock >= item.Quantity);
         if (!isValid) throw new ArgumentException("Not enough stock");
     }
+    public Product UpdateProduct(Guid id, Product product)
+    {
+        return _productRepository.UpdateProduct(id, product);
+    }
 }
