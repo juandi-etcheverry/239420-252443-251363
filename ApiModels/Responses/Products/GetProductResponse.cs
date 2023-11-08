@@ -13,4 +13,6 @@ public class GetProductResponse
     public Category Category { get; set; }
     public IList<Color> Colors { get; set; }
     public int Stock { get; set; }
+    public bool PromotionsApply { get; set; }
+
 }
