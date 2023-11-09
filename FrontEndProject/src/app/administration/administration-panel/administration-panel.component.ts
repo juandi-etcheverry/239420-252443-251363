@@ -1,19 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 import { ProductsService } from 'src/app/products/products.service';
-import { User } from 'src/app/user/user-model';
 import { Product } from 'src/utils/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductItemComponent } from './products/product-item/product-item.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { NewProductComponent } from './products/new-product/new-product.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UsersService } from 'src/app/user/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administration-panel',
@@ -25,12 +22,26 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class AdministrationPanelComponent {
   products : Product[] = [];
 
-  constructor(private productService : ProductsService, public dialog: MatDialog, private _snackBar : MatSnackBar) { }
+  constructor(private productService : ProductsService, public dialog: MatDialog, private _snackBar : MatSnackBar, 
+    private userService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
+    this.userService.getLoggedUser()?.subscribe((user) => {
+      if(!user || user.role === 1){
+        this._snackBar.open("You don't have access to this page", "Close", {
+          duration: 2000,
+        });
+        this.goToPage("/products");
+      }
+    });
+
     this.productService.getAllProducts().subscribe((response) => {
       this.products = response.products;
     });
+  }
+
+  goToPage(url: string){
+    this.router.navigate([url]);
   }
 
   addNewProduct(){
