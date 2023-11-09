@@ -11,6 +11,7 @@ public class Product
     public List<Color> Colors { get; set; }
     public bool IsDeleted { get; set; } = false;
     public int Stock { get; set; }
+    public bool PromotionsApply { get; set; } = true;
 }
 
 public class PurchaseProduct

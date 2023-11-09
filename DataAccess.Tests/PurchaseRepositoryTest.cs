@@ -504,6 +504,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("GetAllPurchasesHistory_AllPurchases_OK");
         var purchaseRepository = new PurchaseRepository(context);
+        
         var user = new User
         {
             Email = "A@A.A",
@@ -516,13 +517,21 @@ public class Test
         {
             Name = "A",
             Description = "A",
-            Price = 300
+            Price = 300,
+            Id = Guid.NewGuid(),
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         var product2 = new Product
         {
             Name = "A",
             Description = "A",
-            Price = 200
+            Price = 200,
+            Id = Guid.NewGuid(),
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         products.Add(product1);
         products.Add(product2);
@@ -531,6 +540,11 @@ public class Test
             User = user,
             Products = products
         };
+        var productsRepo = new ProductRepository(context);
+        productsRepo.AddProduct(product1);
+        productsRepo.AddProduct(product2);
+        var userRepo = new UserRepository(context);
+        userRepo.AddUser(user);
         purchaseRepository.AddProducts(purchase, products);
         purchaseRepository.AddPurchase(purchase);
 

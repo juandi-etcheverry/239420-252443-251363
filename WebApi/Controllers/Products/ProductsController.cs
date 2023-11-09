@@ -11,7 +11,7 @@ public class ProductsController : ControllerBase
 {
     private readonly IProductLogic _productLogic;
 
-    public ProductsController(IProductLogic productLogic, ISessionTokenLogic sessionTokenLogic)
+    public ProductsController(IProductLogic productLogic)
     {
         _productLogic = productLogic;
     }

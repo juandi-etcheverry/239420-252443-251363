@@ -21,6 +21,7 @@ public class GetProductsResponse
             Brand = product.Brand.Name,
             Colors = product.Colors.Select(c => c.Name).ToList(),
             Stock = product.Stock,
+            PromotionsApply = product.PromotionsApply
         };
     }
 
@@ -45,4 +46,5 @@ public class ProductReponseObject
     public string Brand { get; set; }
     public IList<string> Colors { get; set; }
     public int Stock { get; set; }
+    public bool PromotionsApply { get; set; }
 }
