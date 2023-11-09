@@ -7,6 +7,7 @@ public class ThreeForTwoPromotionStrategy : IPromotionStrategy
 {
     private const float DiscountPercentage = 1f;
     public string Name => "3x2 Category Promotion";
+    public bool IsEnabled { get; set; } = true;
 
     public float GetDiscount(List<Product> products)
     {

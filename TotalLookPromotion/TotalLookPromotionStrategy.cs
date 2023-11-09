@@ -12,6 +12,7 @@ public class TotalLookPromotionStrategy : IPromotionStrategy
 {
     private const float DiscountPercentage = 0.5f;
     public string Name => "Total Look Promotion";
+    public bool IsEnabled { get; set; } = true;
 
     public float GetDiscount(List<Product> products)
     {

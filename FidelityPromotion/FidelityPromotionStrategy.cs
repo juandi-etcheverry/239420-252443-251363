@@ -6,6 +6,7 @@ namespace PromotionStrategies;
 public class FidelityPromotionStrategy : IPromotionStrategy
 {
     public string Name => "Fidelity Promotion";
+    public bool IsEnabled { get; set; } = true;
 
     public float GetDiscount(List<Product> products)
     {

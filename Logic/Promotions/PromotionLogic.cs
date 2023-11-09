@@ -63,6 +63,10 @@ public class PromotionLogic : IPromotionLogic
     private void UpdatePromotions()
     {
         var filePaths = _fileDataReader.GetDirectoryFilePaths(PROMOTIONS_DIRECTORY);
+        if (filePaths.Length == 0)
+        {
+            return;
+        }
         RemoveOrVerifyCachedPromotions(filePaths);
         AddNewPromotionsFromDirectory(filePaths); 
     }

@@ -27,7 +27,6 @@
         <ProjectReference Include="..\Domain\Domain.csproj"/>
         <ProjectReference Include="..\FidelityPromotion\FidelityPromotion.csproj" />
         <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj"/>
-        <ProjectReference Include="..\ServerFactory\ServerFactory.csproj"/>
         <ProjectReference Include="..\ThreeForTwoPromotion\ThreeForTwoPromotion.csproj" />
         <ProjectReference Include="..\TotalLookPromotion\TotalLookPromotion.csproj" />
         <ProjectReference Include="..\TwentyPercentPromotion\TwentyPercentPromotion.csproj" />

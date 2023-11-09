@@ -13,13 +13,14 @@ public class PromotionsController : ControllerBase
    private IPromotionLogic _promotionLogic;
    private IProductLogic _productLogic;
    
-   PromotionsController(IPromotionLogic promotionLogic, IProductLogic productLogic)
+   public PromotionsController(IPromotionLogic promotionLogic, IProductLogic productLogic)
    {
       _promotionLogic = promotionLogic;
       _productLogic = productLogic;
    }
 
    [HttpPost]
+   [Route("discount")]
    public IActionResult GetPromotionForProducts([FromBody] PurchaseProduct[] products)
    {
       var foundProducts = new List<Product>();
@@ -44,7 +45,7 @@ public class PromotionsController : ControllerBase
    }
 
    [HttpPost]
-   [Route("api/promotions/{name}/toggle")]
+   [Route("{name}/toggle")]
    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
    public IActionResult TogglePromotions([FromRoute] string name)
    {

@@ -7,6 +7,7 @@ public class TwentyPercentPromotionStrategy : IPromotionStrategy
 {
     private const float DiscountPercentage = 0.2f;
     public string Name => "20% Promotion";
+    public bool IsEnabled { get; set; } = true;
 
     public float GetDiscount(List<Product> products)
     {
