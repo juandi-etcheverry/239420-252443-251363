@@ -237,4 +237,36 @@ public class UserLogicTest
 
         //ERROR
     }
+
+    [TestMethod]
+    public void GetAllUsers_OK()
+    {
+        
+        var users = new List<User>
+        {
+            new User
+            {
+                Email = "a@a.a",
+                Password = "Password123",
+                Role = Role.Admin
+            },
+            new User
+            {
+                Email = "b@b.b",
+                Password = "Password123",
+                Role = Role.Buyer
+            }
+        };
+
+        var mock = new Mock<IUserRepository>(MockBehavior.Strict);
+        mock.Setup(ur => ur.GetAllUsers()).Returns(users);
+
+        var logic = new UserLogic(mock.Object);
+
+        
+        var result = logic.GetAllUsers();
+
+        
+        Assert.AreEqual(users, result);
+    }
 }

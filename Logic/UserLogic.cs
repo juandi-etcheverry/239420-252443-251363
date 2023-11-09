@@ -43,4 +43,9 @@ public class UserLogic : IUserLogic
     {
         return _userRepository.UpdateUser(id, user);
     }
+
+    public IList<User> GetAllUsers()
+    {
+        return _userRepository.GetAllUsers();
+    }
 }
