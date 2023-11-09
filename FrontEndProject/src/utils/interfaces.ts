@@ -23,6 +23,7 @@ export interface Category{
     name?: string;
 }
 export interface Color{
+    id: number;
     name?: string;
 }
 export interface Product {
@@ -50,7 +51,8 @@ export interface GetProductsResponse {
     message: string;
     products: Product[],
     brands: Brand[],
-    categories: Category[]
+    categories: Category[],
+    colors: Color[]
 };
 
 export interface ProductFilterForm {
@@ -114,7 +116,7 @@ export interface CreateProductRequest{
     price?: number;
     brand?: Brand;
     category?: Category;
-    colors?: string[];
+    colors?: Color[];
     stock?: number;
     description?: string;
 }
@@ -124,7 +126,7 @@ export interface UpdateProductRequest{
     price?: number;
     brand?: Brand;
     category?: Category;
-    colors?: string[];
+    colors?: Color[];
     stock?: number;
     description?: string;
 }

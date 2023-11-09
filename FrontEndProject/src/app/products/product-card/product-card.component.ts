@@ -9,7 +9,7 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from 'src/app/cart/cart.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { Product, CartItem } from 'src/utils/interfaces';
+import { Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-product-card',
@@ -65,6 +65,6 @@ export class ProductCardComponent implements OnInit{
   }
 
   getColors(productItem: Product): string {
-    return productItem.colors.join(', ');
+    return productItem.colors.map(color => color.name).join(', ');
   }
 }

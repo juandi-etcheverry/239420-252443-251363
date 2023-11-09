@@ -23,7 +23,7 @@
     </mat-form-field>
 
 
-    <button id="modificar" 
+    <button id="modificar"
     class="button" 
     mat-raised-button 
     color="primary" 
@@ -34,5 +34,5 @@
 </form>
 
 <div style="display: flex; justify-content: center;">
-    <button id="modulo" mat-raised-button color="primary" type="submit" (click)="goToAdmin()">Modulo Administrador</button>
+    <button *ngIf="data != null && data.role > 1"  id="modulo" mat-raised-button color="primary" type="submit" (click)="goToAdmin()">Modulo Administrador</button>
 </div>

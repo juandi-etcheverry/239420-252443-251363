@@ -54,7 +54,8 @@ public class ProductsController : ControllerBase
             Message = "Products retrieved successfully",
             Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList(),
             Brands = GetProductsResponse.GetBrands(products),
-            Categories = GetProductsResponse.GetCategories(products)
+            Categories = GetProductsResponse.GetCategories(products),
+            Colors = GetProductsResponse.GetColors(products),
         };
 
         return StatusCode(200, response);

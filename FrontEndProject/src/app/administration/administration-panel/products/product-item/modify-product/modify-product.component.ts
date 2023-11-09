@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsService } from 'src/app/products/products.service';
-import { Brand, Category, GetProductsResponse, Product } from 'src/utils/interfaces';
+import { Brand, Category, Color, GetProductsResponse, Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-modify-product',
@@ -21,12 +21,13 @@ export class ModifyProductComponent {
 
   brands!:Brand[]
   categories!:Category[]
-  colors!:string[]
+  colors!:Color[]
 
   constructor(public dialogRef : MatDialogRef<ModifyProductComponent>, private productService : ProductsService, private _snackBar : MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: Product){
     this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
       this.brands = response.brands;
       this.categories = response.categories;
+      this.colors = response.colors;
     });
   }
 
@@ -36,7 +37,7 @@ export class ModifyProductComponent {
     description: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(1)]}),
     brand: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     category: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    colors : new FormControl('', {nonNullable: true}),
+    colors : new FormControl([], {nonNullable: true}),
     stock: new FormControl('', {nonNullable: true, validators: [Validators.pattern("^[0-9]*$"), Validators.required]}),
   });
 
@@ -49,7 +50,7 @@ export class ModifyProductComponent {
       description: formData.description,
       brand: formData?.brand as Brand,
       category: formData?.category as Category,
-      colors: [],
+      colors: formData?.colors as Color[],
       stock: Number(formData.stock),
     };
     this.productService.updateProduct(productData).subscribe((response: Product) => {

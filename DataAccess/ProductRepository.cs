@@ -61,16 +61,17 @@ public class ProductRepository : IProductRepository
 
         var existingBrand = _context.Set<Brand>().Find(product.Brand.Id);
         var existingCategory = _context.Set<Category>().Find(product.Category.Id);
+        var existingColors = _context.Set<Color>().Where(c => product.Colors.Select(pc => pc.Id).Contains(c.Id)).ToList();
         productToModify.Price = product.Price;
         productToModify.Brand = existingBrand;
         productToModify.Category = existingCategory;
-        productToModify.Colors = product.Colors;
+        productToModify.Colors = existingColors;
         productToModify.Description = product.Description;
         productToModify.Name = product.Name;
         productToModify.Stock = product.Stock;
         productToModify.IsDeleted = product.IsDeleted;
 
-        //_context.Set<Product>().Update(productToModify);
+        _context.Set<Product>().Update(productToModify);
         _context.SaveChanges();
         return productToModify;
     }

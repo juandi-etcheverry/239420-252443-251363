@@ -68,5 +68,9 @@ export class ProductDetailComponent implements OnInit {
     }
     this.cant = this.cartService.getCantOfItem(this.product.id);
   }
+
+  getColors(productItem: Product): string {
+    return productItem.colors.map(color => color.name).join(', ');
+  }
 }
 
