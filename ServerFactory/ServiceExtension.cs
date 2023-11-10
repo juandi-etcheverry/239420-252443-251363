@@ -18,6 +18,7 @@ public static class ServiceExtension
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IPurchaseRepository, PurchaseRepository>();
         services.AddScoped<IColorRepository, ColorRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
         services.AddScoped<IProductLogic, ProductLogic>();
@@ -26,6 +27,7 @@ public static class ServiceExtension
         services.AddScoped<IPurchaseLogic, PurchaseLogic>();
         services.AddScoped<IPromotionLogic, PromotionLogic>();
         services.AddScoped<IColorLogic, ColorLogic>();
+        services.AddScoped<ICategoryLogic, CategoryLogic>();
 
         services.AddScoped<IPromotionStrategy, TwentyPercentPromotionStrategy>();
         services.AddScoped<IPromotionStrategy, FidelityPromotionStrategy>();
