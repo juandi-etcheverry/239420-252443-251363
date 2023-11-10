@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <Nullable>enable</Nullable>
@@ -21,12 +21,15 @@
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
-
     <ItemGroup>
-        <ProjectReference Include="..\ApiModels\ApiModels.csproj" />
-        <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-        <ProjectReference Include="..\Domain\Domain.csproj" />
-        <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj" />
+        <ProjectReference Include="..\ApiModels\ApiModels.csproj"/>
+        <ProjectReference Include="..\DataAccess\DataAccess.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\FidelityPromotion\FidelityPromotion.csproj" />
+        <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj"/>
+        <ProjectReference Include="..\ThreeForTwoPromotion\ThreeForTwoPromotion.csproj" />
+        <ProjectReference Include="..\TotalLookPromotion\TotalLookPromotion.csproj" />
+        <ProjectReference Include="..\TwentyPercentPromotion\TwentyPercentPromotion.csproj" />
         <ProjectReference Include="..\ServerFactory\ServerFactory.csproj" />
     </ItemGroup>
 

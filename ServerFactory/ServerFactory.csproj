@@ -22,7 +22,6 @@
         <ProjectReference Include="..\DataAccess\DataAccess.csproj"/>
         <ProjectReference Include="..\Logic.Interfaces\Logic.Interfaces.csproj"/>
         <ProjectReference Include="..\Logic\Logic.csproj"/>
-        <ProjectReference Include="..\PromotionStrategies\PromotionStrategies.csproj"/>
     </ItemGroup>
 
 </Project>

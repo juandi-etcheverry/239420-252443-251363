@@ -12,4 +12,5 @@ public class CreateProductResponse
     public Brand Brand { get; set; }
     public IList<Color> Colors { get; set; }
     public int Stock { get; set; }
+    public bool PromotionsApply { get; set; }
 }

@@ -1,10 +1,9 @@
-﻿using DataAccess;
+using DataAccess;
 using DataAccess.Interfaces;
 using Logic;
 using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PromotionStrategies;
 
 namespace ServerFactory;
 
@@ -30,11 +29,7 @@ public static class ServiceExtension
         services.AddScoped<IColorLogic, ColorLogic>();
         services.AddScoped<ICategoryLogic, CategoryLogic>();
         services.AddScoped<IBrandLogic, BrandLogic>();
-
-        services.AddScoped<IPromotionStrategy, TwentyPercentPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, FidelityPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, ThreeForTwoPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, TotalLookPromotionStrategy>();
+        services.AddScoped<IFileDataReader, FileDataReader>();
         return services;
     }
 }

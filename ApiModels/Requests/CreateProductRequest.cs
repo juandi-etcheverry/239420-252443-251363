@@ -11,6 +11,7 @@ public class CreateProductRequest
     public Category Category { get; set; }
     public List<Color> Colors { get; set; }
     public int Stock { get; set; }
+    public bool PromotionsApply { get; set; } = true;
 
     public Product ToEntity()
     {
@@ -22,7 +23,8 @@ public class CreateProductRequest
             Brand = Brand,
             Category = Category,
             Colors = Colors,
-            Stock = Stock
+            Stock = Stock,
+            PromotionsApply = PromotionsApply
         };
     }
 }
