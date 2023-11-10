@@ -21,20 +21,20 @@ export class ProductItemComponent {
   disabled = true;
   unbounded = false;
 
-  @Output() refresh = new EventEmitter<void>();
+  @Output() refreshProducts = new EventEmitter<void>();
 
   constructor(private productService : ProductsService, private _snackBar : MatSnackBar, public dialog: MatDialog){}
 
   onDelete(){
     this.productService.deleteProduct(this.product.id).subscribe((response) => {
-      this.refresh.emit();
+      this.refreshProducts.emit();
       this._snackBar.open('Product Deleted', 'Close');
     });
   }
   onModify(){
     const dialogRef = this.dialog.open(ModifyProductComponent, {data: this.product});
     dialogRef.afterClosed().subscribe(result => {
-      this.refresh.emit();
+      this.refreshProducts.emit();
     });
   }
 

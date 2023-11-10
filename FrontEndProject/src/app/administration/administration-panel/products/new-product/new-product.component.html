@@ -1,7 +1,6 @@
 <h1>Create new product</h1>
 <div mat-dialog-content>
     <form [formGroup]="newProductForm" (submit)="onSubmit()">
-
         <table>
             <td>
                 <tr>
@@ -56,9 +55,9 @@
                     </mat-form-field>
                     <mat-form-field id="colorsInput">
                         <mat-label>Colors</mat-label>
-                        <mat-select  formControlName="colors">
+                        <mat-select formControlName="colors" multiple>
                             <mat-option *ngFor="let color of colors" [value]="color">
-                            {{color}}
+                            {{color.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -75,7 +74,7 @@
             </td>
         </table>
         <div mat-dialog-actions align="end">
-            <button mat-raised-button id="closeBtn" (click)="onCloseClick()">Close</button>
+            <button mat-raised-button id="closeBtn" type="button" (click)="onCloseClick()">Close</button>
             <button id="submit" class="button" mat-raised-button color="primary" type="submit" [disabled]="newProductForm.invalid">Submit</button>
         </div>
     </form>

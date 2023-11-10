@@ -24,10 +24,17 @@ export class ModifyProductComponent {
   colors!:Color[]
 
   constructor(public dialogRef : MatDialogRef<ModifyProductComponent>, private productService : ProductsService, private _snackBar : MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: Product){
-    this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
-      this.brands = response.brands;
-      this.categories = response.categories;
-      this.colors = response.colors;
+    this.productService.getAllBrands().subscribe((response: Brand[]) => {
+      this.brands = response;
+    });
+
+    this.productService.getAllColors().subscribe((response: Color[]) => {
+      this.colors = response;
+    });
+
+    this.productService.getAllCategories().subscribe((response: Category[]) => {
+      this.categories = response;
+      console.log('las categories:',this.categories);
     });
   }
 

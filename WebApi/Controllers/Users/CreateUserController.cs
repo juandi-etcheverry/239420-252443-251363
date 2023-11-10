@@ -11,12 +11,10 @@ namespace WebApi.Controllers.Users;
 public class CreateUserController : ControllerBase
 {
     private readonly IUserLogic _userLogic;
-    private ISessionTokenLogic _sessionTokenLogic;
 
-    public CreateUserController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+    public CreateUserController(IUserLogic userLogic)
     {
         _userLogic = userLogic;
-        _sessionTokenLogic = sessionTokenLogic;
     }
 
     [HttpPost]
@@ -26,5 +24,14 @@ public class CreateUserController : ControllerBase
         var newUser = _userLogic.CreateUser(request.ToEntity());
         var responseOk = new CreateUserResponse { Message = "User created successfully", User = newUser };
         return StatusCode(201, responseOk);
+    }
+
+    [HttpGet]
+    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
+    public IActionResult GetAllUsers()
+    {
+        var users = _userLogic.GetAllUsers().ToList();
+        var response = new GetAllUsersResponse { Users = users };
+        return StatusCode(200, response);
     }
 }

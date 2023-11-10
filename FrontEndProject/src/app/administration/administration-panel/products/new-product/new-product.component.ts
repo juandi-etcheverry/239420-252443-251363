@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/products/products.service';
-import { Brand, Category, CreateProductRequest, GetProductsResponse, Product } from 'src/utils/interfaces';
+import { Brand, Category, Color, CreateProductRequest, GetProductsResponse, Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-new-product',
@@ -22,12 +22,20 @@ export class NewProductComponent {
 
   brands!:Brand[]
   categories!:Category[]
-  colors!:string[]
+  colors!:Color[]
   
   constructor(public dialogRef : MatDialogRef<NewProductComponent>, private productService : ProductsService, private router: Router, private _snackBar : MatSnackBar) {
-    this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
-      this.brands = response.brands;
-      this.categories = response.categories;
+    this.productService.getAllBrands().subscribe((response: Brand[]) => {
+      this.brands = response;
+    });
+
+    this.productService.getAllColors().subscribe((response: Color[]) => {
+      this.colors = response;
+    });
+
+    this.productService.getAllCategories().subscribe((response: Category[]) => {
+      this.categories = response;
+      console.log('las categories:',this.categories);
     });
    }
 
@@ -37,7 +45,7 @@ export class NewProductComponent {
     description: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(1)]}),
     brand: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     category: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    colors : new FormControl('', {nonNullable: true}),
+    colors : new FormControl([], {nonNullable: true}),
     stock: new FormControl('', {nonNullable: true, validators: [Validators.pattern("^[0-9]*$"), Validators.required]}),
   });
 
@@ -49,12 +57,12 @@ export class NewProductComponent {
       description: formData.description,
       brand: formData?.brand as Brand,
       category: formData?.category as Category,
-      colors: [],
+      colors: formData?.colors as Color[],
       stock: Number(formData.stock),
     };
     this.productService.addProduct(productData).subscribe((response: Product) => {
       this.dialogRef.close();
-      this._snackBar.open("Product added successfully", 'Close');
+      this._snackBar.open("Product added successfully", 'Close', {duration: 2000});
     });
     
   }

@@ -28,7 +28,7 @@ export class SignupComponent {
   constructor(private router: Router, private userService: UsersService, 
     private _snackBar: MatSnackBar, private authService: AuthService, private cartService : CartService) {
       if (authService.hasAuthToken()) {
-        _snackBar.open("You are already logged in", 'Close');
+        _snackBar.open("You are already logged in", 'Close', {duration: 2000});
         this.goToPage("/");
       }
     }

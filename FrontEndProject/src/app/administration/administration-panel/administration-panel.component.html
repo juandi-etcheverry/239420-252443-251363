@@ -1,9 +1,29 @@
 <h1>Administration Module</h1>
-
-<div id="productList">
-    <div class="title">
-        <h2>Products List</h2>
-        <button mat-button class="button" (click)="addNewProduct()">Add New</button>
+<div class="container">
+    
+    <div class="productList">
+        <div class="title">
+            <h2>Products List</h2>
+            <button mat-button class="button" (click)="addNewProduct()">Add New</button>
+        </div>
+            <app-product-item 
+                *ngFor="let item of products" 
+                [product]="item" 
+                (refreshProducts)="refreshProducts()" 
+            >
+            </app-product-item>
     </div>
-    <app-product-item *ngFor="let item of products" [product]="item" (refresh)="refresh()"></app-product-item>
+    
+    <div class="userList">
+        <div class="titleUser">
+            <h2>Users List</h2>
+            <button mat-button class="button" (click)="addNewUser()">Add New</button>
+        </div>
+        <app-user-item
+            *ngFor="let item of users"
+            [user]="item"
+            (refreshUsers)="refreshUsers()"
+        >
+        </app-user-item>
+    </div>
 </div>

@@ -9,9 +9,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { UsersService } from '../user/users.service';
-import { User } from '../user/user-model';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../cart/cart.service';
+import { User } from 'src/utils/interfaces';
 
 
 @Component({

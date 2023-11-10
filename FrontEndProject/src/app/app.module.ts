@@ -26,6 +26,9 @@ import { AdministrationPanelComponent } from './administration/administration-pa
 import { ProductItemComponent } from './administration/administration-panel/products/product-item/product-item.component';
 import { NewProductComponent } from './administration/administration-panel/products/new-product/new-product.component';
 import { ModifyProductComponent } from './administration/administration-panel/products/product-item/modify-product/modify-product.component';
+import { UserItemComponent } from './administration/administration-panel/users/user-item/user-item.component';
+import { ModifyUserComponent } from './administration/administration-panel/users/user-item/modify-user/modify-user.component';
+import { NewUserComponent } from './administration/administration-panel/users/user-item/new-user/new-user.component';
 
 
 @NgModule({
@@ -35,7 +38,6 @@ import { ModifyProductComponent } from './administration/administration-panel/pr
     ProductsComponent,
     UserComponent,
     PagenotfoundComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -57,9 +59,11 @@ import { ModifyProductComponent } from './administration/administration-panel/pr
     SignupComponent,
     LoginComponent,
     ProductItemComponent,
+    UserItemComponent,
     AdministrationPanelComponent,
     NewProductComponent,
     ModifyProductComponent,
+    NewUserComponent,
   ],
   providers: [
     {

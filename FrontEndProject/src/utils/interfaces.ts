@@ -8,6 +8,17 @@ export interface GetUserResponse {
 
 export interface UpdateUserResponse extends GetUserResponse {};
 
+export interface User{
+    id: string;
+    email: string;
+    address: string;
+    role: number;
+}
+
+export interface GetUsersResponse {
+    users: User[];
+}
+
 export interface ErrorStatus {
     status: number;
     error: {
@@ -80,6 +91,16 @@ export interface SignupRequest {
     password: string;
     passwordConfirmation: string;
 }
+
+export interface CreateUserRequest extends SignupRequest {
+    role: number;
+}
+
+export interface CreateUserResponse {
+    user?: User;
+    message: string;
+}
+
 export interface LoginRequest {
     email: string;
     password: string;

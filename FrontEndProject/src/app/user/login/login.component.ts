@@ -23,7 +23,7 @@ export class LoginComponent {
   constructor(private router: Router, private userService: UsersService,
     private _snackBar: MatSnackBar, private authService: AuthService, private cartService : CartService) {
       if (authService.hasAuthToken()) {
-        _snackBar.open("You are already logged in", 'Close');
+        _snackBar.open("You are already logged in", 'Close', {duration: 2000});
         this.goToPage("/");
       }
      }
@@ -40,7 +40,7 @@ export class LoginComponent {
       next: (response) => {
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
         this.cartService.signIn();
-        this._snackBar.open('Log In successfully', 'Close');
+        this._snackBar.open('Log In successfully', 'Close', {duration: 2000});
         this.goToPage('/products');
       },
       error: (error: ErrorStatus) => {

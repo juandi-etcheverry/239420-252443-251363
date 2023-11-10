@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import url from 'src/utils/url';
-import { CreateProductRequest, GetProductReponse, GetProductsResponse, Product, ProductFilterForm, UpdateProductRequest } from 'src/utils/interfaces';
+import { Brand, Category, Color, CreateProductRequest, GetProductReponse, GetProductsResponse, Product, ProductFilterForm, UpdateProductRequest } from 'src/utils/interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,15 @@ export class ProductsService {
       });
     }
 
-  
+    getAllColors(): Observable<Color[]>{
+      return this.http.get<Color[]>(`${url}/colors`);
+    }
 
+    getAllCategories(): Observable<Category[]>{
+      return this.http.get<Category[]>(`${url}/categories`);
+    }
+
+    getAllBrands(): Observable<Brand[]>{
+      return this.http.get<Brand[]>(`${url}/brands`);
+    }
 }
