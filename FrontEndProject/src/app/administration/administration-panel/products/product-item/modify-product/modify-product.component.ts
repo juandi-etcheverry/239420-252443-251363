@@ -34,7 +34,6 @@ export class ModifyProductComponent {
 
     this.productService.getAllCategories().subscribe((response: Category[]) => {
       this.categories = response;
-      console.log('las categories:',this.categories);
     });
   }
 
