@@ -10,4 +10,5 @@ public interface IUserRepository
     public User SoftDelete(Guid id);
     public User UpdateUser(Guid id, User user);
     public bool FindUser(string email);
+    public IList<User> GetAllUsers();
 }

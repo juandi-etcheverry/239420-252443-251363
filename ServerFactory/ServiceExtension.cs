@@ -1,4 +1,4 @@
-﻿using DataAccess;
+using DataAccess;
 using DataAccess.Interfaces;
 using Logic;
 using Logic.Interfaces;
@@ -16,6 +16,9 @@ public static class ServiceExtension
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+        services.AddScoped<IColorRepository, ColorRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IBrandRepository, BrandRepository>();
 
 
         services.AddScoped<IProductLogic, ProductLogic>();
@@ -23,6 +26,9 @@ public static class ServiceExtension
         services.AddScoped<ISessionTokenLogic, SessionTokenLogic>();
         services.AddScoped<IPurchaseLogic, PurchaseLogic>();
         services.AddScoped<IPromotionLogic, PromotionLogic>();
+        services.AddScoped<IColorLogic, ColorLogic>();
+        services.AddScoped<ICategoryLogic, CategoryLogic>();
+        services.AddScoped<IBrandLogic, BrandLogic>();
         services.AddScoped<IFileDataReader, FileDataReader>();
         return services;
     }

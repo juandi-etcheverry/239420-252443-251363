@@ -11,14 +11,11 @@ namespace WebApi.Controllers.Users;
 [ApiController]
 public class AdminUsersController : ControllerBase
 {
-    private ISessionTokenLogic _sessionTokenLogic;
-
     private readonly IUserLogic _userLogic;
 
-    public AdminUsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+    public AdminUsersController(IUserLogic userLogic)
     {
         _userLogic = userLogic;
-        _sessionTokenLogic = sessionTokenLogic;
     }
 
     [HttpGet]

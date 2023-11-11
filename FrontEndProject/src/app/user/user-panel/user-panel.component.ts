@@ -44,6 +44,9 @@ export class UserPanelComponent implements OnInit {
   goToPage(url: string){
     this.router.navigate([url]);
   }
+  goToAdmin(){
+    this.goToPage(`/admin`);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

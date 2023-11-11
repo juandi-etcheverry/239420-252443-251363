@@ -57,11 +57,15 @@ public class ProductRepository : IProductRepository
     public Product UpdateProduct(Guid id, Product product)
     {
         var productToModify = GetProduct(id);
+        if (productToModify.IsDeleted) throw new ArgumentException($"Product with id {id} not found");
 
+        var existingBrand = _context.Set<Brand>().Find(product.Brand.Id);
+        var existingCategory = _context.Set<Category>().Find(product.Category.Id);
+        var existingColors = _context.Set<Color>().Where(c => product.Colors.Select(pc => pc.Id).Contains(c.Id)).ToList();
         productToModify.Price = product.Price;
-        productToModify.Brand = product.Brand;
-        productToModify.Category = product.Category;
-        productToModify.Colors = product.Colors;
+        productToModify.Brand = existingBrand;
+        productToModify.Category = existingCategory;
+        productToModify.Colors = existingColors;
         productToModify.Description = product.Description;
         productToModify.Name = product.Name;
         productToModify.Stock = product.Stock;

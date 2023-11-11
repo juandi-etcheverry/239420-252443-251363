@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetUserResponse, SignupRequest, LoginRequest, UpdateUserProps, UpdateUserResponse } from 'src/utils/interfaces';
+import { GetUserResponse, SignupRequest, LoginRequest, UpdateUserProps, UpdateUserResponse, GetUsersResponse, CreateUserRequest, CreateUserResponse } from 'src/utils/interfaces';
 import url from 'src/utils/url';
-import { User } from './user-model';
 import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +36,29 @@ export class UsersService {
   logout(){
     return this.http.post(`${url}/logout`, {});
   }
+
   login({email, password}: LoginRequest){
     return this.http.post(`${url}/login`, {Email: email, Password: password},
     {observe: 'response'});
+  }
+
+  deleteUser(id: string){
+    return this.http.delete(`${url}/users/${id}`);
+  }
+
+  getAllUsers(): Observable<GetUsersResponse>{
+    return this.http.get<GetUsersResponse>(`${url}/users`);
+  }
+
+  createUser(
+    {
+      email,
+      address,
+      role,
+      password,
+      passwordConfirmation
+    }: CreateUserRequest): Observable<CreateUserResponse> {
+    return this.http.post<CreateUserResponse>(`${url}/users`, 
+      {Email: email, Address: address, Role: role, Password: password, PasswordConfirmation: passwordConfirmation});
   }
 }

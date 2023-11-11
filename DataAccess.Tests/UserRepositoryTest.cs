@@ -261,4 +261,31 @@ public class UserRepositoryTest
 
         Assert.IsFalse(result);
     }
+
+    [TestMethod]
+    public void GetAllUsers_OK()
+    {
+        var context = CreateDbContext("GetAllUsers_OK");
+        var userRepository = new UserRepository(context);
+        var user1 = new User
+        {
+            Email = "test@gmail.com",
+            Password = "Password123",
+            Role = Role.Buyer,
+            Address = "Mercedes 2331"
+        };
+        var user2 = new User
+        {
+            Email = "test2@gmail.com",
+            Password = "Password1234",
+            Role = Role.Total,
+            Address = "Mercedes 2331"
+        };
+        userRepository.AddUser(user1);
+        userRepository.AddUser(user2);
+
+        IList<User> result = userRepository.GetAllUsers();
+
+        Assert.AreEqual(3, result.Count);
+    }
 }

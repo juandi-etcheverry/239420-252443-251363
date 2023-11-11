@@ -1,0 +1,76 @@
+<h1>Create new product</h1>
+<div mat-dialog-content>
+    <form [formGroup]="createUserForm" (submit)="onSubmit()">
+        <table>
+            <td>
+                <tr>
+                    <mat-form-field id="emailInput">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput>
+                        <mat-error *ngIf="createUserForm.controls.email.errors?.['required']">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="createUserForm.controls.email.errors?.['email']">
+                            Email is invalid
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="addressInput">
+                        <mat-label>Address</mat-label>
+                        <input formControlName="address" matInput class="example-right-align">
+                        <mat-error *ngIf="createUserForm.controls.address.errors?.['required']">
+                            Address is required
+                        </mat-error>
+                        <mat-error *ngIf="createUserForm.controls.address.errors?.['minlength']">
+                            Address is too short
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field id="roleInput">
+                        <mat-label>Role</mat-label>
+                        <mat-select formControlName="role">
+                            <mat-option [value]=1 selected>Buyer</mat-option>
+                            <mat-option [value]=2>Admin</mat-option>
+                            <mat-option [value]=3>Total</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="createUserForm.controls.role.errors?.['required']">
+                            Role is required
+                        </mat-error>
+                        <mat-error *ngIf="createUserForm.controls.role.errors?.['pattern']">
+                            Invalid role
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field id="passwordInput">
+                        <mat-label>Password</mat-label>
+                        <input id="password" formControlName="password" type="password" matInput>
+                        <mat-error *ngIf="createUserForm.controls.password.errors?.['required']">
+                            Password is required
+                        </mat-error>
+                        <mat-error *ngIf="createUserForm.controls.password.errors?.['minlength']">
+                            Password is too short
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field id="confirmationInput">
+                        <mat-label>Password Confirmation</mat-label>
+                        <input id="passwordConfirmation" formControlName="passwordConfirmation" type="password" matInput>
+                        <mat-error *ngIf="createUserForm.controls.passwordConfirmation.errors?.['required']">
+                            Password is required
+                        </mat-error>
+                        <mat-error *ngIf="createUserForm.controls.passwordConfirmation.errors?.['passwordMismatch']">
+                            Password and Confirmation do not match
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+            </td>
+        </table>
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button id="closeBtn" type="button" (click)="onCloseClick()">Close</button>
+            <button id="submit" class="button" mat-raised-button color="primary" type="submit" [disabled]="createUserForm.invalid">Submit</button>
+        </div>
+    </form>
+</div>
+

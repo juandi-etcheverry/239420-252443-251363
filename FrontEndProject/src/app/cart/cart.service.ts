@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Product, CartItem, PurchaseResponse } from "src/utils/interfaces";
+import { Product, CartItem, PurchaseResponse, User } from "src/utils/interfaces";
 import { AuthService } from "../auth.service";
 import { UsersService } from "../user/users.service";
-import { User } from "../user/user-model";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import url from "src/utils/url";

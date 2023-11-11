@@ -1,0 +1,17 @@
+#productCard{
+    width: 500px;
+    margin: 10px;
+    background-color: whitesmoke;
+    cursor: auto;
+}
+#title{
+    font-size:x-large;
+    cursor: auto;
+}
+.button{
+    background-color: #3c54b4;
+    color: white;
+    height: 25px;
+    margin: 1px;
+    cursor: pointer;
+}

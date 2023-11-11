@@ -280,4 +280,40 @@ public class ProductLogicTest
         // Act
         var result = logic.DecreaseStock(product.Id, 20);
     }
+
+    [TestMethod]
+    public void UpdateProduct_OK()
+    {
+        var product = new Product
+        {
+            Name = "Prod",
+            Price = 400,
+            Description = "Test Description",
+            Category = new Category { Name = "Test" },
+            Brand = new Brand { Name = "Test" },
+            Colors = new List<Color> { new() { Name = "Test" } },
+            Stock = 10
+        };
+        var product2 = new Product
+        {
+            Name = "Prod2",
+            Price = 500,
+            Description = "Test Description2",
+            Category = new Category { Name = "Test" },
+            Brand = new Brand { Name = "Test" },
+            Colors = new List<Color> { new() { Name = "Test" } },
+            Stock = 10
+        };
+        var mock = new Mock<IProductRepository>(MockBehavior.Strict);
+        mock.Setup(x => x.GetProduct(It.IsAny<Guid>())).Returns(product);
+        mock.Setup(x => x.UpdateProduct(It.IsAny<Guid>(), It.IsAny<Product>())).Returns(product);
+        var logic = new ProductLogic(mock.Object);
+
+        //Act
+        var result = logic.UpdateProduct(product.Id, product2);
+
+        //Assert
+        Assert.AreEqual(result.Id, product.Id);
+
+    }
 }

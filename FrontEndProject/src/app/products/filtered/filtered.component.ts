@@ -10,7 +10,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { ProductsService } from '../products.service';
-import { GetProductsResponse, Product } from 'src/utils/interfaces';
+import { Brand, Category, GetProductsResponse, Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-filtered',
@@ -46,8 +46,14 @@ export class FilteredComponent {
     this.submitClicked = new EventEmitter();
     
       this.productService.getAllProducts().subscribe((response: GetProductsResponse) => {
-        this.brands = response.brands;
-        this.categories = response.categories;
+        this.brands = response.brands.map((brand) => {
+          if(brand.name !== undefined) return brand.name;
+          return "";
+        });
+        this.categories = response.categories.map((category) => {
+          if(category.name !== undefined) return category.name;
+          return "";
+        });
       });
   }
 
