@@ -44,7 +44,7 @@ export class LoginComponent {
         this.goToPage('/products');
       },
       error: (error: ErrorStatus) => {
-        alert(error.error.message);
+        this._snackBar.open(error.error.message, 'Close');
       }
     });
   }

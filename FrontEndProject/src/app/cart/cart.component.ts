@@ -18,7 +18,7 @@ import { UsersService } from '../user/users.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
   standalone: true,
-  imports: [PaymentmethodComponent, MatButtonModule, MatDividerModule, MatIconModule, CartItemComponent, CommonModule]
+  imports: [PaymentmethodComponent, MatButtonModule, MatDividerModule, MatIconModule, CartItemComponent, CommonModule, MatSnackBarModule]
 })
 export class CartComponent implements OnInit{
 
@@ -29,7 +29,7 @@ export class CartComponent implements OnInit{
   userLogged : Boolean = false;
   
   constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService,
-    private userService: UsersService){
+    private userService: UsersService, private _snackBar : MatSnackBar){
 }
 
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class CartComponent implements OnInit{
   showHide(){
     this.cartItems = this.cartService.items;
     if(this.cartItems.length == 0){
-      alert("Cannot purchase 0 items");
+      this._snackBar.open('Cannot purchase 0 items', 'Close', {duration: 2000});
     }
     else{
       if(this.userLogged){
@@ -107,7 +107,7 @@ export class askForLogIn {
   constructor(public dialogRef: MatDialogRef<askForLogIn>, private _snackBar: MatSnackBar, private router : Router) {}
 
   LogInNeeded(){
-    this._snackBar.open('Successfull purchase!', 'Close');
+    this._snackBar.open('Successfull purchase!', 'Close', {duration: 2000});
   }
 
   redirectToLogin(){

@@ -60,7 +60,7 @@ export class SignupComponent {
       next: (response) => {
         this.authService.setAuthToken(response.headers.get('Authorization') as string);
         this.cartService.signIn();
-        this._snackBar.open('User created successfully', 'Close');
+        this._snackBar.open('User created successfully', 'Close', {duration: 2000});
         this.goToPage('/products');
       },
        error: (error: ErrorStatus) => {
