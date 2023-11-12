@@ -37,7 +37,6 @@ import { NewUserComponent } from './administration/administration-panel/users/us
     NuestroComponenteComponent,
     ProductsComponent,
     UserComponent,
-    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +63,7 @@ import { NewUserComponent } from './administration/administration-panel/users/us
     NewProductComponent,
     ModifyProductComponent,
     NewUserComponent,
+    PagenotfoundComponent,
   ],
   providers: [
     {
