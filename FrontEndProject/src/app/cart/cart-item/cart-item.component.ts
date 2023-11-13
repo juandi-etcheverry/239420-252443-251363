@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CartItem } from "src/utils/interfaces";
 import {MatRippleModule} from '@angular/material/core';
-import { Router } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { MatButtonModule } from '@angular/material/button';
+import { Route, Router } from '@angular/router';
+import { CartService } from '../cart.service';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cart-item',

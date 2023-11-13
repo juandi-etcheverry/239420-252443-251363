@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ProductsService } from '../services/products.service';
+import { ProductsService } from './products.service';
 import { Product } from 'src/utils/interfaces';
-import { CartService } from '../services/cart.service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-products',

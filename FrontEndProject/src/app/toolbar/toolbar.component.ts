@@ -4,12 +4,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
+
 import {MatDividerModule} from '@angular/material/divider';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { UsersService } from '../services/users.service';
+import { AuthService } from '../auth.service';
+import { UsersService } from '../user/users.service';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../services/cart.service';
+import { CartService } from '../cart/cart.service';
 import { User } from 'src/utils/interfaces';
 
 

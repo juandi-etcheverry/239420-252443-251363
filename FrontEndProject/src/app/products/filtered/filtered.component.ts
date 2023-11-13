@@ -9,8 +9,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { ProductsService } from '../../services/products.service';
-import { GetProductsResponse, Product } from 'src/utils/interfaces';
+import { ProductsService } from '../products.service';
+import { Brand, Category, GetProductsResponse, Product } from 'src/utils/interfaces';
 
 @Component({
   selector: 'app-filtered',

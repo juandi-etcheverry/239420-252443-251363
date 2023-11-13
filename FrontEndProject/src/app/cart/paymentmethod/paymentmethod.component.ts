@@ -4,9 +4,9 @@ import {NgFor} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { CartService } from '../../services/cart.service';
-import { ErrorStatus, PurchaseResponse } from 'src/utils/interfaces';
-import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from '../cart.service';
+import { CartItem, ErrorStatus, PurchaseResponse } from 'src/utils/interfaces';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-paymentmethod',

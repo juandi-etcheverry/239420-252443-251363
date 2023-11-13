@@ -7,7 +7,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule} from '@angular/forms';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from 'src/app/services/cart.service';
+import { CartService } from 'src/app/cart/cart.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { Product } from 'src/utils/interfaces';
 

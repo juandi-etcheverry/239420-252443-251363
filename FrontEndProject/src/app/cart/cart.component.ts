@@ -1,17 +1,17 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { CartItem } from "src/utils/interfaces";
-import { CartService } from '../services/cart.service';
+import { CartService } from './cart.service';
 import { CommonModule } from '@angular/common';
 import { PaymentmethodComponent } from './paymentmethod/paymentmethod.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { UsersService } from '../services/users.service';
+import { UsersService } from '../user/users.service';
 
 @Component({
   selector: 'app-cart',

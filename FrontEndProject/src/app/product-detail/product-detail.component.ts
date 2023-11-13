@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import { ProductsService } from '../../services/products.service';
-import { ErrorStatus, GetProductReponse, Product } from 'src/utils/interfaces';
-import { CartService } from '../../services/cart.service';
+import { ProductsService } from '../products/products.service';
+import { ErrorStatus, GetProductReponse, GetProductsResponse, Product } from 'src/utils/interfaces';
+import { CartService } from '../cart/cart.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
