@@ -61,7 +61,7 @@ export class ModifyProductComponent {
     };
     this.productService.updateProduct(productData).subscribe((response: Product) => {
       this.dialogRef.close();
-      this._snackBar.open("Product modified successfully", 'Close');
+      this._snackBar.open("Product modified successfully", 'Close', {duration: 2000});
     });
   }
   onCloseClick(){

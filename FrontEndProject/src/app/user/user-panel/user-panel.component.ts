@@ -89,7 +89,7 @@ export class UserPanelComponent implements OnInit {
     this.usersService.updateUser(completeFromData)
     .subscribe((response) => {
       this.data = response;
-      this._snackBar.open(response.message, 'Close');
+      this._snackBar.open(response.message, 'Close', {duration: 2000});
     });
   }
 }

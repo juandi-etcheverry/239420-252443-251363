@@ -68,6 +68,7 @@ import { ServerDownComponent } from './server-down/server-down.component';
     ModifyProductComponent,
     NewUserComponent,
     PurchaseHistoryItemComponent,
+    PagenotfoundComponent,
   ],
   providers: [
     {

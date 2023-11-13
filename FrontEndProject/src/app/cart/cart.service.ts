@@ -53,7 +53,6 @@ export class CartService{
     }
 
     removeCartId(id : string){
-        console.log(id);
         localStorage.removeItem(id);
         this.items = [];
     }

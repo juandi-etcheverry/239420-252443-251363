@@ -28,7 +28,7 @@ export class ProductItemComponent {
   onDelete(){
     this.productService.deleteProduct(this.product.id).subscribe((response) => {
       this.refreshProducts.emit();
-      this._snackBar.open('Product Deleted', 'Close');
+      this._snackBar.open('Product Deleted', 'Close', {duration: 2000});
     });
   }
   onModify(){
