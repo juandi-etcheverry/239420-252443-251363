@@ -1,0 +1,13 @@
+.container {
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 300;
+    text-align: center;
+    color: #2196F3;
+}
