@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { UsersService } from 'src/app/user/users.service';
+import { UsersService } from 'src/app/services/users.service';
 import { Inject } from '@angular/core';
 import { UpdateUserResponse, User } from 'src/utils/interfaces';
 import { MatSelectModule } from '@angular/material/select';

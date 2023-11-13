@@ -7,12 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { UsersService } from '../users.service';
-import { ErrorStatus, SignupResponse } from 'src/utils/interfaces';
-import { AuthService } from 'src/app/auth.service';
-import { HttpResponse } from '@angular/common/http';
+import { UsersService } from '../../services/users.service';
+import { ErrorStatus} from 'src/utils/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { CartService } from 'src/app/cart/cart.service';
+import { CartService } from 'src/app/services/cart.service';
 
 
 @Component({

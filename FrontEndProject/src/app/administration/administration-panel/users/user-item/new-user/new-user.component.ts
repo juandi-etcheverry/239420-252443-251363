@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { UsersService } from 'src/app/user/users.service';
+import { UsersService } from 'src/app/services/users.service';
 import { CreateUserRequest } from 'src/utils/interfaces';
 
 @Component({
