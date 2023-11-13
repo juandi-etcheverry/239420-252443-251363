@@ -36,12 +36,13 @@ public class PromotionsController : ControllerBase
       var promotion = _promotionLogic.GetBestPromotion(foundProducts);
       var discount = promotion.GetDiscount(foundProducts);
       var totalPrice = foundProducts.Sum(p => p.Price);
-      return StatusCode(200, new GetPromotionResponse()
-      {
-         PromotionName = promotion.Name,
-         Discount = discount,
-         FinalPrice = totalPrice - discount
-      });
+      var response = new GetPromotionResponse()
+             {
+                PromotionName = promotion.Name,
+                Discount = discount,
+                FinalPrice = totalPrice - discount
+             };
+      return StatusCode(200, response);
    }
 
    [HttpPost]

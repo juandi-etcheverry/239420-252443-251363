@@ -29,6 +29,7 @@ import { ModifyProductComponent } from './administration/administration-panel/pr
 import { UserItemComponent } from './administration/administration-panel/users/user-item/user-item.component';
 import { ModifyUserComponent } from './administration/administration-panel/users/user-item/modify-user/modify-user.component';
 import { NewUserComponent } from './administration/administration-panel/users/user-item/new-user/new-user.component';
+import { PurchaseHistoryItemComponent } from './administration/administration-panel/purchase-history-item/purchase-history-item.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { NewUserComponent } from './administration/administration-panel/users/us
     NewProductComponent,
     ModifyProductComponent,
     NewUserComponent,
+    PurchaseHistoryItemComponent,
   ],
   providers: [
     {

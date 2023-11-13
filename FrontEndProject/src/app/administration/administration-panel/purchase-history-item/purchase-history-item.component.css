@@ -1,0 +1,12 @@
+.purchaseHistory.finalPrice {
+    display: flex;
+    flex-direction: column;
+}
+
+#purchaseCard {
+    overflow: auto;
+    height: 8.2rem;
+    min-width: 30rem;
+    max-width: max-content;
+    padding-inline: 2rem;
+}

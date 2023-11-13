@@ -3,8 +3,8 @@
 <div id="contenedor">
     <div id="left">
         <p class="total"><span class="total-label">Total: $</span> {{total}}.0</p>
-        <p>Price with promotion: $</p>
-        <p>Promotion: </p>
+        <p>Price with promotion: {{priceWithPromotion}}$</p>
+        <p>Promotion: {{promotionName}}</p>
         <div class="cart-list-wrapper">
             <app-cart-item  *ngFor="let item of cartItems" [cartItem]="item" (changeItemCant)="Refresh()"></app-cart-item>
         </div>

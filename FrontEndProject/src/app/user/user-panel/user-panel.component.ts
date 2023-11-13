@@ -7,10 +7,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../users.service';
-import { ErrorStatus, GetUserResponse, UpdateUserProps } from 'src/utils/interfaces';
+import { ErrorStatus, GetUserResponse, SinglePurchase, UpdateUserProps } from 'src/utils/interfaces';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { z } from 'zod';
+import { PurchaseService } from 'src/app/purchase/purchase-service';
+import { PurchaseHistoryItemComponent } from 'src/app/administration/administration-panel/purchase-history-item/purchase-history-item.component';
 
 const UpdateUserSchema = z.object({
   email: z.string().email(),
@@ -22,12 +24,13 @@ const UpdateUserSchema = z.object({
   templateUrl: './user-panel.component.html',
   styleUrls: ['./user-panel.component.css'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatSnackBarModule],
+  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatSnackBarModule, PurchaseHistoryItemComponent],
 })
 
 export class UserPanelComponent implements OnInit {
 
   data: GetUserResponse | null = null;
+  purchases: SinglePurchase[] = [];
   userId: string = '';
 
   userForm = new FormGroup({
@@ -36,7 +39,7 @@ export class UserPanelComponent implements OnInit {
     address: new FormControl(''),
   });
 
-  constructor(private router: Router, private usersService: UsersService, 
+  constructor(private router: Router, private usersService: UsersService, private purchaseService: PurchaseService,
     private route: ActivatedRoute, private _snackBar: MatSnackBar){
 
   }
@@ -62,6 +65,10 @@ export class UserPanelComponent implements OnInit {
         if(error.status == 401) this.goToPage('/login');
       }
     });
+
+    this.purchaseService.getPurchases(this.userId).subscribe(response => {
+        this.purchases = response.purchases
+      })
   }
 
   onSubmit(): void {

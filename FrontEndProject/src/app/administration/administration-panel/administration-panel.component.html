@@ -26,4 +26,15 @@
         >
         </app-user-item>
     </div>
+
+    <div class="purchaseList" *ngIf="purchases && purchases.length > 0">
+        <div class="titlePurchase">
+            <h2>Purchases List</h2>
+        </div>
+        <app-purchase-history-item
+            *ngFor="let purchase of purchases"
+            [purchase]="purchase"
+        >
+        </app-purchase-history-item>
+    </div>
 </div>
