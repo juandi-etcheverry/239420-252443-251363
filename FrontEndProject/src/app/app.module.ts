@@ -39,7 +39,6 @@ import { ServerDownComponent } from './server-down/server-down.component';
     NuestroComponenteComponent,
     ProductsComponent,
     UserComponent,
-    PagenotfoundComponent,
     ServerDownComponent,
   ],
   imports: [
