@@ -20,10 +20,9 @@ export class PurchaseHistoryItemComponent {
   unbounded = false;
 
 
-  constructor(private _snackBar : MatSnackBar){
+  constructor(){
   }
 
   ngOnInit() {
-
   }
 }

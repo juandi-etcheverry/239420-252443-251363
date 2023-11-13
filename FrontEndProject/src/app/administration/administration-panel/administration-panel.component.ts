@@ -51,7 +51,6 @@ export class AdministrationPanelComponent {
 
     this.purchaseService.getPurchases().subscribe(response => {
       this.purchases = response.purchases;
-      console.log(response);
     })
   }
 
