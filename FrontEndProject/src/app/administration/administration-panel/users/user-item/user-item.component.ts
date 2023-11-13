@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from 'src/app/user/users.service';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { User } from 'src/utils/interfaces';
 import { MatCardModule } from '@angular/material/card';
