@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ProductsService } from 'src/app/products/products.service';
-import { Product, User } from 'src/utils/interfaces';
+import { Product, SinglePurchase, User } from 'src/utils/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,19 +13,22 @@ import { UsersService } from 'src/app/user/users.service';
 import { Router } from '@angular/router';
 import { UserItemComponent } from './users/user-item/user-item.component';
 import { NewUserComponent } from './users/user-item/new-user/new-user.component';
+import { PurchaseService } from 'src/app/purchase/purchase-service';
+import { PurchaseHistoryItemComponent } from './purchase-history-item/purchase-history-item.component';
 
 @Component({
   selector: 'app-administration-panel',
   templateUrl: './administration-panel.component.html',
   styleUrls: ['./administration-panel.component.css'],
   standalone: true,
-  imports: [ MatButtonModule, MatDividerModule, MatIconModule, ProductItemComponent, CommonModule, MatSnackBarModule, UserItemComponent]
+  imports: [ MatButtonModule, MatDividerModule, MatIconModule, ProductItemComponent, CommonModule, MatSnackBarModule, UserItemComponent, PurchaseHistoryItemComponent]
 })
 export class AdministrationPanelComponent {
   products : Product[] = [];
   users: User[] = [];
+  purchases: SinglePurchase[] = [];
 
-  constructor(private productService : ProductsService, public dialog: MatDialog, private _snackBar : MatSnackBar, 
+  constructor(private productService : ProductsService, private purchaseService : PurchaseService, public dialog: MatDialog, private _snackBar : MatSnackBar, 
     private userService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
@@ -45,6 +48,10 @@ export class AdministrationPanelComponent {
     this.userService.getAllUsers().subscribe((response) => {
       this.users = response.users;
     });
+
+    this.purchaseService.getPurchases().subscribe(response => {
+      this.purchases = response.purchases;
+    })
   }
 
   goToPage(url: string){

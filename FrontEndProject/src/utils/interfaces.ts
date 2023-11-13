@@ -124,13 +124,7 @@ export interface CartItem {
 
 export interface PurchaseResponse {
     message: string,
-    Purchase: {
-        ProductNames: string[],
-        UserEmail: string,
-        TotalPrice: number,
-        FinalPrice: number,
-        PromotionName?: string
-    }
+    Purchase: SinglePurchase
 }
 export interface CreateProductRequest{
     name?: string;
@@ -150,4 +144,26 @@ export interface UpdateProductRequest{
     colors?: Color[];
     stock?: number;
     description?: string;
+}
+
+export interface GetPromotionResponse{
+    promotionName: string;
+    discount: number;
+    finalPrice: number;
+}
+export interface PurchaseProducts{
+    ProductId: string;
+    Quantity: number;
+}
+
+export interface SinglePurchase {
+    productsNames: string[],
+    userEmail: string,
+    totalPrice: number,
+    finalPrice: number,
+    promotionName?: string
+}
+
+export interface GetAllPurchasesResponse {
+    purchases : SinglePurchase[];
 }

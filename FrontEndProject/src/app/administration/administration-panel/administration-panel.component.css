@@ -27,10 +27,13 @@ h1 {
 .container {
     display: flex;
     margin-top: 50px;
-    justify-content: space-around;
+    width: fit-content;
 }
 
-.productList, .userList {
+.productList, .userList .purchaseList  {
     flex: 1;
-    margin: 60px;
+}
+
+.purchaseList {
+    width: 100%;
 }

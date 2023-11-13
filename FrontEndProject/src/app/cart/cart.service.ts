@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Product, CartItem, PurchaseResponse, User } from "src/utils/interfaces";
+import { Product, CartItem, PurchaseResponse, User, GetPromotionResponse, PurchaseProducts } from "src/utils/interfaces";
 import { AuthService } from "../auth.service";
 import { UsersService } from "../user/users.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import url from "src/utils/url";
+import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class CartService{
     items: CartItem[] = [];
     isLoggedIn : boolean = this.authService.hasAuthToken();
     user : User | null = null;
+    purchaseProducts : PurchaseProducts[] = [];
 
     constructor(private authService: AuthService, private userService : UsersService, private router : Router,
                 private http: HttpClient){
@@ -51,7 +53,6 @@ export class CartService{
     }
 
     removeCartId(id : string){
-        console.log(id);
         localStorage.removeItem(id);
         this.items = [];
     }
@@ -135,6 +136,12 @@ export class CartService{
           internalSubscribeLogic();
         })
       }
+
+      getPromotionData(): Observable<GetPromotionResponse> {
+        this.loadCartFromLocalStorage();
+        this.purchaseProducts = this.items.map((item) => ({ProductId: item.id, Quantity: item.cant}));
+        return this.http.post<GetPromotionResponse>(`${url}/promotions/discount`, this.purchaseProducts);
+    }
     
     addPurchase(){
         const body = this.items.map((item) => (

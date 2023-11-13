@@ -2,6 +2,6 @@
 
 public class PromotionDTO
 {
-    public string? Name;
-    public bool? IsEnabled;
+    public string? Name { get; set; }
+    public bool? IsEnabled { get; set; }
 }

@@ -9,6 +9,7 @@ import { UserPanelComponent } from './user/user-panel/user-panel.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { LoginComponent } from './user/login/login.component';
 import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
+import { ServerDownComponent } from './server-down/server-down.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'products', pathMatch: 'full'},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdministrationPanelComponent},
+  {path: 'serverdown', component: ServerDownComponent},
   {path: '**', component: PagenotfoundComponent}
 ];
 
