@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GetUserResponse, SignupRequest, LoginRequest, UpdateUserProps, UpdateUserResponse, GetUsersResponse, CreateUserRequest, CreateUserResponse } from 'src/utils/interfaces';
 import url from 'src/utils/url';
-import { AuthService } from '../auth.service';
+import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable({

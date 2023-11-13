@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { CartService } from "../cart/cart.service";
+import { CartService } from "./cart.service";
 import { HttpClient } from "@angular/common/http";
 import url from "src/utils/url";
-import { map } from "rxjs";
 import { CartItem, PurchaseRequest } from "src/utils/interfaces";
 
 @Injectable({

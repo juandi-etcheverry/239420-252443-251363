@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProductsService } from 'src/app/products/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { Product, User } from 'src/utils/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,7 +9,7 @@ import { ProductItemComponent } from './products/product-item/product-item.compo
 import { MatDialog } from '@angular/material/dialog';
 import { NewProductComponent } from './products/new-product/new-product.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { UsersService } from 'src/app/user/users.service';
+import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 import { UserItemComponent } from './users/user-item/user-item.component';
 import { NewUserComponent } from './users/user-item/new-user/new-user.component';
