@@ -17,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UserPanelComponent } from './user/user-panel/user-panel.component';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { PaymentmethodComponent } from './cart/paymentmethod/paymentmethod.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { AuthInterceptor } from './auth.interceptor';
@@ -27,8 +27,9 @@ import { ProductItemComponent } from './administration/administration-panel/prod
 import { NewProductComponent } from './administration/administration-panel/products/new-product/new-product.component';
 import { ModifyProductComponent } from './administration/administration-panel/products/product-item/modify-product/modify-product.component';
 import { UserItemComponent } from './administration/administration-panel/users/user-item/user-item.component';
-import { ModifyUserComponent } from './administration/administration-panel/users/user-item/modify-user/modify-user.component';
 import { NewUserComponent } from './administration/administration-panel/users/user-item/new-user/new-user.component';
+import { ServerErrorInterceptor } from './server-error.interceptor';
+import { ServerDownComponent } from './server-down/server-down.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { NewUserComponent } from './administration/administration-panel/users/us
     ProductsComponent,
     UserComponent,
     PagenotfoundComponent,
+    ServerDownComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +71,11 @@ import { NewUserComponent } from './administration/administration-panel/users/us
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: ServerErrorInterceptor, 
       multi: true
     }
 ],
