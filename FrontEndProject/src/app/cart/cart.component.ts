@@ -27,6 +27,8 @@ export class CartComponent implements OnInit{
   showPayment : Boolean = false;
   buttonMessage : String = "Purchase";
   userLogged : Boolean = false;
+  priceWithPromotion : number = 0;
+  promotionName : string = "";
   
   constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService,
     private userService: UsersService){
@@ -36,6 +38,7 @@ export class CartComponent implements OnInit{
     this.userLogged = this.authService.hasAuthToken();
     this.cartService.loadCartFromLocalStorage();
     this.cartItems = this.cartService.items;
+    this.updatePromotionData();
   }
 
   get total():number{
@@ -77,9 +80,17 @@ export class CartComponent implements OnInit{
   }
   Refresh(){
     this.cartItems = this.cartService.items;
+    this.updatePromotionData();
     if(this.cartItems.length == 0){
       this.hidePaymentPanel();
     }
+  }
+
+  updatePromotionData() {
+    this.cartService.getPromotionData().subscribe(value => {
+      this.promotionName = value.promotionName;
+      this.priceWithPromotion = value.finalPrice;
+    });
   }
 
   deleteCart(){

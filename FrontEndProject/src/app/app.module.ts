@@ -28,6 +28,7 @@ import { NewProductComponent } from './administration/administration-panel/produ
 import { ModifyProductComponent } from './administration/administration-panel/products/product-item/modify-product/modify-product.component';
 import { UserItemComponent } from './administration/administration-panel/users/user-item/user-item.component';
 import { NewUserComponent } from './administration/administration-panel/users/user-item/new-user/new-user.component';
+import { PurchaseHistoryItemComponent } from './administration/administration-panel/purchase-history-item/purchase-history-item.component';
 import { ServerErrorInterceptor } from './server-error.interceptor';
 import { ServerDownComponent } from './server-down/server-down.component';
 
@@ -66,6 +67,7 @@ import { ServerDownComponent } from './server-down/server-down.component';
     NewProductComponent,
     ModifyProductComponent,
     NewUserComponent,
+    PurchaseHistoryItemComponent,
   ],
   providers: [
     {

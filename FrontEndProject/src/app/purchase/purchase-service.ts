@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { CartService } from "../cart/cart.service";
 import { HttpClient } from "@angular/common/http";
 import url from "src/utils/url";
-import { map } from "rxjs";
-import { CartItem, PurchaseRequest } from "src/utils/interfaces";
+import { CartItem, GetAllPurchasesResponse, PurchaseRequest } from "src/utils/interfaces";
 
 @Injectable({
     providedIn: 'root',
@@ -26,6 +25,10 @@ export class PurchaseService{
             return {id : cartItem.id, cant : cartItem.cant}
         })
 
+    }
+
+    getPurchases(id ?: string) {
+        return this.http.get<GetAllPurchasesResponse>(`${url}/purchases${id? '/'.concat(id) : ''}`)
     }
 
 
