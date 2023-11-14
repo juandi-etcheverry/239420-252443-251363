@@ -31,8 +31,14 @@ export class CartComponent implements OnInit{
   promotionName : string = "";
   
   constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService,
-    private userService: UsersService, private _snackBar : MatSnackBar){
-}
+    private userService: UsersService, private _snackBar : MatSnackBar, private router: Router){
+      if (this.cartService.user?.role === 2) {
+        _snackBar.open('Only buyers can access the cart', 'Close', {
+          duration: 2000,
+        });
+        router.navigate(['/'])
+      };
+  }
 
   ngOnInit(): void {
     this.userLogged = this.authService.hasAuthToken();
@@ -81,16 +87,16 @@ export class CartComponent implements OnInit{
   Refresh(){
     this.cartItems = this.cartService.items;
     this.updatePromotionData();
-    if(this.cartItems.length == 0){
-      this.hidePaymentPanel();
-    }
+    this.hidePaymentPanel();
   }
 
   updatePromotionData() {
-    this.cartService.getPromotionData().subscribe(value => {
+    this.cartService.getPromotionData().subscribe({next: value => {
       this.promotionName = value.promotionName;
-      this.priceWithPromotion = value.finalPrice;
-    });
+      this.priceWithPromotion = value.finalPrice 
+    }, error: _ => {
+      this.priceWithPromotion = this.total;
+    }});
   }
 
   deleteCart(){

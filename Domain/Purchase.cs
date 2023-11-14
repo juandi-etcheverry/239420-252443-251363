@@ -9,8 +9,13 @@ public class Purchase
 
     public float TotalPrice { get; set; }
     public float FinalPrice { get; set; }
-    public string? PromotionName { get; set; }
 
+    public string? PromotionName
+    {
+        get;
+        set;
+    }
+    public string? PaymentMethod { get; set; }
 
     public void AddProducts(List<Product> products)
     {
@@ -42,3 +47,4 @@ public class Purchase
         TotalPrice = Products.Sum(p => p.Price);
     }
 }
+

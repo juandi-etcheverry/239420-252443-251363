@@ -17,6 +17,7 @@ export class CartService{
     isLoggedIn : boolean = this.authService.hasAuthToken();
     user : User | null = null;
     purchaseProducts : PurchaseProducts[] = [];
+    paymentMethod : string | null = null;
 
     constructor(private authService: AuthService, private userService : UsersService, private router : Router,
                 private http: HttpClient){
@@ -114,7 +115,7 @@ export class CartService{
       }
 
     get total(): number{
-        return this.items.reduce(( acc, {price} ) => (acc += price), 0)
+        return this.items.reduce(( acc, {price, cant} ) => (acc += price*cant), 0)
     }
 
     getCantOfItem(id : string) : number{
@@ -142,13 +143,17 @@ export class CartService{
         this.purchaseProducts = this.items.map((item) => ({ProductId: item.id, Quantity: item.cant}));
         return this.http.post<GetPromotionResponse>(`${url}/promotions/discount`, this.purchaseProducts);
     }
+
+    setPaymentMethod(paymentMethod :string) {
+        this.paymentMethod = paymentMethod;
+    }
     
     addPurchase(){
         const body = this.items.map((item) => (
             {ProductId: item.id, Quantity: item.cant}
         ));
         return this.http.post<PurchaseResponse>(`${url}/purchases`,
-        {"Cart": body})
+        {"Cart": body, "PaymentMethod": this.paymentMethod})
     }
 
 }

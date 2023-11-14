@@ -15,6 +15,7 @@ import { UserItemComponent } from './users/user-item/user-item.component';
 import { NewUserComponent } from './users/user-item/new-user/new-user.component';
 import { PurchaseService } from 'src/app/purchase/purchase-service';
 import { PurchaseHistoryItemComponent } from './purchase-history-item/purchase-history-item.component';
+import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
   selector: 'app-administration-panel',
@@ -29,7 +30,7 @@ export class AdministrationPanelComponent {
   purchases: SinglePurchase[] = [];
 
   constructor(private productService : ProductsService, private purchaseService : PurchaseService, public dialog: MatDialog, private _snackBar : MatSnackBar, 
-    private userService: UsersService, private router: Router) { }
+    private userService: UsersService, private router: Router, private cartService : CartService) { }
 
   ngOnInit(): void {
     this.userService.getLoggedUser()?.subscribe((user) => {
@@ -46,7 +47,9 @@ export class AdministrationPanelComponent {
     });
 
     this.userService.getAllUsers().subscribe((response) => {
-      this.users = response.users;
+      this.users = response.users.filter((val) => {
+        val.id !== this.cartService.user?.id
+      });
     });
 
     this.purchaseService.getPurchases().subscribe(response => {
@@ -74,7 +77,9 @@ export class AdministrationPanelComponent {
 
   refreshUsers(){
     this.userService.getAllUsers().subscribe((response) => {
-      this.users = response.users;
+      this.users = response.users.filter((val) => {
+        val.id !== this.cartService.user?.id
+      });
     });
   }
 

@@ -38,5 +38,13 @@ export class ProductItemComponent {
     });
   }
 
+  onExclude() {
+    this.productService.updateProduct({...this.product, promotionsApply: !this.product.promotionsApply}).subscribe({
+      next: _ => {
+        this.product.promotionsApply = !this.product.promotionsApply
+      }
+    })
+  }
+
 }
 

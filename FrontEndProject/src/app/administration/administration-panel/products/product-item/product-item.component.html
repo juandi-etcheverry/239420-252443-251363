@@ -10,7 +10,7 @@
         <mat-card-subtitle>Stock: {{product?.stock}} units    -    Brand: {{product?.brand?.name}}    -    Category: {{product?.category?.name}} </mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions align="end" id="actions">
-        <button mat-button class="button">Exclude</button>
+        <button mat-button class="button" (click)="onExclude()">{{product?.promotionsApply ? 'Exclude' : 'Include' }}</button>
         <button mat-button class="button" (click)="onModify()">Modify</button>
         <button mat-button class="button" (click)="onDelete()">Delete</button>
       </mat-card-actions>

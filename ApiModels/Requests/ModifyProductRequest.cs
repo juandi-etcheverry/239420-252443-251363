@@ -13,6 +13,7 @@ namespace ApiModels.Requests
         public Category Category { get; set; }
         public List<Color> Colors { get; set; }
         public int Stock { get; set; }
+        public bool PromotionsApply { get; set; }
 
         public Product ToEntity()
         {
@@ -24,7 +25,8 @@ namespace ApiModels.Requests
                 Brand = Brand,
                 Category = Category,
                 Colors = Colors,
-                Stock = Stock
+                Stock = Stock,
+                PromotionsApply = PromotionsApply
             };
         }
     }

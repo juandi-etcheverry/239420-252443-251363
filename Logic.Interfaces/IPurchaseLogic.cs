@@ -10,4 +10,5 @@ public interface IPurchaseLogic
     public void SetFinalPrice(Purchase purchase);
     public List<Purchase> GetAllPurchasesHistory(User user);
     public List<Purchase> GetAllPurchasesHistory();
+    public void ValidatePaymentMethod(string method); 
 }

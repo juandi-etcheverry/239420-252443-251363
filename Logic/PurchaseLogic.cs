@@ -8,6 +8,7 @@ public class PurchaseLogic : IPurchaseLogic
 {
     private readonly IPromotionLogic _promotionStrategies;
     private readonly IPurchaseRepository _purchaseRepository;
+    private static readonly string[] _paymentMethods = new[] { "CreditVisa", "CreditMastercard", "DebitSantander", "DebitItau", "DebitBBVA", "Paypal", "Paganza" };
 
     public PurchaseLogic(IPurchaseRepository purchaseRepository, IPromotionLogic promotionStrategies)
     {
@@ -65,5 +66,10 @@ public class PurchaseLogic : IPurchaseLogic
     public List<Purchase> GetAllPurchasesHistory()
     {
         return _purchaseRepository.GetAllPurchasesHistory();
+    }
+
+    public void ValidatePaymentMethod(string method)
+    {
+        if (!_paymentMethods.Contains(method)) throw new ArgumentException("Invalid payment method");
     }
 }

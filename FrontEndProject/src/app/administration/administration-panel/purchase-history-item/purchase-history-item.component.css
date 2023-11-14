@@ -9,4 +9,6 @@
     min-width: 30rem;
     max-width: max-content;
     padding-inline: 2rem;
+    background-color: whitesmoke;
+    margin: 10px;
 }

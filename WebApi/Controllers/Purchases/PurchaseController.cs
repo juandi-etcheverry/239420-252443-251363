@@ -63,7 +63,10 @@ public class PurchaseController : ControllerBase
         });
 
         newPurchase.AddProducts(products);
+        _purchaseLogic.ValidatePaymentMethod(request.PaymentMethod);
+        newPurchase.PaymentMethod = request.PaymentMethod;
         var purchase = _purchaseLogic.AddCart(newPurchase);
+        purchase.PaymentMethod = request.PaymentMethod;
 
         var response = new EffectPurchaseResponse
         {

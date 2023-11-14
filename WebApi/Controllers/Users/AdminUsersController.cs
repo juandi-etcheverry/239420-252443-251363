@@ -35,8 +35,15 @@ public class AdminUsersController : ControllerBase
 
     [HttpDelete]
     [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
-    public IActionResult DeleteUser([FromRoute] Guid id)
+    public IActionResult DeleteUser([FromRoute] Guid id, [FromHeader] Guid Authorization)
     {
+        if (Authorization == id)
+        {
+            return new ObjectResult("You cannot delete yourself!")
+            {
+                StatusCode = 403
+            };
+        }
         var user = _userLogic.DeleteUser(id);
         var response = new DeleteUserResponse
         {

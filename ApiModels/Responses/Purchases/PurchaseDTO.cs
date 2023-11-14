@@ -9,6 +9,7 @@ public class PurchaseDTO
     public float TotalPrice { get; set; }
     public float FinalPrice { get; set; }
     public string? PromotionName { get; set; }
+    public string PaymentMethod { get; set; }
 
     public static PurchaseDTO ToPurchaseDTO(Purchase purchase)
     {
@@ -18,6 +19,7 @@ public class PurchaseDTO
         purchaseDTO.FinalPrice = purchase.FinalPrice;
         purchaseDTO.PromotionName = purchase.PromotionName;
         purchaseDTO.ProductsNames = purchase.Products.Select(p => p.Name).ToList();
+        purchaseDTO.PaymentMethod = purchase.PaymentMethod;
         return purchaseDTO;
     }
 }

@@ -70,6 +70,7 @@ export class ProductsService {
       category,
       colors,
       stock,
+      promotionsApply
     } : UpdateProductRequest){
       return this.http.put<Product>(`${url}/products`, {
         Id : id,
@@ -80,6 +81,7 @@ export class ProductsService {
         Category: category,
         Colors: colors,
         Stock: stock,
+        promotionsApply: promotionsApply
       });
     }
 
