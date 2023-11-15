@@ -18,7 +18,7 @@ public class PurchaseDTO
         purchaseDTO.TotalPrice = purchase.TotalPrice;
         purchaseDTO.FinalPrice = purchase.FinalPrice;
         purchaseDTO.PromotionName = purchase.PromotionName;
-        purchaseDTO.ProductsNames = purchase.Products.Select(p => p.Name).ToList();
+        purchaseDTO.ProductsNames = purchase.Products.Select(p => p.Product.Name).ToList();
         purchaseDTO.PaymentMethod = purchase.PaymentMethod;
         return purchaseDTO;
     }

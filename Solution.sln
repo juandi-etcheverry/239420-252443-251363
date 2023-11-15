@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerFactory", "ServerFactory\ServerFactory.csproj", "{6473C0CD-1F30-457D-83B9-36518C486462}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeHelper", "TypeHelper\TypeHelper.csproj", "{7C8D57D3-1CD4-4535-9195-81B1B26257A9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{A98F4AAC-854B-4E43-B3AC-510F0A7758EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotionStrategies.Tests", "PromotionStrategies.Tests\PromotionStrategies.Tests.csproj", "{96AB752F-6056-4BC1-AB2E-F9DCD6D4E043}"
@@ -83,10 +81,6 @@ Global
 		{6473C0CD-1F30-457D-83B9-36518C486462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6473C0CD-1F30-457D-83B9-36518C486462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6473C0CD-1F30-457D-83B9-36518C486462}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C8D57D3-1CD4-4535-9195-81B1B26257A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C8D57D3-1CD4-4535-9195-81B1B26257A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C8D57D3-1CD4-4535-9195-81B1B26257A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C8D57D3-1CD4-4535-9195-81B1B26257A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A98F4AAC-854B-4E43-B3AC-510F0A7758EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A98F4AAC-854B-4E43-B3AC-510F0A7758EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A98F4AAC-854B-4E43-B3AC-510F0A7758EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

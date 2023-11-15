@@ -15,17 +15,17 @@ public class PurchaseRepository : IPurchaseRepository
 
     public Purchase AddPurchase(Purchase purchase)
     {
-        var products = _context.Set<Product>().Where(p => purchase.Products.Select(pp => pp.Id).Contains(p.Id))
-            .ToList();
+        // var products = _context.Set<PurchaseProduct>().Include(p => p.Product).Where(p => purchase.Products.Select(pp => pp.Product.Id).Contains(p.Product.Id))
+        //     .ToList();
         var user = _context.Set<User>().Find(purchase.User.Id);
-        purchase.Products = products;
         purchase.User = user;
+        purchase.Products.ForEach(p => _context.Set<PurchaseProduct>().Add(p));
         _context.Set<Purchase>().Add(purchase);
         _context.SaveChanges();
         return purchase;
     }
 
-    public Purchase AddProducts(Purchase purchase, List<Product> products)
+    public Purchase AddProducts(Purchase purchase, List<PurchaseProduct> products)
     {
         if (purchase == null) throw new ArgumentException("Cart is null");
         if (products.Count == 0) throw new ArgumentException("There are no products to Add");
@@ -34,10 +34,10 @@ public class PurchaseRepository : IPurchaseRepository
         return purchase;
     }
 
-    public Purchase DeleteProduct(Purchase purchase, Product product)
+    public Purchase DeleteProduct(Purchase purchase, PurchaseProduct product)
     {
         if (purchase == null) throw new ArgumentException("Cart is null");
-        if (product == null) throw new ArgumentException("Product is null");
+        if (product == null || product.Product == null) throw new ArgumentException("Product is null");
         purchase.DeleteProduct(product);
         _context.SaveChanges();
         return purchase;

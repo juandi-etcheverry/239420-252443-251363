@@ -21,13 +21,13 @@ public class PurchaseLogic : IPurchaseLogic
         _purchaseRepository = purchaseRepository;
     }
 
-    public Purchase AddProducts(List<Product> products, Purchase purchase)
+    public Purchase AddProducts(List<PurchaseProduct> products, Purchase purchase)
     {
         var result = _purchaseRepository.AddProducts(purchase, products);
         return result;
     }
 
-    public Purchase DeleteProduct(Product product, Purchase purchase)
+    public Purchase DeleteProduct(PurchaseProduct product, Purchase purchase)
     {
         var result = _purchaseRepository.DeleteProduct(purchase, product);
         return result;
@@ -44,9 +44,9 @@ public class PurchaseLogic : IPurchaseLogic
     {
         try
         {
-
-            var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
-            var result = promotion.GetDiscount(purchase.Products);
+            var products = purchase.Products.Select(p => p.Product).ToList();
+            var promotion = _promotionStrategies.GetBestPromotion(products);
+            var result = promotion.GetDiscount(products);
            
             purchase.FinalPrice = purchase.TotalPrice - result;
             purchase.PromotionName = promotion.Name;

@@ -14,7 +14,7 @@ public class Product
     public bool PromotionsApply { get; set; } = true;
 }
 
-public class PurchaseProduct
+public class PurchaseProductRequest
 {
     public Guid ProductId { get; set; }
     public int Quantity { get; set; }

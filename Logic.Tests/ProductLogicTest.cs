@@ -191,7 +191,7 @@ public class ProductLogicTest
     [TestMethod]
     public void IsPurchaseValid_Valid_OK()
     {
-        var cart = new List<PurchaseProduct>
+        var cart = new List<PurchaseProductRequest>
         {
             new() { ProductId = Guid.NewGuid(), Quantity = 1 },
         };
@@ -216,7 +216,7 @@ public class ProductLogicTest
     [ExpectedException(typeof(ArgumentException))]
     public void IsPurchaseValid_Valid_FAIL()
     {
-        var cart = new List<PurchaseProduct>
+        var cart = new List<PurchaseProductRequest>
         {
             new() { ProductId = Guid.NewGuid(), Quantity = 5 },
         };

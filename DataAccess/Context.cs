@@ -16,6 +16,7 @@ public class Context : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<SessionToken> SessionTokens { get; set; }
     public DbSet<Purchase> Carts { get; set; }
+    public DbSet<PurchaseProduct> PurchaseProducts { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
