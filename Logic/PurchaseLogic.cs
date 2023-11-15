@@ -47,6 +47,7 @@ public class PurchaseLogic : IPurchaseLogic
 
             var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
             var result = promotion.GetDiscount(purchase.Products);
+           
             purchase.FinalPrice = purchase.TotalPrice - result;
             purchase.PromotionName = promotion.Name;
         }
@@ -54,6 +55,10 @@ public class PurchaseLogic : IPurchaseLogic
         {
             purchase.FinalPrice = purchase.TotalPrice;
             purchase.PromotionName = "No Promotion";
+        }
+        finally
+        {
+            if (purchase.PaymentMethod == "Paganza") purchase.FinalPrice *= 0.9f;
         }
     }
 

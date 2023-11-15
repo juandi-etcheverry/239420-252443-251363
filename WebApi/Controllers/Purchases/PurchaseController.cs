@@ -55,6 +55,7 @@ public class PurchaseController : ControllerBase
         }
 
         var newPurchase = new Purchase { User = user };
+        newPurchase.PaymentMethod = request.PaymentMethod;
 
         var products = _productLogic.GetProducts(p =>
         {
@@ -62,11 +63,14 @@ public class PurchaseController : ControllerBase
             return productsIds.Contains(p.Id);
         });
 
+        
+
         newPurchase.AddProducts(products);
         _purchaseLogic.ValidatePaymentMethod(request.PaymentMethod);
-        newPurchase.PaymentMethod = request.PaymentMethod;
         var purchase = _purchaseLogic.AddCart(newPurchase);
         purchase.PaymentMethod = request.PaymentMethod;
+        
+        
 
         var response = new EffectPurchaseResponse
         {

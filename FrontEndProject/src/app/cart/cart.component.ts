@@ -1,13 +1,17 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CartItemComponent } from './cart-item/cart-item.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import { CartItem } from "src/utils/interfaces";
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { CartItem } from 'src/utils/interfaces';
 import { CartService } from './cart.service';
 import { CommonModule } from '@angular/common';
 import { PaymentmethodComponent } from './paymentmethod/paymentmethod.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -18,26 +22,39 @@ import { UsersService } from '../user/users.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
   standalone: true,
-  imports: [PaymentmethodComponent, MatButtonModule, MatDividerModule, MatIconModule, CartItemComponent, CommonModule, MatSnackBarModule]
+  imports: [
+    PaymentmethodComponent,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    CartItemComponent,
+    CommonModule,
+    MatSnackBarModule,
+  ],
 })
-export class CartComponent implements OnInit{
-
-  
+export class CartComponent implements OnInit {
   cartItems: CartItem[] = this.cartService.items;
-  showPayment : Boolean = false;
-  buttonMessage : String = "Purchase";
-  userLogged : Boolean = false;
-  priceWithPromotion : number = 0;
-  promotionName : string = "";
-  
-  constructor(private cartService : CartService, public dialog: MatDialog, private authService: AuthService,
-    private userService: UsersService, private _snackBar : MatSnackBar, private router: Router){
-      if (this.cartService.user?.role === 2) {
-        _snackBar.open('Only buyers can access the cart', 'Close', {
-          duration: 2000,
-        });
-        router.navigate(['/'])
-      };
+  showPayment: Boolean = false;
+  buttonMessage: String = 'Purchase';
+  userLogged: Boolean = false;
+  priceWithPromotion: number = 0;
+  originalPriceWithPromotion: number = 0;
+  promotionName: string = '';
+
+  constructor(
+    private cartService: CartService,
+    public dialog: MatDialog,
+    private authService: AuthService,
+    private userService: UsersService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    if (this.cartService.user?.role === 2) {
+      _snackBar.open('Only buyers can access the cart', 'Close', {
+        duration: 2000,
+      });
+      router.navigate(['/']);
+    }
   }
 
   ngOnInit(): void {
@@ -47,59 +64,66 @@ export class CartComponent implements OnInit{
     this.updatePromotionData();
   }
 
-  get total():number{
+  get total(): number {
     return this.cartService.total;
   }
 
-  showHide(){
+  showHide() {
     this.cartItems = this.cartService.items;
-    if(this.cartItems.length == 0){
-      this._snackBar.open('Cannot purchase 0 items', 'Close', {duration: 2000});
-    }
-    else{
-      if(this.userLogged){
-        if(this.showPayment){
+    if (this.cartItems.length == 0) {
+      this._snackBar.open('Cannot purchase 0 items', 'Close', {
+        duration: 2000,
+      });
+    } else {
+      if (this.userLogged) {
+        if (this.showPayment) {
           this.hidePaymentPanel();
-        }else{
+        } else {
           this.showPaymentPanel();
         }
-      }
-      else{
+      } else {
         this.openDialog('0ms', '0ms');
       }
     }
   }
-  showPaymentPanel(){
+  showPaymentPanel() {
     this.showPayment = true;
-    this.buttonMessage = "Cancel purchase";
+    this.buttonMessage = 'Cancel purchase';
   }
-  hidePaymentPanel(){
+  hidePaymentPanel() {
     this.showPayment = false;
-    this.buttonMessage = "Purchase";
+    this.buttonMessage = 'Purchase';
   }
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     this.dialog.open(askForLogIn, {
       width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
   }
-  Refresh(){
+  Refresh() {
     this.cartItems = this.cartService.items;
     this.updatePromotionData();
     this.hidePaymentPanel();
   }
 
   updatePromotionData() {
-    this.cartService.getPromotionData().subscribe({next: value => {
-      this.promotionName = value.promotionName;
-      this.priceWithPromotion = value.finalPrice 
-    }, error: _ => {
-      this.priceWithPromotion = this.total;
-    }});
+    this.cartService.getPromotionData().subscribe({
+      next: (value) => {
+        this.promotionName = value.promotionName;
+        this.priceWithPromotion = value.finalPrice;
+        this.originalPriceWithPromotion = value.finalPrice;
+      },
+      error: (_) => {
+        this.priceWithPromotion = this.total;
+      },
+    });
   }
 
-  deleteCart(){
+  deleteCart() {
     this.userService.getLoggedUser()?.subscribe({
       next: (user) => {
         this.cartService.removeCartId(user.id);
@@ -107,10 +131,18 @@ export class CartComponent implements OnInit{
       },
       error: (err) => {
         console.log(err);
-      }
+      },
     });
 
     this.Refresh();
+  }
+
+  getPromotionPrice($event: string) {
+    if ($event === 'Paganza') {
+      this.priceWithPromotion *= 0.9;
+    } else {
+      this.priceWithPromotion = this.originalPriceWithPromotion;
+    }
   }
 }
 
@@ -121,15 +153,17 @@ export class CartComponent implements OnInit{
   imports: [MatDialogModule, MatButtonModule, MatSnackBarModule],
 })
 export class askForLogIn {
-  constructor(public dialogRef: MatDialogRef<askForLogIn>, private _snackBar: MatSnackBar, private router : Router) {}
+  constructor(
+    public dialogRef: MatDialogRef<askForLogIn>,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
-  LogInNeeded(){
-    this._snackBar.open('Successfull purchase!', 'Close', {duration: 2000});
+  LogInNeeded() {
+    this._snackBar.open('Successful purchase!', 'Close', { duration: 2000 });
   }
 
-  redirectToLogin(){
+  redirectToLogin() {
     this.router.navigate(['/login']);
   }
 }
-
-
