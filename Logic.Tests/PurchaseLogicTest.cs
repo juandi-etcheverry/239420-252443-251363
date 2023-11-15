@@ -14,16 +14,21 @@ public class PurchaseLogicTest
     public void AddProductToCart_Valid_OK()
     {
         // Arrange
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product = new Product { Name = "Test", Price = 420, Description = "Test Description" };
-        products.Add(product);
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        products.Add(pp);
         var session = new SessionToken();
         var cart = new Purchase();
 
         var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<Product>>())).Returns(() =>
+        mock.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<PurchaseProduct>>())).Returns(() =>
         {
-            cart.AddProduct(product);
+            cart.AddProduct(pp);
             return cart;
         });
         var logic = new PurchaseLogic(mock.Object);
@@ -40,19 +45,24 @@ public class PurchaseLogicTest
     {
         // Arrange
         var product = new Product { Name = "Test", Price = 420, Description = "Test Description" };
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
         var session = new SessionToken();
         var cart = new Purchase();
 
         var mock = new Mock<IPurchaseRepository>(MockBehavior.Strict);
-        mock.Setup(x => x.DeleteProduct(It.IsAny<Purchase>(), It.IsAny<Product>())).Returns(() =>
+        mock.Setup(x => x.DeleteProduct(It.IsAny<Purchase>(), It.IsAny<PurchaseProduct>())).Returns(() =>
         {
-            cart.DeleteProduct(product);
+            cart.DeleteProduct(pp);
             return cart;
         });
         var logic = new PurchaseLogic(mock.Object);
 
         // Act
-        var result = logic.DeleteProduct(product, cart);
+        var result = logic.DeleteProduct(pp, cart);
 
         // Assert
         Assert.AreEqual(0, result.Products.Count);
@@ -74,7 +84,7 @@ public class PurchaseLogicTest
         var newProduct = new Product { Name = "Test", Price = 420, Description = "Test Description" };
 
         cart.User = user;
-        cart.Products = new List<Product> { newProduct };
+        cart.Products = new List<PurchaseProduct> { new () {Product = newProduct, Quantity = 1} };
 
         var mockPurchaseRepository = new Mock<IPurchaseRepository>(MockBehavior.Strict);
         mockPurchaseRepository.Setup(x => x.AddPurchase(It.IsAny<Purchase>())).Returns(() => { return cart; });
@@ -96,18 +106,29 @@ public class PurchaseLogicTest
     public void SetFinalPrice_Valid_OK()
     {
         // Arrange
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product1 = new Product { Name = "Test1", Price = 420, Description = "Test Description" };
         var product2 = new Product { Name = "Test2", Price = 500, Description = "Test Description" };
-        products.Add(product1);
-        products.Add(product2);
+        var pp1 = new PurchaseProduct()
+        {
+            Product = product1,
+            Quantity = 1
+        };
+        var pp2 = new PurchaseProduct()
+        {
+            Product = product2,
+            Quantity = 1
+        };
+        
+        products.Add(pp1);
+        products.Add(pp2);
         var cart = new Purchase();
 
         var mockPurchase = new Mock<IPurchaseRepository>(MockBehavior.Strict);
         var mockPromotion = new Mock<IPromotionLogic>(MockBehavior.Strict);
         var mockPromotionStrategy = new Mock<IPromotionStrategy>(MockBehavior.Strict);
 
-        mockPurchase.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<Product>>())).Returns(() =>
+        mockPurchase.Setup(x => x.AddProducts(It.IsAny<Purchase>(), It.IsAny<List<PurchaseProduct>>())).Returns(() =>
         {
             cart.AddProducts(products);
             return cart;

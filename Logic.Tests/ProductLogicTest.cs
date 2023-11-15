@@ -7,6 +7,22 @@ namespace Logic.Tests;
 [TestClass]
 public class ProductLogicTest
 {
+    private Product _product;
+
+    [TestInitialize]
+    public void InitializeProduct()
+    {
+        _product = new Product
+        {
+            Name = "Test",
+            Price = 420,
+            Description = "Test Description",
+            Brand = new Brand { Name = "Test" },
+            Category = new Category { Name = "Test" },
+            Colors = new List<Color> { new() { Name = "Test" } }
+        };
+    }
+
     [TestMethod]
     public void GetProduct_ValidId_OK()
     {
@@ -193,11 +209,11 @@ public class ProductLogicTest
     {
         var cart = new List<PurchaseProduct>
         {
-            new() { ProductId = Guid.NewGuid(), Quantity = 1 },
+            new() { Product = _product, Quantity = 1 },
         };
         var products = new List<Product>
         {
-            new() { Id = cart[0].ProductId, Stock = 2 },
+            new() { Id = cart[0].Product.Id, Stock = 2 },
         };
 
         var mock = new Mock<IProductRepository>(MockBehavior.Strict);
@@ -218,11 +234,11 @@ public class ProductLogicTest
     {
         var cart = new List<PurchaseProduct>
         {
-            new() { ProductId = Guid.NewGuid(), Quantity = 5 },
+            new() { Product = _product, Quantity = 5 },
         };
         var products = new List<Product>
         {
-            new() { Id = cart[0].ProductId, Stock = 2 },
+            new() { Id = cart[0].Product.Id, Stock = 2 },
         };
 
         var mock = new Mock<IProductRepository>(MockBehavior.Strict);

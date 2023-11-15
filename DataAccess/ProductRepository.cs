@@ -70,6 +70,7 @@ public class ProductRepository : IProductRepository
         productToModify.Name = product.Name;
         productToModify.Stock = product.Stock;
         productToModify.IsDeleted = product.IsDeleted;
+        productToModify.PromotionsApply = product.PromotionsApply;
 
         _context.Set<Product>().Update(productToModify);
         _context.SaveChanges();

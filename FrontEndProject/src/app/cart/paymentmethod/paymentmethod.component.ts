@@ -1,9 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {MatRadioModule} from '@angular/material/radio';
-import {NgFor} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
+import { NgFor } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from '../cart.service';
 import { CartItem, ErrorStatus, PurchaseResponse } from 'src/utils/interfaces';
 import { AuthService } from 'src/app/auth.service';
@@ -13,18 +17,31 @@ import { AuthService } from 'src/app/auth.service';
   templateUrl: './paymentmethod.component.html',
   styleUrls: ['./paymentmethod.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatRadioModule, NgFor]
+  imports: [MatDialogModule, MatButtonModule, MatRadioModule, NgFor],
 })
-export class PaymentmethodComponent implements OnInit{
+export class PaymentmethodComponent implements OnInit {
   @Output() deleteCart = new EventEmitter<void>();
+  @Output() change = new EventEmitter<string>();
   paymentOption: string;
-  options: string[] = ['Visa', 'MasterCard', 'Santander', 'ITAU', 'BBVA',  'Paypal', 'Paganza'];
+  options: { label: string; value: string }[] = [
+    { label: 'Visa', value: 'CreditVisa' },
+    { label: 'MasterCard', value: 'CreditMastercard' },
+    { label: 'Santander', value: 'DebitSantander' },
+    { label: 'ITAU', value: 'DebitItau' },
+    { label: 'BBVA', value: 'DebitBBVA' },
+    { label: 'Paypal', value: 'Paypal' },
+    { label: 'Paganza', value: 'Paganza' },
+  ];
 
-  constructor(public dialog: MatDialog){
-    this.paymentOption = "";
+  constructor(public dialog: MatDialog, private cartService: CartService) {
+    this.paymentOption = '';
   }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.cartService.setPaymentMethod(this.paymentOption);
     const dialogRef = this.dialog.open(ConfirmPurchase, {
       width: '400px',
       enterAnimationDuration,
@@ -35,12 +52,14 @@ export class PaymentmethodComponent implements OnInit{
       this.deleteCart.emit();
     });
   }
-  
-  ngOnInit(): void {
+
+  ngOnInit(): void {}
+
+  updatePaymentMethod($event: MatRadioChange) {
+    this.paymentOption = $event.value;
+    this.change.emit(this.paymentOption);
   }
-
 }
-
 
 @Component({
   selector: 'dialog-animations-example-dialog',
@@ -49,21 +68,25 @@ export class PaymentmethodComponent implements OnInit{
   imports: [MatDialogModule, MatButtonModule, MatSnackBarModule],
 })
 export class ConfirmPurchase {
-
   @Output() deleteCart = new EventEmitter<void>();
 
-  constructor(public dialogRef: MatDialogRef<ConfirmPurchase>, private _snackBar: MatSnackBar,
-              private cartService: CartService, private authService: AuthService) {}
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmPurchase>,
+    private _snackBar: MatSnackBar,
+    private cartService: CartService
+  ) {}
 
-  processPurchase(){
+  processPurchase() {
     this.cartService.addPurchase().subscribe({
       next: (response: PurchaseResponse) => {
         this.deleteCart.emit();
-        this._snackBar.open('Successful purchase!', 'Close', {duration: 2000});
+        this._snackBar.open('Successful purchase!', 'Close', {
+          duration: 2000,
+        });
       },
       error: (error: ErrorStatus) => {
-        this._snackBar.open('Error in purchase!', 'Close', {duration: 2000});
-      }});
-    }
-
+        this._snackBar.open('Error in purchase!', 'Close', { duration: 2000 });
+      },
+    });
+  }
 }

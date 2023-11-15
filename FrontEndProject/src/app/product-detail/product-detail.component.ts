@@ -62,7 +62,7 @@ export class ProductDetailComponent implements OnInit {
       this.cartService.addItem(cartItem);
     }
     else{
-      this._snackBar.open('No more stock', 'Cerrar', {
+      this._snackBar.open('No more stock', 'Close', {
         duration: 2000,
       });
     }

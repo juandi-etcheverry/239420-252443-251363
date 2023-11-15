@@ -50,7 +50,7 @@ public class ProductLogic : IProductLogic
 
     public void IsPurchaseValid(IList<PurchaseProduct> cart)
     {
-        bool isValid = cart.All(item => GetProduct(item.ProductId).Stock >= item.Quantity);
+        bool isValid = cart.All(item => item.Product.Stock >= item.Quantity);
         if (!isValid) throw new ArgumentException("Not enough stock");
     }
     public Product UpdateProduct(Guid id, Product product)

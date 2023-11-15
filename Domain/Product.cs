@@ -13,9 +13,3 @@ public class Product
     public int Stock { get; set; }
     public bool PromotionsApply { get; set; } = true;
 }
-
-public class PurchaseProduct
-{
-    public Guid ProductId { get; set; }
-    public int Quantity { get; set; }
-}

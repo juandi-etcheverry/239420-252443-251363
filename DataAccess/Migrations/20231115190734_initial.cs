@@ -77,7 +77,8 @@ namespace DataAccess.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false)
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    PromotionsApply = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,7 +106,8 @@ namespace DataAccess.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TotalPrice = table.Column<float>(type: "real", nullable: false),
                     FinalPrice = table.Column<float>(type: "real", nullable: false),
-                    PromotionName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PromotionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -143,24 +145,20 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseProduct",
+                name: "PurchaseProducts",
                 columns: table => new
                 {
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PurchaseId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchaseProduct", x => new { x.ProductsId, x.PurchaseId });
+                    table.PrimaryKey("PK_PurchaseProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchaseProduct_Carts_PurchaseId",
-                        column: x => x.PurchaseId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PurchaseProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_PurchaseProducts_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -189,6 +187,30 @@ namespace DataAccess.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PurchaseProduct",
+                columns: table => new
+                {
+                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    PurchaseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseProduct", x => new { x.ProductsId, x.PurchaseId });
+                    table.ForeignKey(
+                        name: "FK_PurchaseProduct_Carts_PurchaseId",
+                        column: x => x.PurchaseId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchaseProduct_PurchaseProducts_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "PurchaseProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserId",
                 table: "Carts",
@@ -213,6 +235,11 @@ namespace DataAccess.Migrations
                 name: "IX_PurchaseProduct_PurchaseId",
                 table: "PurchaseProduct",
                 column: "PurchaseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchaseProducts_ProductId",
+                table: "PurchaseProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SessionTokens_CartId",
@@ -241,19 +268,22 @@ namespace DataAccess.Migrations
                 name: "Colors");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "PurchaseProducts");
 
             migrationBuilder.DropTable(
                 name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

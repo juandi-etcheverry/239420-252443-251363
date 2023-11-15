@@ -1,4 +1,5 @@
-﻿using ApiModels.Responses.Promotions;
+﻿using ApiModels.Requests;
+using ApiModels.Responses.Promotions;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class PromotionsController : ControllerBase
 
    [HttpPost]
    [Route("discount")]
-   public IActionResult GetPromotionForProducts([FromBody] PurchaseProduct[] products)
+   public IActionResult GetPromotionForProducts([FromBody] PurchaseProductRequest[] products)
    {
       var foundProducts = new List<Product>();
       foreach (var p in products)

@@ -33,15 +33,26 @@ export class ProductCardComponent implements OnInit{
     this.cant = this.cartService.getCantOfItem(this.productItem.id);
   }
 
+  isBuyerInvalid() {
+    if (this.cartService.user?.role === 2) {
+      this._snackBar.open('Only buyers can add products to the cart', 'Close', {
+        duration: 2000,
+      });
+      return true;
+    } 
+    return false;
+  }
+
   onIncrease($event : Event){
     $event.stopPropagation()
+    if (this.isBuyerInvalid()) return;
     this.cant = this.cartService.getCantOfItem(this.productItem.id);
     if(this.cant < this.productItem.stock){
       const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);
       this.cartService.addItem(cartItem);
     }
     else{
-      this._snackBar.open('No more stock', 'Cerrar', {
+      this._snackBar.open('No more stock', 'Close', {
         duration: 2000,
       });
     }
@@ -50,6 +61,7 @@ export class ProductCardComponent implements OnInit{
   
   onDecrease($event : Event){
     $event.stopPropagation()
+    if (this.isBuyerInvalid()) return;
     this.cant = this.cartService.getCantOfItem(this.productItem.id);
     if(this.cant > 0){
       const cartItem = this.cartService.mapProductItemToCartItem(this.productItem);

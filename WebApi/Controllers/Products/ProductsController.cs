@@ -31,7 +31,8 @@ public class ProductsController : ControllerBase
             Colors = product.Colors.ToList(),
             Description = product.Description,
             Price = product.Price,
-            Stock = product.Stock
+            Stock = product.Stock,
+            PromotionsApply = product.PromotionsApply
         };
         return StatusCode(201, response);
     }
@@ -77,7 +78,8 @@ public class ProductsController : ControllerBase
             Brand = product.Brand,
             Category = product.Category,
             Colors = product.Colors,
-            Stock = product.Stock
+            Stock = product.Stock,
+            PromotionsApply = product.PromotionsApply
         };
 
         return StatusCode(200, response);

@@ -46,6 +46,7 @@ export interface Product {
     colors: Color[];
     stock: number;
     description: string;
+    promotionsApply?:boolean
 }
 export interface GetProductReponse{
     id: string;
@@ -56,6 +57,7 @@ export interface GetProductReponse{
     stock: number;
     colors: Color[];
     description: string;
+    promotionsApply?:boolean
 }
 
 export interface GetProductsResponse {
@@ -113,6 +115,7 @@ export interface LoginResponse {
 }
 export interface PurchaseRequest{
     cart : {id : string, cant : number}[];
+    paymentMethod:string;
 }
 
 export interface CartItem {
@@ -134,6 +137,7 @@ export interface CreateProductRequest{
     colors?: Color[];
     stock?: number;
     description?: string;
+    promotionsApply?:boolean
 }
 export interface UpdateProductRequest{
     id?: string;
@@ -144,6 +148,7 @@ export interface UpdateProductRequest{
     colors?: Color[];
     stock?: number;
     description?: string;
+    promotionsApply?:boolean
 }
 
 export interface GetPromotionResponse{
@@ -162,6 +167,7 @@ export interface SinglePurchase {
     totalPrice: number,
     finalPrice: number,
     promotionName?: string
+    paymentMethod?:string
 }
 
 export interface GetAllPurchasesResponse {
