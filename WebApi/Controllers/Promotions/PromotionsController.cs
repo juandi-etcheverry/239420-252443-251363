@@ -1,4 +1,5 @@
-﻿using ApiModels.Responses.Promotions;
+﻿using ApiModels.Requests;
+using ApiModels.Responses.Promotions;
 using Domain;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;

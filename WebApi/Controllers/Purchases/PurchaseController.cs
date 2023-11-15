@@ -47,7 +47,16 @@ public class PurchaseController : ControllerBase
     {
         var user = _sessionTokenLogic.GetSessionToken(Authorization).User;
 
-        _productLogic.IsPurchaseValid(request.Cart);
+        var products = _productLogic.GetProducts(p =>
+        {
+            var productsIds = request.Cart.Select(p => p.ProductId).ToList();
+            return productsIds.Contains(p.Id);
+        }).Select(p => new PurchaseProduct
+            { Product = p, Quantity = request.Cart.First(pp => pp.ProductId == p.Id).Quantity }).ToList();
+
+
+        _productLogic.IsPurchaseValid(products);
+
         foreach (var pp in request.Cart)
         {
             
@@ -56,13 +65,6 @@ public class PurchaseController : ControllerBase
 
         var newPurchase = new Purchase { User = user };
         newPurchase.PaymentMethod = request.PaymentMethod;
-
-        var products = _productLogic.GetProducts(p =>
-        {
-            var productsIds = request.Cart.Select(p => p.ProductId).ToList();
-            return productsIds.Contains(p.Id);
-        }).Select(p => new PurchaseProduct
-            { Product = p, Quantity = request.Cart.First(pp => pp.ProductId == p.Id).Quantity }).ToList();
 
         newPurchase.AddProducts(products);
         _purchaseLogic.ValidatePaymentMethod(request.PaymentMethod);
