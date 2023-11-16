@@ -207,13 +207,13 @@ public class ProductLogicTest
     [TestMethod]
     public void IsPurchaseValid_Valid_OK()
     {
-        var cart = new List<PurchaseProduct>
-        {
-            new() { Product = _product, Quantity = 1 },
-        };
         var products = new List<Product>
         {
-            new() { Id = cart[0].Product.Id, Stock = 2 },
+            new() { Id = new Guid(), Stock = 2 },
+        };
+        var cart = new List<PurchaseProduct>
+        {
+            new() { Product = products[0], Quantity = 1 },
         };
 
         var mock = new Mock<IProductRepository>(MockBehavior.Strict);
