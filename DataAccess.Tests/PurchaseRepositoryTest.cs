@@ -183,13 +183,12 @@ public class Test
                 new () {Product = product2, Quantity = 1} },
             User = _user
         };
-        var cartResult = cartRepository.AddPurchase(cart);
 
         //Act
-        var result = cartRepository.AddProducts(cartResult, products);
+        var cartResult = cartRepository.AddPurchase(cart);
 
         //Assert
-        Assert.AreEqual(result.Products.Count, 2);
+        Assert.AreEqual(2, cartResult.Products.Count);
     }
 
     [TestMethod]
@@ -226,14 +225,14 @@ public class Test
             Products = new List<PurchaseProduct> { new () {Product = product1, Quantity = 1} },
             User = _user
         };
-        var cartResult = cartRepository.AddPurchase(cart);
+        
 
         //Act
         products.Add(pp);
-        var result = cartRepository.AddProducts(cartResult, products);
+        var cartResult = cartRepository.AddPurchase(cart);
 
         //Assert
-        Assert.AreEqual(result.Products.Count, 1);
+        Assert.AreEqual(1, cartResult.Products.Count);
     }
 
     [TestMethod]
@@ -312,7 +311,6 @@ public class Test
         };
         products.Add(pp);
         context.Set<Product>().Add(product);
-        context.Set<PurchaseProduct>().Add(pp);
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase
@@ -320,14 +318,13 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<PurchaseProduct> { new() { Product = product, Quantity = 1 } },
+            Products = new List<PurchaseProduct> { pp },
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(cart);
-        var cartResultWithProduct = cartRepository.AddProducts(cartResult, products);
 
         //Act
-        var result = cartRepository.DeleteProduct(cartResultWithProduct, pp);
+        var result = cartRepository.DeleteProduct(cartResult, pp);
 
         //Assert
         Assert.AreEqual(result.Products.Count, 0);
