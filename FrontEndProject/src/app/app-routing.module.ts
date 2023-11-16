@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductsComponent } from './products/products.component';
-import { UserComponent } from './user/user.component';
-import { CartComponent } from './cart/cart.component';
-import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { UserPanelComponent } from './user/user-panel/user-panel.component';
-import { SignupComponent } from './user/signup/signup.component';
-import { LoginComponent } from './user/login/login.component';
-import { AdministrationPanelComponent } from './administration/administration-panel/administration-panel.component';
-import { ServerDownComponent } from './server-down/server-down.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { UserComponent } from './components/user/user.component';
+import { UserPanelComponent } from './components/user/user-panel/user-panel.component';
+import { CartComponent } from './components/cart/cart.component';
+import { SignupComponent } from './components/user/signup/signup.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { AdministrationPanelComponent } from './components/administration/administration-panel/administration-panel.component';
+import { ServerDownComponent } from './components/server-down/server-down.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'products', pathMatch: 'full'},

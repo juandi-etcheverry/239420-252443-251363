@@ -1,0 +1,159 @@
+import { Injectable } from "@angular/core";
+import { Product, CartItem, PurchaseResponse, User, GetPromotionResponse, PurchaseProducts } from "src/utils/interfaces";
+import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import url from "src/utils/url";
+import { Observable } from "rxjs";
+import { AuthService } from "src/app/services/auth.service";
+import { UsersService } from "src/app/services/users.service";
+
+
+@Injectable({
+    providedIn: 'root',
+})
+export class CartService{
+    public cartKey: string = 'AnonymousCart';
+    items: CartItem[] = [];
+    isLoggedIn : boolean = this.authService.hasAuthToken();
+    user : User | null = null;
+    purchaseProducts : PurchaseProducts[] = [];
+    paymentMethod : string | null = null;
+
+    constructor(private authService: AuthService, private userService : UsersService, private router : Router,
+                private http: HttpClient){
+        this.fetchUserData(() => {});
+    }
+
+    signIn(){
+        this.fetchUserData(() => {
+            this.mergeInOne();
+          });
+    }
+
+    mergeInOne(){
+        const sourceKey: string = 'AnonymousCart';
+        const targetKey: string = this.user?.id ?? 'AnonymousCart';
+        const sourceCartItems: CartItem[] = JSON.parse(localStorage.getItem(sourceKey) || '[]');
+        const targetCartItems: CartItem[] = JSON.parse(localStorage.getItem(targetKey) || '[]');
+
+        sourceCartItems.forEach((sourceItem) => {
+            const existingItem = targetCartItems.find(targetItem => targetItem.id === sourceItem.id);
+            if(existingItem){
+                existingItem.cant += sourceItem.cant;
+            } else{
+                targetCartItems.push(sourceItem);
+            }
+        });
+        localStorage.setItem(targetKey, JSON.stringify(targetCartItems));
+        localStorage.removeItem(sourceKey);
+        this.loadCartFromLocalStorage();
+    }
+
+    get itemsCount(): number {
+        return this.items.length;
+    }
+
+    removeCartId(id : string){
+        localStorage.removeItem(id);
+        this.items = [];
+    }
+    
+    saveCartToLocalStorage(){
+        localStorage.setItem(this.cartKey, JSON.stringify(this.items));
+    }
+
+    loadCartFromLocalStorage(){
+        const cartItemsStr = localStorage.getItem(this.cartKey);
+        if(cartItemsStr){
+            this.items = JSON.parse(cartItemsStr);
+        }
+    }
+
+    logout(){
+        this.user = null;
+        this.cartKey = 'AnonymousCart';
+        localStorage.setItem(this.cartKey, JSON.stringify([]));
+        this.loadCartFromLocalStorage();
+    }
+
+    addItem(item : CartItem){
+        if(this.items.find((i)=> i.id == item.id)){
+            this.items = this.items.map((i)=>{
+                if(i.id == item.id){
+                    i.cant++;
+                }
+                return i;
+            })
+        }
+        else{
+            this.items = [...this.items, item];
+        }
+        this.saveCartToLocalStorage();
+    }
+    
+    decreaseItem(itemToDecrease : CartItem){
+        this.loadCartFromLocalStorage();
+        for (let item of this.items){
+            if(itemToDecrease.id == item.id){
+                item.cant--;
+                if(item.cant == 0){
+                    this.items = this.items.filter((item)=> item.id != itemToDecrease.id);
+                }
+            }
+        }
+        this.saveCartToLocalStorage();
+    }
+
+    mapProductItemToCartItem(product: Product): CartItem {
+        const cartItem: CartItem = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          cant: 1,
+        };
+        return cartItem;
+      }
+
+    get total(): number{
+        return this.items.reduce(( acc, {price, cant} ) => (acc += price*cant), 0)
+    }
+
+    getCantOfItem(id : string) : number{
+        this.loadCartFromLocalStorage();
+        if(this.items.find((item)=> item.id == id)){
+            return this.items.find((item)=> item.id == id)!.cant;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    private fetchUserData(internalSubscribeLogic : () => void) {
+        return this.userService.getLoggedUser()?.subscribe(({id, email, address, role}) => {
+          this.user = {
+            id, email, address, role
+          }
+          this.cartKey = this.user.id;
+          internalSubscribeLogic();
+        })
+      }
+
+      getPromotionData(): Observable<GetPromotionResponse> {
+        this.loadCartFromLocalStorage();
+        this.purchaseProducts = this.items.map((item) => ({ProductId: item.id, Quantity: item.cant}));
+        return this.http.post<GetPromotionResponse>(`${url}/promotions/discount`, this.purchaseProducts);
+    }
+
+    setPaymentMethod(paymentMethod :string) {
+        this.paymentMethod = paymentMethod;
+    }
+    
+    addPurchase(){
+        const body = this.items.map((item) => (
+            {ProductId: item.id, Quantity: item.cant}
+        ));
+        return this.http.post<PurchaseResponse>(`${url}/purchases`,
+        {"Cart": body, "PaymentMethod": this.paymentMethod})
+    }
+
+}
