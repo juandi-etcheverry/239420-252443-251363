@@ -92,9 +92,9 @@ export class AdministrationPanelComponent {
 
   refreshUsers() {
     this.userService.getAllUsers().subscribe((response) => {
-      this.users = response.users.filter((val) => {
-        val.id !== this.cartService.user?.id;
-      });
+      this.users = response.users.filter(
+        (val) => val.id !== this.cartService.user?.id
+      );
     });
   }
 
