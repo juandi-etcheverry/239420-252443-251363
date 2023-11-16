@@ -22,23 +22,39 @@ import { ProductItemComponent } from './products/product-item/product-item.compo
   templateUrl: './administration-panel.component.html',
   styleUrls: ['./administration-panel.component.css'],
   standalone: true,
-  imports: [ MatButtonModule, MatDividerModule, MatIconModule, ProductItemComponent, CommonModule, MatSnackBarModule, UserItemComponent, PurchaseHistoryItemComponent]
+  imports: [
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    ProductItemComponent,
+    CommonModule,
+    MatSnackBarModule,
+    UserItemComponent,
+    PurchaseHistoryItemComponent,
+  ],
 })
 export class AdministrationPanelComponent {
-  products : Product[] = [];
+  products: Product[] = [];
   users: User[] = [];
   purchases: SinglePurchase[] = [];
 
-  constructor(private productService : ProductsService, private purchaseService : PurchaseService, public dialog: MatDialog, private _snackBar : MatSnackBar, 
-    private userService: UsersService, private router: Router, private cartService : CartService) { }
+  constructor(
+    private productService: ProductsService,
+    private purchaseService: PurchaseService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private userService: UsersService,
+    private router: Router,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.userService.getLoggedUser()?.subscribe((user) => {
-      if(!user || user.role === 1){
-        this._snackBar.open("You don't have access to this page", "Close", {
+      if (!user || user.role === 1) {
+        this._snackBar.open("You don't have access to this page", 'Close', {
           duration: 2000,
         });
-        this.goToPage("/products");
+        this.goToPage('/products');
       }
     });
 
@@ -48,46 +64,44 @@ export class AdministrationPanelComponent {
 
     this.userService.getAllUsers().subscribe((response) => {
       this.users = response.users.filter((val) => {
-        val.id !== this.cartService.user?.id
+        return val.id !== this.cartService.user?.id;
       });
     });
 
-    this.purchaseService.getPurchases().subscribe(response => {
+    this.purchaseService.getPurchases().subscribe((response) => {
       this.purchases = response.purchases;
-    })
+    });
   }
 
-  goToPage(url: string){
+  goToPage(url: string) {
     this.router.navigate([url]);
   }
 
-  addNewProduct(){
+  addNewProduct() {
     const dialogRef = this.dialog.open(NewProductComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.refreshProducts();
     });
-    
   }
 
-  refreshProducts(){
+  refreshProducts() {
     this.productService.getAllProducts().subscribe((response) => {
       this.products = response.products;
     });
   }
 
-  refreshUsers(){
+  refreshUsers() {
     this.userService.getAllUsers().subscribe((response) => {
       this.users = response.users.filter((val) => {
-        val.id !== this.cartService.user?.id
+        val.id !== this.cartService.user?.id;
       });
     });
   }
 
-  addNewUser(){
+  addNewUser() {
     const dialogRef = this.dialog.open(NewUserComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.refreshUsers();
     });
   }
 }
-
