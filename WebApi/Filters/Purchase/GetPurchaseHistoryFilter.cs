@@ -24,10 +24,10 @@ public class GetPurchaseHistoryFilter : IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (!context.HttpContext.Request.Cookies.ContainsKey("Authorization"))
+        if (!context.HttpContext.Request.Headers.ContainsKey("Authorization"))
             throw new UnauthorizedAccessException("You must be logged in to perform this action!");
 
-        var auth = Guid.Parse(context.HttpContext.Request.Cookies["Authorization"]);
+        var auth = Guid.Parse(context.HttpContext.Request.Headers["Authorization"]);
         var session = _sessionTokenLogic.GetSessionToken(auth);
 
         if (session.User is null)

@@ -1,0 +1,40 @@
+
+#cartItem{
+    background-color:whitesmoke;
+    margin-bottom: 12px;
+    height: 4.5rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    width: 75%;
+    border: 1px solid gray;
+    border-radius: 1rem;
+}
+
+#info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 0.5rem;
+}
+
+#Exclude{
+    background-color: rgb(227, 226, 226);
+    margin-right: 10px;
+}
+
+.cartItemDetails {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+
+#itemName{
+    font-size: 1.8rem;
+    padding-bottom: 0.2rem;
+}

@@ -1,0 +1,53 @@
+<h2>  Filter by:</h2>
+<form [formGroup]="filterForm" (submit)="onSubmit()">
+    <table>
+        <td>
+            <tr><mat-form-field class="example-full-width">
+                <mat-label>Text</mat-label>
+                <input id="textInput" formControlName="textInput" matInput>
+              </mat-form-field></tr>
+        </td>
+        <td>
+            <tr><mat-form-field>
+            <mat-label>Brand</mat-label>
+            <mat-select id="brandInput" formControlName="brandInput">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let brand of brands" [value]="brand">
+                {{brand}}
+                </mat-option>
+            </mat-select>
+            </mat-form-field></tr>
+        </td>
+        <td>
+            <tr><mat-form-field>
+                <mat-label >Category</mat-label>
+                <mat-select id="categoryInput" formControlName="categoryInput">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let cat of categories" [value]="cat">
+                    {{cat}}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field></tr>
+        </td>
+        <td>
+            <tr>
+                <mat-form-field class="priceField" floatLabel="always">
+                    <mat-label>Min price</mat-label>
+                    <input id="minPrice" formControlName="minPrice" matInput type="number" class="example-right-align" min="0">
+                    <span matTextPrefix>$&nbsp;</span>
+                  </mat-form-field>
+    
+                  <mat-form-field class="priceField" floatLabel="always">
+                    <mat-label>Max price</mat-label>
+                    <input id="maxPrice" formControlName="maxPrice" matInput type="number" class="example-right-align" min="0">
+                    <span matTextPrefix>$&nbsp;</span>
+                  </mat-form-field>
+            </tr>
+        </td>
+    </table>
+    <button id="getResultsBtn" mat-raised-button color="primary" type="submit">Get results</button>
+</form>
+
+
+
+

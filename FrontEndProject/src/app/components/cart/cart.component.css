@@ -1,0 +1,22 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 28px;
+}
+
+#contenedor{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#left{
+    width: 50%;
+    padding-right: 50px;
+}
+
+.cart-list-wrapper {
+    height: 80%;
+    overflow: auto;
+}

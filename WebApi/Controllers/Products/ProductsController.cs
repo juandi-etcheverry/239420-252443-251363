@@ -11,7 +11,7 @@ public class ProductsController : ControllerBase
 {
     private readonly IProductLogic _productLogic;
 
-    public ProductsController(IProductLogic productLogic, ISessionTokenLogic sessionTokenLogic)
+    public ProductsController(IProductLogic productLogic)
     {
         _productLogic = productLogic;
     }
@@ -30,7 +30,9 @@ public class ProductsController : ControllerBase
             Category = product.Category,
             Colors = product.Colors.ToList(),
             Description = product.Description,
-            Price = product.Price
+            Price = product.Price,
+            Stock = product.Stock,
+            PromotionsApply = product.PromotionsApply
         };
         return StatusCode(201, response);
     }
@@ -40,15 +42,21 @@ public class ProductsController : ControllerBase
     [Route("api/products")]
     public IActionResult GetProducts([FromQuery] GetProductsRequest request)
     {
-        var products = _productLogic.GetProducts(p => (p.Name.Contains(request.Text) ||
-                                                       p.Description.Contains(request.Text)) &&
-                                                      p.Brand.Name.Contains(request.Brand) &&
-                                                      p.Category.Name.Contains(request.Category));
+        var products = _productLogic.GetProducts(p =>((p.Name.ToLower().Contains(request.Text.ToLower()) ||
+                                                       p.Description.ToLower().Contains(request.Text.ToLower()))) &&
+                                                      p.Brand.Name.ToLower().Contains(request.Brand.ToLower()) &&
+                                                      p.Category.Name.ToLower().Contains(request.Category.ToLower()) &&
+                                                      p.Price >= request.MinPrice &&
+                                                      p.Price <= request.MaxPrice &&
+                                                      p.IsDeleted == false);
 
         var response = new GetProductsResponse
         {
             Message = "Products retrieved successfully",
-            Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList()
+            Products = products.Select(p => GetProductsResponse.ToResponseObject(p)).ToList(),
+            Brands = GetProductsResponse.GetBrands(products),
+            Categories = GetProductsResponse.GetCategories(products),
+            Colors = GetProductsResponse.GetColors(products),
         };
 
         return StatusCode(200, response);
@@ -62,13 +70,16 @@ public class ProductsController : ControllerBase
 
         var response = new GetProductResponse
         {
+            id = product.Id,
             Message = "Product retrieved successfully",
             Name = product.Name,
             Description = product.Description,
             Price = product.Price,
             Brand = product.Brand,
             Category = product.Category,
-            Colors = product.Colors
+            Colors = product.Colors,
+            Stock = product.Stock,
+            PromotionsApply = product.PromotionsApply
         };
 
         return StatusCode(200, response);
@@ -89,4 +100,19 @@ public class ProductsController : ControllerBase
 
         return StatusCode(200, response);
     }
+
+    [HttpPut]
+    [Route("api/products")]
+    [ServiceFilter(typeof(ProductAuthenticationFilter))]
+    public IActionResult ModifyProduct([FromBody] ModifyProductRequest request)
+    {
+        var product = _productLogic.UpdateProduct(request.Id, request.ToEntity());
+        var response = new ModifyProductResponse
+        {
+            Message = "Product updated successfully",
+            Name = product.Name
+        }; 
+        return StatusCode(200, response);
+    }
+
 }

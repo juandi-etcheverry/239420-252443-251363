@@ -1,0 +1,18 @@
+<div id="cartItem" (click)="onCardClick(cartItem.id)" 
+     matRipple
+     [matRippleCentered]="centered"
+     [matRippleDisabled]="disabled"
+     [matRippleUnbounded]="unbounded">
+     
+    <div id="info">
+        <span id="itemName">{{cartItem?.name}}</span>
+        <div class="cartItemDetails">
+            <span class="info-price">${{cartItem?.price}}</span>
+            <span>Cant: {{cant}}</span>
+        </div>    
+    </div>
+    <div id="actions">
+        <button mat-raised-button color="primary" (click)="onDeleteClick($event)">-</button>
+    </div>
+</div>
+

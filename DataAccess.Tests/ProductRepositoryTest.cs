@@ -365,4 +365,53 @@ public class ProductTests
         // Act
         productRepository.SoftDelete(new Guid());
     }
+
+    [TestMethod]
+    public void UpdateProduct_CorrectProduct_OK()
+    {
+        // Arrange
+        var context = CreateDbContext("UpdateProduct_CorrectProduct_OK");
+        var productRepository = new ProductRepository(context);
+
+        var product = new Product
+        {
+            Name = "Test Product 1",
+            Description = "Test Description 1",
+            Price = 100,
+            IsDeleted = false,
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color>
+            {
+                new() { Name = "Red" },
+                new() { Name = "Blue" }
+            },
+            Stock = 10
+        };
+        context.Set<Product>().Add(product);
+        context.SaveChanges();
+
+        var updatedProduct = new Product
+        {
+            Name = "Test Product 2",
+            Description = "Test Description 2",
+            Price = 200,
+            IsDeleted = false,
+            Brand = product.Brand,
+            Category = product.Category,
+            Colors = new List<Color>
+            {
+                new() { Name = "Red" },
+                new() { Name = "Blue" },
+                new() { Name = "Green" }
+            },
+            Stock = 200
+        };
+
+        // Act
+        var result = productRepository.UpdateProduct(product.Id, updatedProduct);
+
+        // Assert
+        Assert.AreEqual(updatedProduct.Stock, result.Stock);
+    }   
 }

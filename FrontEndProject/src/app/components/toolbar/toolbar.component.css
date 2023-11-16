@@ -1,0 +1,11 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.active-link{
+    background-color:blue;
+}
+
+.navbutton {
+  margin: 0 5px;
+}

@@ -1,0 +1,39 @@
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 28px;
+}
+
+h1 {
+    margin-top: 60px;
+}
+#Login{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#Signup{
+    width: 50%;
+    display: flex, grid;
+    justify-content: center;
+    align-items: center;
+}
+h2{
+    margin-top: 150px;
+}
+#question{
+    width: 80%;
+    display: grid;
+    justify-content: center;
+}
+
+form {
+    display: grid;
+    width: 80%; 
+    margin-top: 20px; 
+}
+

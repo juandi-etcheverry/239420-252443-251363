@@ -1,0 +1,37 @@
+#productCard{
+    width: 500px;
+    margin: 10px;
+    background-color: whitesmoke;
+    cursor: auto;
+}
+#title{
+    font-size:x-large;
+    cursor: auto;
+}
+.button{
+    background-color: #3c54b4;
+    color: white;
+    height: 25px;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.example-ripple-container {
+    cursor:auto;
+    width: 300px;
+    height: 125px;
+    line-height: 300px;
+  
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  #actions{
+    cursor: auto;
+    background-color: rgb(241, 240, 240);
+    margin-top: 5px;
+  }

@@ -43,19 +43,35 @@ public class PurchaseController : ControllerBase
     [HttpPost]
     [Route("api/purchases")]
     [ServiceFilter(typeof(AddPurchaseFilter))]
-    public IActionResult AddPurchase([FromBody] AddPurchaseRequest request)
+    public IActionResult AddPurchase([FromBody] AddPurchaseRequest request, [FromHeader] Guid Authorization)
     {
-        var auth = Guid.Parse(Request.Cookies["Authorization"]);
-        var user = _sessionTokenLogic.GetSessionToken(auth).User;
+        var user = _sessionTokenLogic.GetSessionToken(Authorization).User;
 
-        var products = _productLogic.GetProducts(p => request.ProductsIds.Contains(p.Id));
-
-        var newPurchase = new Purchase
+        var products = _productLogic.GetProducts(p =>
         {
-            User = user
-        };
+            var productsIds = request.Cart.Select(p => p.ProductId).ToList();
+            return productsIds.Contains(p.Id);
+        }).Select(p => new PurchaseProduct
+            { Product = p, Quantity = request.Cart.First(pp => pp.ProductId == p.Id).Quantity }).ToList();
+
+
+        _productLogic.IsPurchaseValid(products);
+
+        foreach (var pp in request.Cart)
+        {
+            
+            _productLogic.DecreaseStock(pp.ProductId, pp.Quantity);
+        }
+
+        var newPurchase = new Purchase { User = user };
+        newPurchase.PaymentMethod = request.PaymentMethod;
+
         newPurchase.AddProducts(products);
+        _purchaseLogic.ValidatePaymentMethod(request.PaymentMethod);
         var purchase = _purchaseLogic.AddCart(newPurchase);
+        purchase.PaymentMethod = request.PaymentMethod;
+        
+        
 
         var response = new EffectPurchaseResponse
         {

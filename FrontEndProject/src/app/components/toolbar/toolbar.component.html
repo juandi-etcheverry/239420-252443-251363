@@ -1,0 +1,18 @@
+
+    <mat-toolbar color="primary">
+      <span>Ticu-Commerce</span>
+      <span class="example-spacer"></span>
+      <nav>
+        <button mat-raised-button class="navbutton" color="primary" (click)="goToPage('products')">Products</button>
+        <button mat-raised-button class="navbutton" color="primary" (click)="goToPage('cart')">Cart</button>
+        <button mat-raised-button class="navbutton" color="primary" *ngIf="isLoggedIn" [matMenuTriggerFor]="beforeMenu">{{avatar}}</button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="goToProfile()">View Profile</button>
+          <button mat-menu-item (click)="logout()">Log Out</button>
+        </mat-menu>
+        <button mat-raised-button class="navbutton" color="primary" *ngIf="!isLoggedIn" (click)="goToLogin()">Login</button>
+
+      </nav>
+    </mat-toolbar>
+ 
+ 

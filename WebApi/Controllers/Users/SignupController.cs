@@ -28,9 +28,9 @@ public class SignupController : ControllerBase
         var newUser = _userLogic.CreateUser(request.ToEntity());
 
         SessionToken tokenResponse;
-        if (Request.Cookies.ContainsKey("Authorization"))
+        if (Request.Headers.ContainsKey("Authorization"))
         {
-            var auth = Guid.Parse(Request.Cookies["Authorization"]);
+            var auth = Guid.Parse(Request.Headers["Authorization"]);
             if (_sessionTokenLogic.SessionTokenExists(auth))
                 tokenResponse = _sessionTokenLogic.AddUserToToken(auth, newUser);
             else
@@ -41,7 +41,7 @@ public class SignupController : ControllerBase
             tokenResponse = _sessionTokenLogic.AddSessionToken(new SessionToken { User = newUser });
         }
 
-        Response.Cookies.Append("Authorization", tokenResponse.Id.ToString(), new CookieOptions { HttpOnly = true });
+        Response.Headers.Append("Authorization", tokenResponse.Id.ToString());
 
         var response = new SignupResponse { Message = "User created successfully" };
         return StatusCode(201, response);

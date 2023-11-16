@@ -8,6 +8,7 @@ public class PurchaseLogic : IPurchaseLogic
 {
     private readonly IPromotionLogic _promotionStrategies;
     private readonly IPurchaseRepository _purchaseRepository;
+    private static readonly string[] _paymentMethods = new[] { "CreditVisa", "CreditMastercard", "DebitSantander", "DebitItau", "DebitBBVA", "Paypal", "Paganza" };
 
     public PurchaseLogic(IPurchaseRepository purchaseRepository, IPromotionLogic promotionStrategies)
     {
@@ -20,13 +21,13 @@ public class PurchaseLogic : IPurchaseLogic
         _purchaseRepository = purchaseRepository;
     }
 
-    public Purchase AddProducts(List<Product> products, Purchase purchase)
+    public Purchase AddProducts(List<PurchaseProduct> products, Purchase purchase)
     {
         var result = _purchaseRepository.AddProducts(purchase, products);
         return result;
     }
 
-    public Purchase DeleteProduct(Product product, Purchase purchase)
+    public Purchase DeleteProduct(PurchaseProduct product, Purchase purchase)
     {
         var result = _purchaseRepository.DeleteProduct(purchase, product);
         return result;
@@ -43,9 +44,17 @@ public class PurchaseLogic : IPurchaseLogic
     {
         try
         {
-
-            var promotion = _promotionStrategies.GetBestPromotion(purchase.Products);
-            var result = promotion.GetDiscount(purchase.Products);
+            var foundProducts = new List<Product>();
+            foreach (var p in purchase.Products)
+            {
+                for (int i = 0; i < p.Quantity; i++)
+                {
+                    foundProducts.Add(p.Product);
+                }
+            }
+            var promotion = _promotionStrategies.GetBestPromotion(foundProducts);
+            var result = promotion.GetDiscount(foundProducts);
+           
             purchase.FinalPrice = purchase.TotalPrice - result;
             purchase.PromotionName = promotion.Name;
         }
@@ -53,6 +62,10 @@ public class PurchaseLogic : IPurchaseLogic
         {
             purchase.FinalPrice = purchase.TotalPrice;
             purchase.PromotionName = "No Promotion";
+        }
+        finally
+        {
+            if (purchase.PaymentMethod == "Paganza") purchase.FinalPrice *= 0.9f;
         }
     }
 
@@ -65,5 +78,10 @@ public class PurchaseLogic : IPurchaseLogic
     public List<Purchase> GetAllPurchasesHistory()
     {
         return _purchaseRepository.GetAllPurchasesHistory();
+    }
+
+    public void ValidatePaymentMethod(string method)
+    {
+        if (!_paymentMethods.Contains(method)) throw new ArgumentException("Invalid payment method");
     }
 }

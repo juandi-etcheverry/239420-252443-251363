@@ -60,4 +60,9 @@ public class UserRepository : IUserRepository
         if (user == null) return false;
         return true;
     }
+
+    public IList<User> GetAllUsers()
+    {
+        return _context.Set<User>().Where(user => !user.IsDeleted).ToList();
+    }
 }

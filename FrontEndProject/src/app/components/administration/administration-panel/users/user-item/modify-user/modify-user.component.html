@@ -1,0 +1,50 @@
+<h1>Modify user: {{data.email}}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="ModifyUserForm" (submit)="onSubmit()">
+
+        <table>
+            <td>
+                <tr>
+                    <mat-form-field id="emailInput">
+                        <mat-label>Email</mat-label>
+                        <input *ngIf="data" [ngModel]="data.email" formControlName="email" matInput >
+                        <mat-error *ngIf="ModifyUserForm.controls.email.errors?.['required']">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="ModifyUserForm.controls.email.errors?.['email']">
+                            Email is invalid
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="addressInput" floatLabel="always" id="addressInput" >
+                        <mat-label>Address</mat-label>
+                        <input *ngIf="data" [ngModel]="data.address" formControlName="address" matInput class="example-right-align" min="0">
+                        <mat-error *ngIf="ModifyUserForm.controls.address.errors?.['required']">
+                            Address is required
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field id="roleInput">
+                        <mat-label>Role</mat-label>
+                        <mat-select [(ngModel)]="data.role" formControlName="role">
+                            <mat-option [value]=1 selected>Buyer</mat-option>
+                            <mat-option [value]=2>Admin</mat-option>
+                            <mat-option [value]=3>Total</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="ModifyUserForm.controls.role.errors?.['required']">
+                            Role is required
+                        </mat-error>
+                        <mat-error *ngIf="ModifyUserForm.controls.role.errors?.['pattern']">
+                            Invalid role
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+            </td>
+        </table>
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button id="closeBtn" type="button" (click)="onCloseClick()">Close</button>
+            <button id="submit" class="button" mat-raised-button color="primary" type="submit" [disabled]="ModifyUserForm.invalid">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,10 +1,9 @@
-﻿using DataAccess;
+using DataAccess;
 using DataAccess.Interfaces;
 using Logic;
 using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PromotionStrategies;
 
 namespace ServerFactory;
 
@@ -17,6 +16,9 @@ public static class ServiceExtension
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+        services.AddScoped<IColorRepository, ColorRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IBrandRepository, BrandRepository>();
 
 
         services.AddScoped<IProductLogic, ProductLogic>();
@@ -24,11 +26,10 @@ public static class ServiceExtension
         services.AddScoped<ISessionTokenLogic, SessionTokenLogic>();
         services.AddScoped<IPurchaseLogic, PurchaseLogic>();
         services.AddScoped<IPromotionLogic, PromotionLogic>();
-
-        services.AddScoped<IPromotionStrategy, TwentyPercentPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, FidelityPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, ThreeForTwoPromotionStrategy>();
-        services.AddScoped<IPromotionStrategy, TotalLookPromotionStrategy>();
+        services.AddScoped<IColorLogic, ColorLogic>();
+        services.AddScoped<ICategoryLogic, CategoryLogic>();
+        services.AddScoped<IBrandLogic, BrandLogic>();
+        services.AddScoped<IFileDataReader, FileDataReader>();
         return services;
     }
 }

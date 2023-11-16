@@ -1,0 +1,82 @@
+<h1>Modify product: {{data.name}}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="ModifyProductForm" (submit)="onSubmit()">
+
+        <table>
+            <td>
+                <tr>
+                    <mat-form-field id="nameInput">
+                        <mat-label>Name</mat-label>
+                        <input *ngIf="data" [ngModel]="data.name" formControlName="name" matInput >
+                        <mat-error *ngIf="ModifyProductForm.controls.name.errors?.['required']">
+                            Name is required
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="priceField" floatLabel="always" id="priceInput" >
+                        <mat-label>Price</mat-label>
+                        <input *ngIf="data" [ngModel]="data.price" formControlName="price" matInput type="number" class="example-right-align" min="0">
+                        <span matTextPrefix>$&nbsp;</span>
+                        <mat-error *ngIf="ModifyProductForm.controls.price.errors?.['required']">
+                            Price is required
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field id="brandInput">
+                        <mat-label>Brand</mat-label>
+                        <mat-select [(ngModel)]="data.brand.name" formControlName="brand">
+                            <mat-option *ngFor="let brand of brands" [value]="brand">
+                            {{brand.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="ModifyProductForm.controls.brand.errors?.['required']">
+                            Brand is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field id="categoryInput">
+                        <mat-label >Category</mat-label>
+                        <mat-select  formControlName="category">
+                            <mat-option *ngFor="let cat of categories" [value]="cat">
+                            {{cat.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="ModifyProductForm.controls.category.errors?.['required']">
+                            Category is required
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field class="priceField" floatLabel="always" id="stockInput" >
+                        <mat-label>Stock</mat-label>
+                        <input *ngIf="data" [ngModel]="data.stock" formControlName="stock" matInput type="number" class="example-right-align" min="0">
+                        <mat-error *ngIf="ModifyProductForm.controls.stock.errors?.['required']">
+                            Stock is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field id="colorsInput">
+                        <mat-label>Colors</mat-label>
+                        <mat-select formControlName="colors" multiple>
+                            <mat-option *ngFor="let color of colors" [value]="color">
+                            {{color.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </tr>
+                <tr>
+                    <mat-form-field class="example-full-width" id="descriptionInput">
+                        <mat-label>Description</mat-label>
+                        <input *ngIf="data" [ngModel]="data.description" id="descriptionInput" formControlName="description" matInput>
+                        <mat-error *ngIf="ModifyProductForm.controls.description.errors?.['required']">
+                            Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </tr>
+            </td>
+        </table>
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button id="closeBtn" type="button" (click)="onCloseClick()">Close</button>
+            <button id="submit" class="button" mat-raised-button color="primary" type="submit" [disabled]="ModifyProductForm.invalid">Submit</button>
+        </div>
+    </form>
+</div>

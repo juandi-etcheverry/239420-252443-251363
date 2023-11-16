@@ -1,0 +1,25 @@
+<div id="payment">
+    <h2 id="title">Select payment method</h2>
+    <mat-radio-group 
+    (change)="updatePaymentMethod($event)"
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group">
+    <!--<mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option">{{option}}</mat-radio-button>-->
+    <p>Credit cards:</p>
+    <mat-radio-button class="example-radio-button" [value]="options[0].value">{{options[0].label}}</mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="options[1].value">{{options[1].label}}</mat-radio-button>
+    <p>Bank debit:</p>
+    <mat-radio-button class="example-radio-button" [value]="options[2].value">{{options[2].label}}</mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="options[3].value">{{options[3].label}}</mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="options[4].value">{{options[4].label}}</mat-radio-button>
+    <p>Others:</p>
+    <mat-radio-button class="example-radio-button" [value]="options[5].value">{{options[5].label}}</mat-radio-button>
+    <mat-radio-button class="example-radio-button" [value]="options[6].value">{{options[6].label}}</mat-radio-button>
+    </mat-radio-group>
+
+    <div id="laststep">
+        <span><h3>Final price: </h3></span>
+        <span><button (click)="openDialog('0ms', '0ms')" mat-raised-button color="primary">Confirm purchase</button></span>
+    </div>
+</div>
+

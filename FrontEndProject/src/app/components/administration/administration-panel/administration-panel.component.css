@@ -1,0 +1,39 @@
+.title{
+    display: flex;
+}
+.titleUser {
+    display: flex;
+}
+.button{
+    background-color: #3c54b4;
+    color: white;
+    margin-left: 80px;
+    margin-top: 10x;
+    width: 120px;
+    cursor: pointer;
+}
+
+h2{
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+    margin-top: 50px;
+    width: fit-content;
+}
+
+.productList, .userList .purchaseList  {
+    flex: 1;
+}
+
+.purchaseList {
+    width: 100%;
+}

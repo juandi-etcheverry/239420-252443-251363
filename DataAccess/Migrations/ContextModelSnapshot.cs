@@ -114,6 +114,12 @@ namespace DataAccess.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<bool>("PromotionsApply")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -134,6 +140,9 @@ namespace DataAccess.Migrations
                     b.Property<float>("FinalPrice")
                         .HasColumnType("real");
 
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PromotionName")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,6 +157,27 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Domain.PurchaseProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("PurchaseProducts");
                 });
 
             modelBuilder.Entity("Domain.SessionToken", b =>
@@ -200,10 +230,10 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ProductPurchase", b =>
+            modelBuilder.Entity("PurchasePurchaseProduct", b =>
                 {
-                    b.Property<Guid>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PurchaseId")
                         .HasColumnType("int");
@@ -260,6 +290,17 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.PurchaseProduct", b =>
+                {
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.SessionToken", b =>
                 {
                     b.HasOne("Domain.Purchase", "Cart")
@@ -275,9 +316,9 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProductPurchase", b =>
+            modelBuilder.Entity("PurchasePurchaseProduct", b =>
                 {
-                    b.HasOne("Domain.Product", null)
+                    b.HasOne("Domain.PurchaseProduct", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)

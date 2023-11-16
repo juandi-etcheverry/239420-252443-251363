@@ -72,7 +72,7 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product> { _product },
+            Products = new List<PurchaseProduct> { new () {Product = _product, Quantity = 1} },
             User = _user
         };
         //Act
@@ -88,7 +88,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("AddProduct_CorrectProductOK");
         var cartRepository = new PurchaseRepository(context);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product = new Product
         {
             Name = "Test Product",
@@ -98,8 +98,14 @@ public class Test
             Category = _category,
             Colors = new List<Color> { _color }
         };
-        products.Add(product);
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        products.Add(pp);
         context.Set<Product>().Add(product);
+        context.Set<PurchaseProduct>().Add(pp);
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase
@@ -107,7 +113,11 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product> { product },
+            Products = new List<PurchaseProduct> { new()
+            {
+                Product = product,
+                Quantity = 1
+            } },
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(cart);
@@ -116,7 +126,7 @@ public class Test
         var result = cartRepository.AddProducts(cartResult, products);
 
         //Assert
-        Assert.AreEqual(result.Products[0].Id, product.Id);
+        Assert.AreEqual(result.Products[0].Product.Id, product.Id);
     }
 
     [TestMethod]
@@ -125,7 +135,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("AddTwoProducts_CorrectProduct");
         var cartRepository = new PurchaseRepository(context);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product1 = new Product
         {
             Name = "Test Product1",
@@ -135,8 +145,14 @@ public class Test
             Category = _category,
             Colors = new List<Color> { _color }
         };
-        products.Add(product1);
+        var pp1 = new PurchaseProduct()
+        {
+            Product = product1,
+            Quantity = 1
+        };
+        products.Add(pp1);
         context.Set<Product>().Add(product1);
+        context.Set<PurchaseProduct>().Add(pp1);
         context.SaveChanges();
 
         var product2 = new Product
@@ -148,8 +164,14 @@ public class Test
             Category = _category,
             Colors = new List<Color> { _color }
         };
-        products.Add(product2);
+        var pp2 = new PurchaseProduct()
+        {
+            Product = product2,
+            Quantity = 1
+        };
+        products.Add(pp2);
         context.Set<Product>().Add(product2);
+        context.Set<PurchaseProduct>().Add(pp2);
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase
@@ -157,16 +179,16 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product> { product1, product2 },
+            Products = new List<PurchaseProduct> { new () {Product = product1, Quantity = 1}, 
+                new () {Product = product2, Quantity = 1} },
             User = _user
         };
-        var cartResult = cartRepository.AddPurchase(cart);
 
         //Act
-        var result = cartRepository.AddProducts(cartResult, products);
+        var cartResult = cartRepository.AddPurchase(cart);
 
         //Assert
-        Assert.AreEqual(result.Products.Count, 2);
+        Assert.AreEqual(2, cartResult.Products.Count);
     }
 
     [TestMethod]
@@ -175,7 +197,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("AddTwoProducts_CorrectProduct");
         var cartRepository = new PurchaseRepository(context);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product1 = new Product
         {
             Name = "Test Product1",
@@ -185,8 +207,14 @@ public class Test
             Category = _category,
             Colors = new List<Color> { _color }
         };
-        products.Add(product1);
+        var pp = new PurchaseProduct()
+        {
+            Product = product1,
+            Quantity = 1
+        };
+        products.Add(pp);
         context.Set<Product>().Add(product1);
+        context.Set<PurchaseProduct>().Add(pp);
         context.SaveChanges();
         var session = new SessionToken();
         var cart = new Purchase
@@ -194,17 +222,17 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product> { product1 },
+            Products = new List<PurchaseProduct> { new () {Product = product1, Quantity = 1} },
             User = _user
         };
-        var cartResult = cartRepository.AddPurchase(cart);
+        
 
         //Act
-        products.Add(product1);
-        var result = cartRepository.AddProducts(cartResult, products);
+        products.Add(pp);
+        var cartResult = cartRepository.AddPurchase(cart);
 
         //Assert
-        Assert.AreEqual(result.Products.Count, 1);
+        Assert.AreEqual(1, cartResult.Products.Count);
     }
 
     [TestMethod]
@@ -220,13 +248,18 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(cart);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         Product product = null;
-        products.Add(product);
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        products.Add(pp);
 
         //Act
         var result = cartRepository.AddProducts(cartResult, products);
@@ -245,11 +278,11 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(purchase);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
 
         //Act
         var result = cartRepository.AddProducts(cartResult, products);
@@ -261,7 +294,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("DeleteProduct_CorrectProductOK");
         var cartRepository = new PurchaseRepository(context);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product = new Product
         {
             Name = "Test Product1",
@@ -271,7 +304,12 @@ public class Test
             Category = _category,
             Colors = new List<Color> { _color }
         };
-        products.Add(product);
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        products.Add(pp);
         context.Set<Product>().Add(product);
         context.SaveChanges();
         var session = new SessionToken();
@@ -280,14 +318,13 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product> { product },
+            Products = new List<PurchaseProduct> { pp },
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(cart);
-        var cartResultWithProduct = cartRepository.AddProducts(cartResult, products);
 
         //Act
-        var result = cartRepository.DeleteProduct(cartResultWithProduct, product);
+        var result = cartRepository.DeleteProduct(cartResult, pp);
 
         //Assert
         Assert.AreEqual(result.Products.Count, 0);
@@ -306,14 +343,19 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var cartResult = cartRepository.AddPurchase(cart);
         Product product = null;
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
 
         //Act
-        var result = cartRepository.DeleteProduct(cartResult, product);
+        var result = cartRepository.DeleteProduct(cartResult, pp);
     }
 
     [TestMethod]
@@ -323,7 +365,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("AddProduct_NullCartFail");
         var cartRepository = new PurchaseRepository(context);
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product = new Product
         {
             Name = "Test Product",
@@ -333,8 +375,14 @@ public class Test
             Category = new Category { Name = "Bag" },
             Colors = new List<Color> { new() { Name = "Red" } }
         };
-        products.Add(product);
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        products.Add(pp);
         context.Set<Product>().Add(product);
+        context.Set<PurchaseProduct>().Add(pp);
         context.SaveChanges();
         Purchase purchase = null;
 
@@ -358,12 +406,19 @@ public class Test
             Category = new Category { Name = "Bag" },
             Colors = new List<Color> { new() { Name = "Red" } }
         };
+        var pp = new PurchaseProduct()
+        {
+            Product = product,
+            Quantity = 1
+        };
+        
         context.Set<Product>().Add(product);
+        context.Set<PurchaseProduct>().Add(pp);
         context.SaveChanges();
         Purchase purchase = null;
 
         //Act
-        var result = cartRepository.DeleteProduct(purchase, product);
+        var result = cartRepository.DeleteProduct(purchase, pp);
     }
 
     [TestMethod]
@@ -377,7 +432,7 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var purchaseResult = purchaseRepository.AddPurchase(purchase);
@@ -400,7 +455,7 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var purchaseResult = purchaseRepository.AddPurchase(purchase);
@@ -441,7 +496,7 @@ public class Test
             FinalPrice = 100,
             TotalPrice = 100,
             PromotionName = "Test Promotion",
-            Products = new List<Product>(),
+            Products = new List<PurchaseProduct>(),
             User = _user
         };
         var purchaseResult = purchaseRepository.AddPurchase(purchase);
@@ -475,7 +530,7 @@ public class Test
         var context = CreateDbContext("CalculateTotalPrice_OK");
         var purchaseRepository = new PurchaseRepository(context);
         var user = new User();
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product1 = new Product
         {
             Price = 300
@@ -484,8 +539,17 @@ public class Test
         {
             Price = 200
         };
-        products.Add(product1);
-        products.Add(product2);
+        products.Add(new PurchaseProduct()
+        {
+            Product = product1,
+            Quantity = 1
+        });
+        products.Add(new PurchaseProduct()
+        {
+            Product = product2,
+            Quantity = 1
+        });
+        
         var purchase = new Purchase
         {
             User = user
@@ -504,6 +568,7 @@ public class Test
         //Arrange
         var context = CreateDbContext("GetAllPurchasesHistory_AllPurchases_OK");
         var purchaseRepository = new PurchaseRepository(context);
+        
         var user = new User
         {
             Email = "A@A.A",
@@ -511,26 +576,47 @@ public class Test
             Password = "Password123",
             Role = Role.Buyer
         };
-        var products = new List<Product>();
+        var products = new List<PurchaseProduct>();
         var product1 = new Product
         {
             Name = "A",
             Description = "A",
-            Price = 300
+            Price = 300,
+            Id = Guid.NewGuid(),
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
         var product2 = new Product
         {
             Name = "A",
             Description = "A",
-            Price = 200
+            Price = 200,
+            Id = Guid.NewGuid(),
+            Brand = new Brand { Name = "Gucci" },
+            Category = new Category { Name = "Bag" },
+            Colors = new List<Color> { new() { Name = "Red" } }
         };
-        products.Add(product1);
-        products.Add(product2);
+        products.Add(new PurchaseProduct()
+        {
+            Product = product1,
+            Quantity = 1
+        });
+        products.Add(new PurchaseProduct()
+        {
+            Product = product2,
+            Quantity = 1
+        });
         var purchase = new Purchase
         {
             User = user,
             Products = products
         };
+        var productsRepo = new ProductRepository(context);
+        productsRepo.AddProduct(product1);
+        productsRepo.AddProduct(product2);
+        var userRepo = new UserRepository(context);
+        userRepo.AddUser(user);
         purchaseRepository.AddProducts(purchase, products);
         purchaseRepository.AddPurchase(purchase);
 

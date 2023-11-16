@@ -4,11 +4,25 @@ using WebApi.Filters.Login;
 using WebApi.Filters.Logout;
 using WebApi.Filters.Products;
 using WebApi.Filters.Purchase;
+using WebApi.Filters.Sessions;
 using WebApi.Filters.Signup;
 using WebApi.Filters.User;
 using WebApi.Filters.User.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithExposedHeaders("Authorization");
+        });
+});
 
 // Add services to the container.
 
@@ -26,6 +40,7 @@ builder.Services.AddScoped<IsLoggedInAuthenticationFilter>();
 builder.Services.AddScoped<ProductAuthenticationFilter>();
 builder.Services.AddScoped<GetPurchaseHistoryFilter>();
 builder.Services.AddScoped<AddPurchaseFilter>();
+builder.Services.AddScoped<IsLoggedFilter>();
 
 var app = builder.Build();
 
@@ -37,6 +52,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

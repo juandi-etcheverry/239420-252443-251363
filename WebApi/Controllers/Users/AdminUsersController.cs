@@ -11,18 +11,15 @@ namespace WebApi.Controllers.Users;
 [ApiController]
 public class AdminUsersController : ControllerBase
 {
-    private ISessionTokenLogic _sessionTokenLogic;
-
     private readonly IUserLogic _userLogic;
 
-    public AdminUsersController(IUserLogic userLogic, ISessionTokenLogic sessionTokenLogic)
+    public AdminUsersController(IUserLogic userLogic)
     {
         _userLogic = userLogic;
-        _sessionTokenLogic = sessionTokenLogic;
     }
 
     [HttpGet]
-    [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
+    [ServiceFilter(typeof(UpdateUserAuthenticationFilter))]
     public IActionResult GetUser([FromRoute] Guid id)
     {
         var user = _userLogic.GetUser(id);
@@ -38,8 +35,15 @@ public class AdminUsersController : ControllerBase
 
     [HttpDelete]
     [ServiceFilter(typeof(AdminUserAuthenticationFilter))]
-    public IActionResult DeleteUser([FromRoute] Guid id)
+    public IActionResult DeleteUser([FromRoute] Guid id, [FromHeader] Guid Authorization)
     {
+        if (Authorization == id)
+        {
+            return new ObjectResult("You cannot delete yourself!")
+            {
+                StatusCode = 403
+            };
+        }
         var user = _userLogic.DeleteUser(id);
         var response = new DeleteUserResponse
         {

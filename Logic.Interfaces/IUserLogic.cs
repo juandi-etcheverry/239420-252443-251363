@@ -9,4 +9,5 @@ public interface IUserLogic
     User CreateUser(User user);
     User DeleteUser(Guid id);
     User UpdateUser(Guid id, User user);
+    IList<User> GetAllUsers();
 }
