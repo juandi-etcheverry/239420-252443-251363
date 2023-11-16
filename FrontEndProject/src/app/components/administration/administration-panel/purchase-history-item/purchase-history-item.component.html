@@ -13,8 +13,8 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="purchaseHistory.productsNames">
-        <ng-template ngFor let-productName [ngForOf]="purchase.productsNames">
-            <li>{{productName}}</li>
+        <ng-template ngFor let-product [ngForOf]="purchase.products">
+            <li>{{product.productName}} x {{product.quantity}}</li>
           </ng-template>
       </mat-card-content>
 

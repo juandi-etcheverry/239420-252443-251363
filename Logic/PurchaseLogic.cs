@@ -44,9 +44,16 @@ public class PurchaseLogic : IPurchaseLogic
     {
         try
         {
-            var products = purchase.Products.Select(p => p.Product).ToList();
-            var promotion = _promotionStrategies.GetBestPromotion(products);
-            var result = promotion.GetDiscount(products);
+            var foundProducts = new List<Product>();
+            foreach (var p in purchase.Products)
+            {
+                for (int i = 0; i < p.Quantity; i++)
+                {
+                    foundProducts.Add(p.Product);
+                }
+            }
+            var promotion = _promotionStrategies.GetBestPromotion(foundProducts);
+            var result = promotion.GetDiscount(foundProducts);
            
             purchase.FinalPrice = purchase.TotalPrice - result;
             purchase.PromotionName = promotion.Name;
