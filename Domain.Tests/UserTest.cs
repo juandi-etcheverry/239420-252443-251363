@@ -81,4 +81,16 @@ public class UserTest
             Address = "Okay address"
         };
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException), "User email format is incorrect")]
+    public void NewUser_EmailWithoutDot_FAIL()
+    {
+        var user = new User
+        {
+            Email = "wrongEmail@gmailcom",
+            Password = "",
+            Address = "Okay address"
+        };
+    }
 }
